@@ -25,13 +25,13 @@ public class Knife4jConfiguration {
     public Docket defaultApi2() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(new ApiInfoBuilder()
-                        .title("springboot-init")
-                        .description("springboot-init")
-                        .termsOfServiceUrl("https://github.com/liyupi")
-                        .contact(new Contact("yupi", "https://github.com/liyupi", "592789970@qq.com"))
+                        .title("visitor-system")
+                        .description("企业访客管理系统")
+                        .termsOfServiceUrl("https://gitlab.com/weihaoming1/visitorsystem")
+                        .contact(new Contact("魏浩铭", "https://github.com/DestinyWei", "1342348280@qq.com"))
                         .version("1.0")
                         .build())
-                .groupName("2.X版本")
+                .groupName("1.0版本")
                 .select()
                 // 这里指定Controller扫描包路径
                 .apis(RequestHandlerSelectors.basePackage("com.project.controller"))
