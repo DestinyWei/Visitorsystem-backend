@@ -1,4 +1,7 @@
-package com.project.common;
+package com.project.util;
+
+import com.project.common.BaseResponse;
+import com.project.common.ErrorCode;
 
 /**
  * 返回工具类
@@ -15,7 +18,30 @@ public class ResultUtils {
      * @return
      */
     public static <T> BaseResponse<T> success(T data) {
-        return new BaseResponse<>(0, data, "ok");
+        return new BaseResponse<>(200, data, "ok");
+    }
+
+    /**
+     * 成功
+     *
+     * @param data
+     * @param message
+     * @param <T>
+     * @return
+     */
+    public static <T> BaseResponse<T> success(T data, String message) {
+        return new BaseResponse<>(200, data, message);
+    }
+
+    /**
+     * 成功
+     *
+     * @param message
+     * @param <T>
+     * @return
+     */
+    public static <T> BaseResponse<T> success(String message) {
+        return new BaseResponse<>(200, null, message);
     }
 
     /**
@@ -36,7 +62,7 @@ public class ResultUtils {
      * @param description
      * @return
      */
-    public static BaseResponse error(int code, String message, String description) {
+    public static BaseResponse error(Integer code, String message, String description) {
         return new BaseResponse(code, null, message, description);
     }
 
@@ -58,5 +84,15 @@ public class ResultUtils {
      */
     public static BaseResponse error(ErrorCode errorCode, String description) {
         return new BaseResponse(errorCode.getCode(), errorCode.getMessage(), description);
+    }
+
+    /**
+     * 失败
+     *
+     * @param message
+     * @return
+     */
+    public static BaseResponse error(String message) {
+        return new BaseResponse(null, message, null);
     }
 }

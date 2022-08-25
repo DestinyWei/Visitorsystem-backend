@@ -21,3 +21,12 @@
 - 示例 SQL（用户表）
 
 访问 localhost:7000/api/doc.html 就能在线调试接口了，不需要前端配合啦~
+
+后端编写规范:
+- 类/接口名理论上按照表名+类别(如service类就在末尾加上Service...)进行创建
+- Service层写业务逻辑
+- Controller层加上一些业务上的判断,如用户登录判断有没有填写账户密码等等，同时使用通用返回类BaseResponse类进行返回
+- Controller中Get请求一般只有search方法使用,同时加上@RequestParam注解来设置分页器,可参考SysUserController的search方法
+- Post请求传入的参数一般都加上@RequestBody注解---使用Json格式
+- 增删改查,详情分别使用: insert、remove、update、search、detail 进行命名
+- 同时必要的注释都要加上,推荐使用AlibabaFormat插件

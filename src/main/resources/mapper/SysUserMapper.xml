@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.mapper.SysUserMapper">
+
+    <resultMap id="BaseResultMap" type="com.project.model.entity.SysUserEntity">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="VARCHAR"/>
+        <result property="idNumber" column="id_number" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="userAccount" column="user_account" jdbcType="VARCHAR"/>
+        <result property="userPassword" column="user_password" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="isDelete" column="is_delete" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        su.id, su.user_name, su.sex, su.id_number, su.phone, su.email,
+        su.user_account, su.user_password,su.`type`,
+        su.create_time, su.update_time, su.user_status, su.is_delete
+    </sql>
+
+    <select id="searchUser" resultType="com.project.model.entity.SysUserEntity">
+        SELECT
+            su.user_name, su.sex, su.id_number, su.phone, su.email, su.user_account, su.`type`,
+            su.user_status, su.is_delete, sr.role_type AS  roleType
+        FROM
+            sys_user su
+        LEFT JOIN
+            user_role ur
+        ON
+            su.id = ur.user_id
+        LEFT JOIN
+            sys_role sr
+        ON
+            ur.role_id = sr.id
+        WHERE 1 = 1
+        <if test=" userName != null and userName != '' ">
+            AND su.user_name LIKE concat('%',#{userName},'%')
+        </if>
+        <if test=" sex != null and sex != '' ">
+            AND su.sex = #{sex}
+        </if>
+        <if test=" phone != null and phone != '' ">
+            AND su.phone LIKE concat('%',#{phone},'%')
+        </if>
+        <if test=" email != null and email != '' ">
+            AND su.email LIKE concat('%',#{email},'%')
+        </if>
+        <if test=" userAccount != null and userAccount != '' ">
+            AND su.user_account LIKE concat('%',#{userAccount},'%')
+        </if>
+        <if test=" type != null and type != '' ">
+            AND su.type = #{type}
+        </if>
+        <if test=" userStatus != null and userStatus != '' ">
+            AND su.user_status = #{userStatus}
+        </if>
+        <if test="roleType != 0">
+            AND su.is_delete = 0
+        </if>
+        ORDER BY
+            su.create_time DESC
+    </select>
+</mapper>

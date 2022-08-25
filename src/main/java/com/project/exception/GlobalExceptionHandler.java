@@ -2,15 +2,13 @@ package com.project.exception;
 
 import com.project.common.BaseResponse;
 import com.project.common.ErrorCode;
-import com.project.common.ResultUtils;
+import com.project.util.ResultUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
  * 全局异常处理器
- *
- * @author yupi
  */
 @RestControllerAdvice
 @Slf4j

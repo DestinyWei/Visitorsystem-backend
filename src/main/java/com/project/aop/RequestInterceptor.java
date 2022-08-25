@@ -16,8 +16,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  * 请求 AOP
- *
- * @author yupi
  **/
 @Aspect
 @Component

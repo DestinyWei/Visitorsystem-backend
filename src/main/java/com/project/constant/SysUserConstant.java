@@ -2,10 +2,8 @@ package com.project.constant;
 
 /**
  * 用户常量
- *
- * @author yupi
  */
-public interface UserConstant {
+public interface SysUserConstant {
 
     /**
      * 用户登录态键
@@ -15,13 +13,18 @@ public interface UserConstant {
     //  ------- 权限 --------
 
     /**
-     * 默认权限
+     * 默认权限-普通成员
      */
-    int DEFAULT_ROLE = 0;
+    String DEFAULT_ROLE = "0";
 
     /**
      * 管理员权限
      */
-    int ADMIN_ROLE = 1;
+    String ADMIN_ROLE = "1";
+
+    /**
+     * 公司高管权限
+     */
+    String MANAGER_ROLE = "2";
 
 }

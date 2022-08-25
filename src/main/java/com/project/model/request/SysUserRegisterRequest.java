@@ -5,11 +5,9 @@ import lombok.Data;
 
 /**
  * 用户注册请求体
- *
- * @author yupi
  */
 @Data
-public class UserRegisterRequest implements Serializable {
+public class SysUserRegisterRequest implements Serializable {
 
     private static final long serialVersionUID = 3191241716373120793L;
 
@@ -18,4 +16,14 @@ public class UserRegisterRequest implements Serializable {
     private String userPassword;
 
     private String checkPassword;
+
+    private String userName;
+
+    private String sex;
+
+    private String idNumber;
+
+    private String phone;
+
+    private String email;
 }
