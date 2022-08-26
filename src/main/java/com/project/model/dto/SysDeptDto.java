@@ -4,8 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.project.model.entity.SysRoleEntity;
+import com.project.model.entity.SysDeptEntity;
 import lombok.Data;
 
 import java.util.Date;
@@ -13,15 +12,16 @@ import java.util.Date;
 /**
  * @description:
  * @author: weihaoming
- * @create: 2022-08-21-22:24
+ * @create: 2022-08-26-15:58
  * @version:
  */
 @Data
-public class SysRoleDto extends Page<SysRoleEntity> {
+public class SysDeptDto extends Page<SysDeptEntity> {
 
-    private String roleName;
-    private String roleType;
-    private Long createUserId;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
-    private Date createTime;
+    private String departmentName;
+    private String departmentCode;
+    private Long parentDepartmentId;
+    private String departmentType;
+    private String unit;
+    private String level;
 }

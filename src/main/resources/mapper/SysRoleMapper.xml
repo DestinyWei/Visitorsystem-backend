@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.mapper.SysRoleMapper">
+
+    <resultMap id="BaseResultMap" type="com.project.model.entity.SysRoleEntity">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="roleName" column="role_name" jdbcType="VARCHAR"/>
+            <result property="roleDesc" column="role_desc" jdbcType="VARCHAR"/>
+            <result property="roleSort" column="role_sort" jdbcType="VARCHAR"/>
+            <result property="roleType" column="role_type" jdbcType="VARCHAR"/>
+            <result property="createUserId" column="create_user_id" jdbcType="BIGINT"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,role_name,role_desc,role_sort
+        role_type,create_user_id,create_time
+    </sql>
+
+    <select id="selectRole" resultType="com.project.model.entity.SysRoleEntity">
+        SELECT
+            sr.role_name, sr.role_desc, sr.role_type, su.user_name, sr.create_time
+        FROM
+            sys_role sr
+        LEFT JOIN
+            sys_user su
+        ON
+            sr.create_user_id = su.id
+        WHERE 1 = 1
+        <if test="roleName != null and roleName != '' ">
+            AND sr.role_name LIKE concat('%',#{roleName},'%')
+        </if>
+        <if test="roleType != null and roleType != '' ">
+            AND sr.role_type LIKE concat('%',#{roleType},'%')
+        </if>
+        ORDER BY
+            sr.role_sort ASC, sr.create_time DESC
+    </select>
+</mapper>

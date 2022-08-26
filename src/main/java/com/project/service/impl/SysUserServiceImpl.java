@@ -96,7 +96,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
         user.setIsDelete(0);
         boolean saveResult = this.save(user);
         if (!saveResult) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "未注册成功");
+            throw new BusinessException(ErrorCode.SAVE_ERROR, "未注册成功");
         }
         return ResultUtils.success(user.getId(), "用户注册成功");
     }
@@ -176,10 +176,24 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
     }
 
     @Override
+    public BaseResponse update(SysUserEntity sysUserEntity) {
+        if (sysUserEntity.getId() == null){
+            return ResultUtils.error(ErrorCode.NULL_ERROR, "Id为空");
+        }
+        int update = sysUserMapper.updateById(sysUserEntity);
+        if (update == 0){
+            return ResultUtils.error(ErrorCode.UPDATE_ERROR, "修改失败");
+        }
+        return null;
+    }
+
+
+    @Override
     public BaseResponse search(SysUserDto sysUserDto) {
         // TODO 权限鉴别
         IPage<SysUserEntity> page = sysUserMapper.searchUser(sysUserDto);
         return ResultUtils.success(page, "查询成功");
     }
 
+    // TODO　密码修改
 }

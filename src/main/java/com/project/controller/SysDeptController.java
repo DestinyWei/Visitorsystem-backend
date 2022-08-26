@@ -1,9 +1,9 @@
 package com.project.controller;
 
 import com.project.common.BaseResponse;
-import com.project.model.dto.SysRoleDto;
-import com.project.model.entity.SysRoleEntity;
-import com.project.service.SysRoleService;
+import com.project.model.dto.SysDeptDto;
+import com.project.model.entity.SysDeptEntity;
+import com.project.service.SysDeptService;
 import com.project.util.ResultUtils;
 import com.project.util.SecurityUtils;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,47 +17,47 @@ import javax.servlet.http.HttpServletRequest;
 import static com.project.common.ErrorCode.NO_AUTH;
 
 /**
- * @description: 角色接口
+ * @description: 部门接口
  * @author: weihaoming
  * @create: 2022-08-25-17:54
  * @version:
  */
 @RestController
-@RequestMapping("/role")
-public class SysRoleController {
+@RequestMapping("/dept")
+public class SysDeptController {
 
     @Resource
-    private SysRoleService sysRoleService;
+    private SysDeptService sysDeptService;
 
     @PostMapping("/insert")
-    public BaseResponse insert(@RequestBody SysRoleEntity sysRoleEntity, HttpServletRequest request){
+    public BaseResponse insert(@RequestBody SysDeptEntity sysDeptEntity, HttpServletRequest request){
         boolean admin = SecurityUtils.isAdmin(request);
         if (!admin){
             return ResultUtils.error(NO_AUTH, "无权限");
         }
-        return sysRoleService.insert(sysRoleEntity, request);
+        return sysDeptService.insert(sysDeptEntity, request);
     }
 
     @PostMapping("/remove")
-    public BaseResponse remove(@RequestBody SysRoleEntity sysRoleEntity, HttpServletRequest request){
+    public BaseResponse remove(@RequestBody SysDeptEntity sysDeptEntity, HttpServletRequest request){
         boolean admin = SecurityUtils.isAdmin(request);
         if (!admin){
             return ResultUtils.error(NO_AUTH, "无权限");
         }
-        return sysRoleService.remove(sysRoleEntity);
+        return sysDeptService.remove(sysDeptEntity);
     }
 
     @PostMapping("/update")
-    public BaseResponse update(@RequestBody SysRoleEntity sysRoleEntity, HttpServletRequest request){
+    public BaseResponse update(@RequestBody SysDeptEntity sysDeptEntity, HttpServletRequest request){
         boolean admin = SecurityUtils.isAdmin(request);
         if (!admin){
             return ResultUtils.error(NO_AUTH, "无权限");
         }
-        return sysRoleService.update(sysRoleEntity);
+        return sysDeptService.update(sysDeptEntity);
     }
 
     @PostMapping("/search")
-    public BaseResponse search(@RequestBody SysRoleDto sysRoleDto){
-        return sysRoleService.search(sysRoleDto);
+    public BaseResponse search(@RequestBody SysDeptDto sysDeptDto){
+        return sysDeptService.search(sysDeptDto);
     }
 }

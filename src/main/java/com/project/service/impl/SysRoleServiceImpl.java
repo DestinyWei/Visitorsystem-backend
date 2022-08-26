@@ -37,7 +37,10 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRoleEntity
         Long userId = SecurityUtils.getLoginUserId(request);
         sysRoleEntity.setCreateUserId(userId);
         sysRoleEntity.setCreateTime(new Date());
-        sysRoleMapper.insert(sysRoleEntity);
+        int insert = sysRoleMapper.insert(sysRoleEntity);
+        if (insert == 0){
+            return ResultUtils.error(ErrorCode.SAVE_ERROR, "新增失败");
+        }
         return ResultUtils.success(sysRoleEntity.getId(), "新增角色成功");
     }
 
@@ -48,7 +51,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRoleEntity
         }
         int delete = sysRoleMapper.deleteById(sysRoleEntity.getId());
         if (delete == 0){
-            return ResultUtils.error("删除失败");
+            return ResultUtils.error(ErrorCode.DELETE_ERROR, "删除失败");
         }
         return ResultUtils.success(sysRoleEntity.getId(), "删除成功");
     }
@@ -62,7 +65,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRoleEntity
         queryWrapper.eq("id", sysRoleEntity.getId());
         int update = sysRoleMapper.update(sysRoleEntity, queryWrapper);
         if (update == 0){
-            return ResultUtils.error("修改失败");
+            return ResultUtils.error(ErrorCode.UPDATE_ERROR, "修改失败");
         }
         return ResultUtils.success(sysRoleEntity.getId(), "修改成功");
     }
@@ -70,6 +73,6 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRoleEntity
     @Override
     public BaseResponse search(SysRoleDto sysRoleDto) {
         IPage<SysRoleEntity> page = sysRoleMapper.selectRole(sysRoleDto);
-        return ResultUtils.success(page);
+        return ResultUtils.success(page, "查询成功");
     }
 }

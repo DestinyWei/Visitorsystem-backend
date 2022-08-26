@@ -32,10 +32,18 @@ CREATE TABLE sys_role(
 )ENGINE=MYISAM
 ;
 
-# 角色用户部门表
-CREATE TABLE user_role_dept (
+# 角色用户表
+CREATE TABLE sys_user_role (
                            id		  BIGINT NOT NULL AUTO_INCREMENT COMMENT 'ID',
                            user_id    BIGINT COMMENT '用户ID',
+                           role_id    BIGINT COMMENT '角色ID',
+                           PRIMARY KEY (id)
+)ENGINE=MYISAM
+;
+
+# 角色部门表
+CREATE TABLE sys_role_dept (
+                           id		  BIGINT NOT NULL AUTO_INCREMENT COMMENT 'ID',
                            role_id    BIGINT COMMENT '角色ID',
                            dept_id    BIGINT COMMENT '部门ID',
                            PRIMARY KEY (id)
@@ -43,7 +51,7 @@ CREATE TABLE user_role_dept (
 ;
 
 # 角色资源表
-CREATE TABLE role_resource(
+CREATE TABLE sys_role_resource(
                               id				 BIGINT NOT NULL AUTO_INCREMENT COMMENT 'ID',
                               resource_id        BIGINT COMMENT '资源ID',
                               role_id            BIGINT COMMENT '角色ID',
@@ -57,7 +65,7 @@ CREATE TABLE sys_resource(
                              id             		 BIGINT NOT NULL AUTO_INCREMENT COMMENT '资源ID',
                              data_type               VARCHAR(8) DEFAULT '' COMMENT '数据类型',
                              parent_resource_id      BIGINT COMMENT '上级资源ID',
-                             resource_type           VARCHAR(8) DEFAULT '' COMMENT '资源类型',
+                             resource_type           VARCHAR(8) DEFAULT '' COMMENT '资源类型 1-系统资源 2-普通资源',
                              resource_name           VARCHAR(64) DEFAULT '' COMMENT '资源名称',
                              sort                    INT COMMENT '排序',
                              resource_url            VARCHAR(1000) DEFAULT '' COMMENT '资源URL',
@@ -65,20 +73,24 @@ CREATE TABLE sys_resource(
                              resource_code           VARCHAR(64) DEFAULT '' COMMENT '资源编码',
                              authorization_status    INT DEFAULT NULL COMMENT '授权状态 0-未授权 1-已授权',
                              `status`                INT DEFAULT NULL COMMENT '状态 0-正常 1-停用',
+                             create_user_id          BIGINT COMMENT '创建者ID',
+                             create_time             TIMESTAMP DEFAULT NULL COMMENT '创建时间',
                              PRIMARY KEY (id)
 )ENGINE=MYISAM
 ;
 
 # 部门信息表
-CREATE TABLE dept_info(
+CREATE TABLE sys_dept(
                           id          		     BIGINT NOT NULL AUTO_INCREMENT COMMENT '部门信息ID',
                           department_name        VARCHAR(64) DEFAULT '' COMMENT '部门名称',
                           department_code        VARCHAR(32) DEFAULT '' COMMENT '部门编码',
-                          parent_department      VARCHAR(32) DEFAULT '' COMMENT '上级部门',
+                          parent_department_id   BIGINT COMMENT '上级部门Id',
                           department_type        VARCHAR(8) DEFAULT '' COMMENT '部门类型',
                           unit                   VARCHAR(32) DEFAULT '' COMMENT '所属单位',
-                          `level`                VARCHAR(8) DEFAULT '' COMMENT '级别',
+                          `level`                VARCHAR(8) DEFAULT '' COMMENT '级别 1-最高级别 以此类推',
                           department_note        VARCHAR(500) DEFAULT '' COMMENT '备注',
+                          create_user_id         BIGINT COMMENT '创建者ID',
+                          create_time            TIMESTAMP DEFAULT NULL COMMENT '创建时间',
                           PRIMARY KEY (id)
 )ENGINE=MYISAM
 ;

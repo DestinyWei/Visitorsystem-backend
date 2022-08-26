@@ -12,7 +12,7 @@ public enum ErrorCode {
     NO_AUTH(40101, "无权限", ""),
     SYSTEM_ERROR(50000, "系统内部异常", ""),
     SAVE_ERROR(50010, "新增失败", ""),
-    UPDATE_ERROR(50020, "更新失败", ""),
+    UPDATE_ERROR(50020, "修改失败", ""),
     DELETE_ERROR(50030, "删除失败", "");
 
     private final int code;

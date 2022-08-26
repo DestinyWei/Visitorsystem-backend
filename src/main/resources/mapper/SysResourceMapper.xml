@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.mapper.SysResourceMapper">
+
+    <resultMap id="BaseResultMap" type="com.project.model.entity.SysResourceEntity">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="dataType" column="data_type" jdbcType="VARCHAR"/>
+            <result property="parentResourceId" column="parent_resource_id" jdbcType="BIGINT"/>
+            <result property="resourceType" column="resource_type" jdbcType="VARCHAR"/>
+            <result property="resourceName" column="resource_name" jdbcType="VARCHAR"/>
+            <result property="sort" column="sort" jdbcType="INTEGER"/>
+            <result property="resourceUrl" column="resource_url" jdbcType="VARCHAR"/>
+            <result property="photoUrl" column="photo_url" jdbcType="VARCHAR"/>
+            <result property="resourceCode" column="resource_code" jdbcType="VARCHAR"/>
+            <result property="authorizationStatus" column="authorization_status" jdbcType="INTEGER"/>
+            <result property="status" column="status" jdbcType="INTEGER"/>
+            <result property="createUserId" column="create_user_id" jdbcType="BIGINT"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,data_type,parent_resource_id,
+        resource_type,resource_name,sort,
+        resource_url,photo_url,resource_code,
+        authorization_status,status,create_user_id,
+        create_time
+    </sql>
+
+    <select id="selectResouces" resultType="com.project.model.entity.SysResourceEntity">
+        SELECT
+            sr1.data_type, sr2.resource_name AS parentResource, sr1.resource_type, sr1.resource_name,
+            sr1.sort, sr1.resource_url, sr1.photo_url, sr1.resource_code, sr1.authorization_status,
+            sr1.status, su.user_name, sr1.create_time
+        FROM
+            sys_resource sr1
+        LEFT JOIN
+            sys_resource sr2
+        ON
+            sr1.parent_resource_id = sr2.id
+        LEFT JOIN
+            sys_user su
+        ON
+            sr1.create_user_id = su.id
+        WHERE 1 = 1
+        <if test="dataType != null and dataType != '' ">
+            AND sr1.data_type LIKE concat('%',#{dataType},'%')
+        </if>
+        <if test="parentResourceId != null ">
+            AND sr1.parent_resource_id = #{parentResourceId}
+        </if>
+        <if test="resourceType != null and resourceType != '' ">
+            AND sr1.resource_type LIKE concat('%',#{resourceType},'%')
+        </if>
+        <if test="resourceName != null and resourceName != '' ">
+            AND sr1.resource_name LIKE concat('%',#{resourceName},'%')
+        </if>
+        <if test="resourceCode != null and resourceCode != '' ">
+            AND sr1.resource_code LIKE concat('%',#{resourceCode},'%')
+        </if>
+        <if test="authorizationStatus != null ">
+            AND sr1.authorization_status = #{authorizationStatus}
+        </if>
+        <if test="status != null ">
+            AND sr1.status = #{status}
+        </if>
+        ORDER BY sr1.sort ASC
+    </select>
+</mapper>

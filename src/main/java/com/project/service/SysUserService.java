@@ -47,8 +47,15 @@ public interface SysUserService extends IService<SysUserEntity> {
     BaseResponse userLogout(HttpServletRequest request);
 
     /**
+     * 用户修改
+     * @param sysUserEntity
+     * @return BaseResponse
+     */
+    BaseResponse update(SysUserEntity sysUserEntity);
+
+    /**
      * 分页查询所有用户
-     * @return BaseResponse<IPage<SysUserEntity>>
+     * @return BaseResponse
      */
     BaseResponse search(SysUserDto sysUserDto);
 }
