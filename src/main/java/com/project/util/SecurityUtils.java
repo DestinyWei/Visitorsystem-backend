@@ -32,6 +32,20 @@ public class SecurityUtils {
     }
 
     /**
+     * 获取登录用户名称（查缓存）
+     * @param request
+     * @return User
+     */
+    public static String getUsername(HttpServletRequest request) {
+        Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
+        SysUserEntity loginUser = (SysUserEntity) userObj;
+        if (loginUser == null) {
+            throw new BusinessException(ErrorCode.NOT_LOGIN);
+        }
+        return loginUser.getUserName();
+    }
+
+    /**
      * 获取登录用户（查缓存）
      * @param request
      * @return User
@@ -85,4 +99,5 @@ public class SecurityUtils {
         SysUserEntity user = (SysUserEntity) userObj;
         return user != null && (SysUserConstant.MANAGER_ROLE).equals(user.getType());
     }
+
 }
