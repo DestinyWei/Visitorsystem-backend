@@ -10,8 +10,8 @@ CREATE TABLE sys_user(
                         user_account                VARCHAR(16) DEFAULT '' COMMENT '账号',
                         user_password               VARCHAR(255) DEFAULT '' COMMENT '密码',
                         type                        VARCHAR(8) DEFAULT '' COMMENT '用户类型 0-默认 1-管理员 2-公司高管',
-                        create_time                 TIMESTAMP DEFAULT NULL COMMENT '创建时间',
-                        update_time                 TIMESTAMP DEFAULT NULL COMMENT '修改时间',
+                        create_time                 DATETIME DEFAULT NULL COMMENT '创建时间',
+                        update_time                 DATETIME DEFAULT NULL COMMENT '修改时间',
                         user_status                 VARCHAR(8) DEFAULT NULL COMMENT '状态 0-正常 1-停用',
                         is_delete                   TINYINT DEFAULT 0 COMMENT '是否删除(逻辑删除) 0-否 1-是',
                         PRIMARY KEY (id)
@@ -27,7 +27,7 @@ CREATE TABLE sys_role(
                          role_sort        VARCHAR(8) DEFAULT '' COMMENT '角色排序',
                          role_type        VARCHAR(8) DEFAULT '' COMMENT '角色类型 0-系统管理员 1-部门经理 2-普通角色',
                          create_user_id   BIGINT COMMENT '创建者ID',
-                         create_time      TIMESTAMP DEFAULT NULL COMMENT '创建时间',
+                         create_time      DATETIME DEFAULT NULL COMMENT '创建时间',
                          PRIMARY KEY (id)
 )ENGINE=MYISAM
 ;
@@ -55,7 +55,7 @@ CREATE TABLE sys_role_resource(
                               id				 BIGINT NOT NULL AUTO_INCREMENT COMMENT 'ID',
                               resource_id        BIGINT COMMENT '资源ID',
                               role_id            BIGINT COMMENT '角色ID',
-                              permission_type    VARCHAR(8) DEFAULT '' COMMENT '权限类型',
+                              permission_type    VARCHAR(8) DEFAULT '' COMMENT '权限类型 1-可读可写 2-只读',
                               PRIMARY KEY (id)
 )ENGINE=MYISAM
 ;
@@ -74,7 +74,7 @@ CREATE TABLE sys_resource(
                              authorization_status    INT DEFAULT NULL COMMENT '授权状态 0-未授权 1-已授权',
                              `status`                INT DEFAULT NULL COMMENT '状态 0-正常 1-停用',
                              create_user_id          BIGINT COMMENT '创建者ID',
-                             create_time             TIMESTAMP DEFAULT NULL COMMENT '创建时间',
+                             create_time             DATETIME DEFAULT NULL COMMENT '创建时间',
                              PRIMARY KEY (id)
 )ENGINE=MYISAM
 ;
@@ -90,7 +90,7 @@ CREATE TABLE sys_dept(
                           `level`                VARCHAR(8) DEFAULT '' COMMENT '级别 1-最高级别 以此类推',
                           department_note        VARCHAR(500) DEFAULT '' COMMENT '备注',
                           create_user_id         BIGINT COMMENT '创建者ID',
-                          create_time            TIMESTAMP DEFAULT NULL COMMENT '创建时间',
+                          create_time            DATETIME DEFAULT NULL COMMENT '创建时间',
                           PRIMARY KEY (id)
 )ENGINE=MYISAM
 ;
@@ -99,11 +99,13 @@ CREATE TABLE sys_dept(
 # 公司信息表
 CREATE TABLE company_info(
                              id              		 BIGINT NOT NULL AUTO_INCREMENT COMMENT '公司信息ID',
-                             company_region          VARCHAR(16) DEFAULT '' COMMENT '地区',
+                             company_name            VARCHAR(16) DEFAULT '' COMMENT '公司名称',
+                             company_region          VARCHAR(16) DEFAULT '' COMMENT '地区 如:四川省/成都市/双流区',
                              company_address         VARCHAR(64) DEFAULT '' COMMENT '详细地址',
                              company_phone           VARCHAR(11) DEFAULT '' COMMENT '联系电话',
                              company_info            VARCHAR(255) DEFAULT '' COMMENT '企业信息',
                              company_introduction    VARCHAR(255) DEFAULT '' COMMENT '介绍',
+                             create_time             DATETIME DEFAULT NULL COMMENT '创建时间',
                              PRIMARY KEY (id)
 )ENGINE=MYISAM
 ;
@@ -111,14 +113,15 @@ CREATE TABLE company_info(
 # 访问申请信息表
 CREATE TABLE apply_info(
                                  id                		   BIGINT NOT NULL AUTO_INCREMENT COMMENT '访问申请ID',
-                                 visit_apply_time          TIMESTAMP DEFAULT NULL COMMENT '访问申请时间',
-                                 visit_apply_department    VARCHAR(32) DEFAULT '' COMMENT '访问申请的部门',
+                                 start_time                DATETIME DEFAULT NULL COMMENT '访问申请开始时间',
+                                 end_time                  DATETIME DEFAULT NULL COMMENT '访问申请结束时间',
+                                 department_id             BIGINT COMMENT '访问申请的部门',
                                  apply_info                VARCHAR(100) DEFAULT '' COMMENT '申请详情',
-                                 apply_time                TIMESTAMP DEFAULT NULL COMMENT '申请时间',
-                                 applicant                 VARCHAR(8) DEFAULT '' COMMENT '申请人',
-                                 principal                 VARCHAR(8) DEFAULT '' COMMENT '负责人',
+                                 create_time               DATETIME DEFAULT NULL COMMENT '申请时间',
+                                 applicant_id              BIGINT COMMENT '申请人ID',
+                                 principal_id              BIGINT COMMENT '负责人ID',
                                  apply_status              VARCHAR(8) DEFAULT '' COMMENT '申请状态 0-待审核 1-审核中 2-已通过 3-驳回',
-                                 company_id                BIGINT COMMENT '企业ID',
+                                 company_id                BIGINT COMMENT '企业ID(申请的)',
                                  PRIMARY KEY (id)
 )ENGINE=MYISAM
 ;
@@ -129,6 +132,7 @@ CREATE TABLE info_collect(
                              visit_id         BIGINT COMMENT '访问申请ID',
                              user_id          BIGINT COMMENT '用户ID',
                              department_id    BIGINT COMMENT '部门ID',
+                             create_time      DATETIME DEFAULT NULL COMMENT '创建时间',
                              PRIMARY KEY (id)
 )ENGINE=MYISAM
 ;
@@ -136,8 +140,11 @@ CREATE TABLE info_collect(
 # 人员信息审核表
 CREATE TABLE info_review(
                           id			  BIGINT NOT NULL AUTO_INCREMENT COMMENT '审核ID',
-                          reviewer        VARCHAR(8) DEFAULT '' COMMENT '审核人',
-                          visit_id        BIGINT COMMENT '访问ID',
+                          reviewer_id     BIGINT COMMENT '审核人ID',
+                          visit_id        BIGINT COMMENT '访问申请ID',
+                          status          VARCHAR(8) DEFAULT '' COMMENT '状态 1-进行中 2-已完成 3-驳回',
+                          remark          VARCHAR(255) DEFAULT '' COMMENT '备注',
+                          create_time     DATETIME DEFAULT NULL COMMENT '创建时间',
                           PRIMARY KEY (id)
 )ENGINE=MYISAM
 ;
@@ -145,11 +152,11 @@ CREATE TABLE info_review(
 # 信息处理表
 CREATE TABLE info_process(
                             id					BIGINT NOT NULL AUTO_INCREMENT COMMENT '处理ID',
-                            process_edit_time   TIMESTAMP DEFAULT NULL COMMENT '编辑时间',
                             collect_id          BIGINT COMMENT '信息采集ID',
                             reviewer_id         BIGINT COMMENT '审核ID',
                             score_id            BIGINT COMMENT '评分ID',
                             notice_id           BIGINT COMMENT '通知公告ID',
+                            create_time         DATETIME DEFAULT NULL COMMENT '编辑时间',
                             PRIMARY KEY (id)
 )ENGINE=MYISAM
 ;
@@ -162,6 +169,8 @@ CREATE TABLE info_score(
                           score           INT COMMENT '分数',
                           remark          VARCHAR(500) DEFAULT  '' COMMENT '备注',
                           collect_id      BIGINT COMMENT '采集ID',
+                          create_user_id  BIGINT COMMENT '创建者ID',
+                          create_time     DATETIME DEFAULT NULL COMMENT '创建时间',
                           PRIMARY KEY (id)
 )ENGINE=MYISAM
 ;
@@ -176,7 +185,8 @@ CREATE TABLE notice(
                        editor_id        BIGINT COMMENT '编辑者ID',
                        remark           VARCHAR(255) DEFAULT  '' COMMENT '备注',
                        post_range       VARCHAR(255) DEFAULT  '' COMMENT '发布范围',
-                       post_time        TIMESTAMP DEFAULT NULL COMMENT '发布时间',
+                       post_time        DATETIME DEFAULT NULL COMMENT '发布时间',
+                       create_time      DATETIME DEFAULT NULL COMMENT '创建时间',
                        PRIMARY KEY (id)
 )ENGINE=MYISAM
 ;

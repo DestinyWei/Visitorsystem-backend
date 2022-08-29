@@ -32,7 +32,7 @@
         SELECT
             sr1.data_type, sr2.resource_name AS parentResource, sr1.resource_type, sr1.resource_name,
             sr1.sort, sr1.resource_url, sr1.photo_url, sr1.resource_code, sr1.authorization_status,
-            sr1.status, su.user_name, sr1.create_time
+            sr1.status, su.user_name AS createUserName, sr1.create_time
         FROM
             sys_resource sr1
         LEFT JOIN
@@ -64,6 +64,12 @@
         </if>
         <if test="status != null ">
             AND sr1.status = #{status}
+        </if>
+        <if test="createUserId != null ">
+            and sr1.create_user_id LIKE concat('%',#{createUserId},'%')
+        </if>
+        <if test="createUserName != null and createUserName != '' ">
+            AND su.user_name LIKE concat('%',#{createUserName},'%')
         </if>
         ORDER BY sr1.sort ASC
     </select>

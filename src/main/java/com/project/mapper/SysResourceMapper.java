@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.project.model.dto.SysResourceDto;
 import com.project.model.entity.SysResourceEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
 * @author Destiny
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @createDate 2022-08-26 16:35:53
 * @Entity generator.domain.SysResource
 */
+@Mapper
 public interface SysResourceMapper extends BaseMapper<SysResourceEntity> {
 
     IPage<SysResourceEntity> selectResouces(SysResourceDto sysResourceDto);

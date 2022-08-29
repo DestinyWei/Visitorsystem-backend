@@ -24,4 +24,6 @@ public class SysDeptDto extends Page<SysDeptEntity> {
     private String departmentType;
     private String unit;
     private String level;
+    private Long createUserId;
+    private String createUserName;
 }

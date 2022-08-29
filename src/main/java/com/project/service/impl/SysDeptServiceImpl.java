@@ -61,9 +61,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptEntity
         if (sysDeptEntity.getId() == null){
             return ResultUtils.error(ErrorCode.NULL_ERROR, "Id为空");
         }
-        QueryWrapper<SysDeptEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("id", sysDeptEntity.getId());
-        int update = sysDeptMapper.update(sysDeptEntity, queryWrapper);
+        int update = sysDeptMapper.updateById(sysDeptEntity);
         if (update == 0){
             return ResultUtils.error(ErrorCode.UPDATE_ERROR, "修改失败");
         }
@@ -72,7 +70,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptEntity
 
     @Override
     public BaseResponse search(SysDeptDto sysDeptDto) {
-        IPage<SysDeptEntity> page = sysDeptMapper.selectDepts(sysDeptDto);
+        IPage<SysDeptEntity> page = sysDeptMapper.selectDept(sysDeptDto);
         return ResultUtils.success(page, "查询成功");
     }
 }

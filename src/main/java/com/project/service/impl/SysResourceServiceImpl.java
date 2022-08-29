@@ -58,9 +58,7 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysRe
         if (sysResourceEntity.getId() == null){
             return ResultUtils.error(ErrorCode.NULL_ERROR, "Id为空");
         }
-        QueryWrapper<SysResourceEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("id", sysResourceEntity.getId());
-        int update = sysResourceMapper.update(sysResourceEntity, queryWrapper);
+        int update = sysResourceMapper.updateById(sysResourceEntity);
         if (update == 0){
             return ResultUtils.error(ErrorCode.UPDATE_ERROR, "修改失败");
         }
