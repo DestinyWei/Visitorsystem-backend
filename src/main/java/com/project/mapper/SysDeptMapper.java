@@ -14,7 +14,7 @@ import org.apache.ibatis.annotations.Mapper;
 */
 @Mapper
 public interface SysDeptMapper extends BaseMapper<SysDeptEntity> {
-    IPage<SysDeptEntity> selectDepts(SysDeptDto sysDeptDto);
+    IPage<SysDeptEntity> selectDept(SysDeptDto sysDeptDto);
 }
 
 

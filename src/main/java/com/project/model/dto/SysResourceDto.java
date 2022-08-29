@@ -1,5 +1,6 @@
 package com.project.model.dto;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.project.model.entity.SysResourceEntity;
 import lombok.Data;
@@ -21,4 +22,6 @@ public class SysResourceDto extends Page<SysResourceEntity> {
     private String resourceCode;
     private Integer authorizationStatus;
     private Integer status;
+    private Long createUserId;
+    private String createUserName;
 }

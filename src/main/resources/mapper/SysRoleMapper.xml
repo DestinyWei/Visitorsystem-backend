@@ -21,7 +21,7 @@
 
     <select id="selectRole" resultType="com.project.model.entity.SysRoleEntity">
         SELECT
-            sr.role_name, sr.role_desc, sr.role_type, su.user_name, sr.create_time
+            sr.role_name, sr.role_desc, sr.role_type, su.user_name AS createUserName, sr.create_time
         FROM
             sys_role sr
         LEFT JOIN
@@ -34,6 +34,12 @@
         </if>
         <if test="roleType != null and roleType != '' ">
             AND sr.role_type LIKE concat('%',#{roleType},'%')
+        </if>
+        <if test="createUserId != null ">
+            and sr.create_user_id LIKE concat('%',#{createUserId},'%')
+        </if>
+        <if test="createUserName != null and createUserName != '' ">
+            AND su.user_name LIKE concat('%',#{createUserName},'%')
         </if>
         ORDER BY
             sr.role_sort ASC, sr.create_time DESC

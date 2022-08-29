@@ -65,6 +65,12 @@ public class SysDeptEntity implements Serializable {
      */
     private Date createTime;
 
+    /**
+     * 创建者
+     */
+    @TableField(exist = false)
+    private String createUserName;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

@@ -24,10 +24,10 @@
         create_time
     </sql>
 
-    <select id="selectDepts" resultType="com.project.model.entity.SysDeptEntity">
+    <select id="selectDept" resultType="com.project.model.entity.SysDeptEntity">
         SELECT
             sd1.department_name, sd1.department_code, sd2.department_name AS parentDept, sd1.department_type,
-            sd1.unit, sd1.`level`, sd1.department_note, su.user_name, sd1.create_time
+            sd1.unit, sd1.`level`, sd1.department_note, su.user_name AS createUserName, sd1.create_time
         FROM
             sys_dept sd1
         LEFT JOIN
@@ -56,6 +56,12 @@
         </if>
         <if test="level != null and level != '' ">
             AND sd1.level LIKE concat('%',#{level},'%')
+        </if>
+        <if test="createUserId != null ">
+            and sd1.create_user_id LIKE concat('%',#{createUserId},'%')
+        </if>
+        <if test="createUserName != null and createUserName != '' ">
+            AND su.user_name LIKE concat('%',#{createUserName},'%')
         </if>
         ORDER BY sd1.`level` ASC , sd1.create_time DESC
     </select>

@@ -61,9 +61,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRoleEntity
         if (sysRoleEntity.getId() == null){
             return ResultUtils.error(ErrorCode.NULL_ERROR, "Id为空");
         }
-        QueryWrapper<SysRoleEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("id", sysRoleEntity.getId());
-        int update = sysRoleMapper.update(sysRoleEntity, queryWrapper);
+        int update = sysRoleMapper.updateById(sysRoleEntity);
         if (update == 0){
             return ResultUtils.error(ErrorCode.UPDATE_ERROR, "修改失败");
         }

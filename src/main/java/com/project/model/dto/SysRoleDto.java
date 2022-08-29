@@ -24,4 +24,5 @@ public class SysRoleDto extends Page<SysRoleEntity> {
     private Long createUserId;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date createTime;
+    private String createUserName;
 }

@@ -27,4 +27,12 @@ public interface SysUserConstant {
      */
     String MANAGER_ROLE = "2";
 
+    // -------校验结果-------
+
+    /**
+     * 校验返回结果码
+     */
+    String UNIQUE = "0";
+    String NOT_UNIQUE = "1";
+
 }
