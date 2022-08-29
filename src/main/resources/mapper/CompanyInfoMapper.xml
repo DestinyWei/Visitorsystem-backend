@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.mapper.CompanyInfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.project.model.entity.CompanyInfoEntity">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="companyRegion" column="company_region" jdbcType="VARCHAR"/>
+            <result property="companyAddress" column="company_address" jdbcType="VARCHAR"/>
+            <result property="companyPhone" column="company_phone" jdbcType="VARCHAR"/>
+            <result property="companyInfo" column="company_info" jdbcType="VARCHAR"/>
+            <result property="companyIntroduction" column="company_introduction" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,company_region,company_address,
+        company_phone,company_info,company_introduction,
+        create_time
+    </sql>
+
+    <select id="selectCompany" resultType="com.project.model.entity.CompanyInfoEntity">
+        SELECT
+            company_name,company_region,company_address,
+            company_phone,company_info,company_introduction,
+            create_time
+        FROM
+            company_info
+        WHERE 1 = 1
+        <if test="companyName != null and companyName != '' ">
+            AND company_name LIKE concat('%',#{companyPhone},'%')
+        </if>
+        <if test="companyRegion != null and companyRegion != '' ">
+            AND company_region = #{companyRegion}
+        </if>
+        <if test="companyPhone != null and companyPhone != '' ">
+            AND company_phone LIKE concat('%',#{companyPhone},'%')
+        </if>
+        ORDER BY create_time DESC
+    </select>
+</mapper>
