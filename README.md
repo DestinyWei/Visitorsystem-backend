@@ -20,7 +20,10 @@
 - 示例单元测试类
 - 示例 SQL（用户表）
 
-访问 localhost:7000/api/doc.html 就能在线调试接口了，不需要前端配合啦~
+访问 
+- localhost:7000/api/doc.html 生产环境
+- localhost:39000/api/doc.html 测试环境
+就能在线调试接口了，不需要前端配合啦~
 
 后端编写规范:
 - 类/接口名理论上按照表名+类别(如service类就在末尾加上Service...)进行创建
