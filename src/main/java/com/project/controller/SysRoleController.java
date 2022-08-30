@@ -1,8 +1,10 @@
 package com.project.controller;
 
+import com.project.aop.annotation.Log;
 import com.project.common.BaseResponse;
 import com.project.model.dto.SysRoleDto;
 import com.project.model.entity.SysRoleEntity;
+import com.project.model.enums.BusinessType;
 import com.project.service.SysRoleService;
 import com.project.util.ResultUtils;
 import com.project.util.SecurityUtils;
@@ -30,6 +32,7 @@ public class SysRoleController {
     private SysRoleService sysRoleService;
 
     @PostMapping("/insert")
+    @Log(title = "角色新增", businessType = BusinessType.INSERT)
     public BaseResponse insert(@RequestBody SysRoleEntity sysRoleEntity, HttpServletRequest request){
         boolean admin = SecurityUtils.isAdmin(request);
         if (!admin){
@@ -39,6 +42,7 @@ public class SysRoleController {
     }
 
     @PostMapping("/remove")
+    @Log(title = "角色删除", businessType = BusinessType.DELETE)
     public BaseResponse remove(@RequestBody SysRoleEntity sysRoleEntity, HttpServletRequest request){
         boolean admin = SecurityUtils.isAdmin(request);
         if (!admin){
@@ -48,6 +52,7 @@ public class SysRoleController {
     }
 
     @PostMapping("/update")
+    @Log(title = "角色修改", businessType = BusinessType.UPDATE)
     public BaseResponse update(@RequestBody SysRoleEntity sysRoleEntity, HttpServletRequest request){
         boolean admin = SecurityUtils.isAdmin(request);
         if (!admin){
