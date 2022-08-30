@@ -6,6 +6,7 @@ import com.project.model.dto.SysUserDto;
 import com.project.model.entity.SysUserEntity;
 import com.project.model.request.SysUserLoginRequest;
 import com.project.model.request.SysUserRegisterRequest;
+import com.project.model.request.SysUserUpdatePwdRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -58,4 +59,11 @@ public interface SysUserService extends IService<SysUserEntity> {
      * @return BaseResponse
      */
     BaseResponse search(SysUserDto sysUserDto);
+
+    /**
+     * 用户修改密码
+     * @param sysUserUpdatePwdRequest
+     * @return BaseResponse
+     */
+    BaseResponse updatePwd(SysUserUpdatePwdRequest sysUserUpdatePwdRequest, HttpServletRequest request);
 }

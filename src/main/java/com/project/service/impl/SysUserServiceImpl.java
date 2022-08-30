@@ -12,8 +12,10 @@ import com.project.model.dto.SysUserDto;
 import com.project.model.entity.SysUserEntity;
 import com.project.model.request.SysUserLoginRequest;
 import com.project.model.request.SysUserRegisterRequest;
+import com.project.model.request.SysUserUpdatePwdRequest;
 import com.project.service.SysUserService;
 import com.project.util.ResultUtils;
+import com.project.util.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -37,9 +39,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
 
     @Resource
     private SysUserMapper sysUserMapper;
-
-    @Resource
-    private SysRoleMapper sysRoleMapper;
 
     /**
      * 盐值，混淆密码
@@ -195,5 +194,25 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
         return ResultUtils.success(page, "查询成功");
     }
 
-    // TODO　密码修改
+    @Override
+    public BaseResponse updatePwd(SysUserUpdatePwdRequest sysUserUpdatePwdRequest, HttpServletRequest request) {
+        SysUserEntity loginUser = SecurityUtils.getLoginUser(request);
+        String userRawPassword = loginUser.getUserPassword();
+        Long userId = loginUser.getId();
+        if (!userRawPassword.equals(sysUserUpdatePwdRequest.getRawPassword())){
+            return ResultUtils.error(ErrorCode.PARAMS_ERROR, "密码校验不正确");
+        }
+        if (!sysUserUpdatePwdRequest.getUserPassword().equals(sysUserUpdatePwdRequest.getCheckPassword())) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "两次密码不一致");
+        }
+        String encryptPassword = DigestUtils.md5DigestAsHex((SALT + sysUserUpdatePwdRequest.getUserPassword()).getBytes());
+        SysUserEntity sysUserEntity = sysUserMapper.selectById(userId);
+        sysUserEntity.setUserPassword(encryptPassword);
+        int update = sysUserMapper.updateById(sysUserEntity);
+        if (update == 0){
+            return ResultUtils.error(ErrorCode.UPDATE_ERROR, "修改密码失败");
+        }
+        return ResultUtils.success("修改密码成功");
+    }
+
 }

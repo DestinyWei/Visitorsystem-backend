@@ -24,6 +24,8 @@
 - localhost:7000/api/doc.html 生产环境
 - localhost:39000/api/doc.html 测试环境
 就能在线调试接口了，不需要前端配合啦~
+- 网页用户名为: user
+- 密码在控制台输出
 
 后端编写规范:
 - 类/接口名理论上按照表名+类别(如service类就在末尾加上Service...)进行创建

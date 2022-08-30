@@ -6,6 +6,7 @@ import com.project.model.dto.SysUserDto;
 import com.project.model.entity.SysUserEntity;
 import com.project.model.request.SysUserLoginRequest;
 import com.project.model.request.SysUserRegisterRequest;
+import com.project.model.request.SysUserUpdatePwdRequest;
 import com.project.service.SysUserService;
 import com.project.common.BaseResponse;
 import com.project.util.ResultUtils;
@@ -85,5 +86,10 @@ public class SysUserController {
         }
         boolean result = sysUserService.removeById(id);
         return ResultUtils.success(result);
+    }
+
+    @PostMapping("/updatePwd")
+    public BaseResponse updatePwd(SysUserUpdatePwdRequest sysUserUpdatePwdRequest, HttpServletRequest request){
+        return sysUserService.updatePwd(sysUserUpdatePwdRequest, request);
     }
 }
