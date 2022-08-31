@@ -1,26 +1,43 @@
 package com.project.aop.annotation;
 
+
 import com.project.model.enums.BusinessType;
+import com.project.model.enums.OperatorType;
 
 import java.lang.annotation.*;
 
 /**
- * @description:
- * @author: weihaoming
- * @create: 2022-08-30-16:19
- * @version:
+ * 自定义操作日志记录注解
+ * 
+ * @author ruoyi
  */
 @Target({ ElementType.PARAMETER, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface Log {
+public @interface Log
+{
     /**
-     * 模块
+     * 模块 
      */
-    String title() default "";
+    public String title() default "";
 
     /**
      * 功能
      */
-    BusinessType businessType() default BusinessType.OTHER;
+    public BusinessType businessType() default BusinessType.OTHER;
+
+    /**
+     * 操作人类别
+     */
+    public OperatorType operatorType() default OperatorType.MANAGE;
+
+    /**
+     * 是否保存请求的参数
+     */
+    public boolean isSaveRequestData() default true;
+
+    /**
+     * 是否保存响应的参数
+     */
+    public boolean isSaveResponseData() default true;
 }

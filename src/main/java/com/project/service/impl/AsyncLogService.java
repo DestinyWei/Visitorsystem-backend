@@ -1,6 +1,5 @@
 package com.project.service.impl;
 
-import com.project.model.entity.SysOperLogEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;

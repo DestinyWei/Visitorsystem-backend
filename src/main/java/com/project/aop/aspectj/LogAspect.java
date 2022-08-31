@@ -1,7 +1,6 @@
 package com.project.aop.aspectj;
 
 import com.project.aop.annotation.Log;
-import com.project.model.entity.SysOperLogEntity;
 import com.project.service.impl.AsyncLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

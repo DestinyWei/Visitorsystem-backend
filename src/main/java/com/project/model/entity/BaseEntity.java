@@ -1,56 +1,44 @@
 package com.project.model.entity;
 
-import cn.hutool.core.date.DatePattern;
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import com.project.jackson.LongToStringSerializer;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.FieldNameConstants;
 
-import java.time.LocalDateTime;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * @description: 实体类基类
- * @author: smalljop
- * @create: 2020-02-15 22:57
- **/
+ * Entity基类
+ * 
+ * @author ruoyi
+ */
 @Data
-@FieldNameConstants
-@EqualsAndHashCode(callSuper = false)
-public class BaseEntity<T> extends Model {
-
+public class BaseEntity implements Serializable
+{
     private static final long serialVersionUID = 1L;
 
+    /** 搜索值 */
+    private String searchValue;
 
-    /**
-     * 主键 避免超出长度 前端丢失精度
-     */
-    @JsonSerialize(using= LongToStringSerializer.class)
-    private Long id;
+    /** 创建者 */
+    private String createBy;
 
-    /**
-     * 创建时间
-     **/
-    @TableField(fill = FieldFill.INSERT)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
-    protected LocalDateTime createTime;
+    /** 创建时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
 
-    /**
-     * 更新时间
-     **/
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    @JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    protected LocalDateTime updateTime;
+    /** 更新者 */
+    private String updateBy;
+
+    /** 更新时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date updateTime;
+
+    /** 备注 */
+    private String remark;
+
+    /** 请求参数 */
+    private Map<String, Object> params;
 
 }
