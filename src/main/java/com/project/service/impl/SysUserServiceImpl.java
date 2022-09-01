@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.project.common.BaseResponse;
 import com.project.common.ErrorCode;
 import com.project.exception.BusinessException;
-import com.project.mapper.SysRoleMapper;
 import com.project.mapper.SysUserMapper;
 import com.project.model.dto.SysUserDto;
 import com.project.model.entity.SysUserEntity;
@@ -27,7 +26,7 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.project.constant.SysUserConstant.USER_LOGIN_STATE;
+import static com.project.constant.SysUserConstants.USER_LOGIN_STATE;
 
 /**
  * 用户服务实现类

@@ -9,6 +9,7 @@ import com.project.model.request.SysUserRegisterRequest;
 import com.project.model.request.SysUserUpdatePwdRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * 用户服务
