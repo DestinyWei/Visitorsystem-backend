@@ -1,6 +1,7 @@
 package com.project.text;
 
-import com.ruoyi.common.utils.StringUtils;
+
+import com.project.util.StringUtils;
 
 /**
  * 字符串格式化

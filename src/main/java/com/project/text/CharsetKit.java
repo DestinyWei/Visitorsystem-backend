@@ -1,6 +1,6 @@
 package com.project.text;
 
-import com.ruoyi.common.utils.StringUtils;
+import com.project.util.StringUtils;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;

@@ -1,6 +1,6 @@
 package com.project.text;
 
-import com.ruoyi.common.utils.StringUtils;
+import com.project.util.StringUtils;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.math.BigDecimal;
