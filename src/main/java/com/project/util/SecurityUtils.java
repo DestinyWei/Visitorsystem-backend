@@ -1,13 +1,13 @@
 package com.project.util;
 
 import com.project.common.ErrorCode;
-import com.project.constant.SysUserConstant;
+import com.project.constant.SysUserConstants;
 import com.project.exception.BusinessException;
 import com.project.model.entity.SysUserEntity;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static com.project.constant.SysUserConstant.USER_LOGIN_STATE;
+import static com.project.constant.SysUserConstants.USER_LOGIN_STATE;
 
 /**
  * @description: 安全服务工具类
@@ -67,7 +67,7 @@ public class SecurityUtils {
     public static boolean isAdmin(HttpServletRequest request) {
         Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
         SysUserEntity user = (SysUserEntity) userObj;
-        return user != null &&  (SysUserConstant.ADMIN_ROLE).equals(user.getType());
+        return user != null &&  (SysUserConstants.ADMIN_ROLE).equals(user.getType());
     }
 
     /**
@@ -76,7 +76,7 @@ public class SecurityUtils {
      * @return boolean
      */
     public static boolean isAdmin(SysUserEntity user) {
-        return user != null && (SysUserConstant.ADMIN_ROLE).equals(user.getType());
+        return user != null && (SysUserConstants.ADMIN_ROLE).equals(user.getType());
     }
 
     /**
@@ -97,7 +97,7 @@ public class SecurityUtils {
     public static boolean isManager(HttpServletRequest request) {
         Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
         SysUserEntity user = (SysUserEntity) userObj;
-        return user != null && (SysUserConstant.MANAGER_ROLE).equals(user.getType());
+        return user != null && (SysUserConstants.MANAGER_ROLE).equals(user.getType());
     }
 
 }

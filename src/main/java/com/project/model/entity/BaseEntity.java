@@ -14,8 +14,7 @@ import java.util.Map;
  * @author ruoyi
  */
 @Data
-public class BaseEntity implements Serializable
-{
+public class BaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /** 搜索值 */
