@@ -1,7 +1,7 @@
 # 系统用户表
 CREATE TABLE sys_user(
-                        id                     		BIGINT NOT NULL AUTO_INCREMENT COMMENT '用户ID',
-                        department_id               BIGINT COMMENT '部门ID',
+                        user_id               		BIGINT NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+                        dept_id                     BIGINT COMMENT '部门ID',
                         user_name                   VARCHAR(16) DEFAULT '' COMMENT '姓名',
                         sex                         VARCHAR(3) DEFAULT '' COMMENT '性别 0-未知 1-男 2-女',
                         id_number                   VARCHAR(18) DEFAULT '' COMMENT '身份证号',
@@ -14,7 +14,7 @@ CREATE TABLE sys_user(
                         update_time                 DATETIME DEFAULT NULL COMMENT '修改时间',
                         user_status                 VARCHAR(8) DEFAULT NULL COMMENT '状态 0-正常 1-停用',
                         is_delete                   TINYINT DEFAULT 0 COMMENT '是否删除(逻辑删除) 0-否 1-是',
-                        PRIMARY KEY (id)
+                        PRIMARY KEY (user_id)
 )ENGINE=MYISAM
 ;
 
@@ -103,17 +103,17 @@ CREATE TABLE sys_resource(
 
 # 部门信息表
 CREATE TABLE sys_dept(
-                          id          		     BIGINT NOT NULL AUTO_INCREMENT COMMENT '部门信息ID',
-                          department_name        VARCHAR(64) DEFAULT '' COMMENT '部门名称',
-                          department_code        VARCHAR(32) DEFAULT '' COMMENT '部门编码',
-                          parent_department_id   BIGINT COMMENT '上级部门Id',
-                          department_type        VARCHAR(8) DEFAULT '' COMMENT '部门类型',
+                          dept_id     		     BIGINT NOT NULL AUTO_INCREMENT COMMENT '部门信息ID',
+                          dept_name              VARCHAR(64) DEFAULT '' COMMENT '部门名称',
+                          dept_code              VARCHAR(32) DEFAULT '' COMMENT '部门编码',
+                          parent_dept_id         BIGINT COMMENT '上级部门Id',
+                          dept_type              VARCHAR(8) DEFAULT '' COMMENT '部门类型',
                           unit                   VARCHAR(32) DEFAULT '' COMMENT '所属单位',
                           `level`                VARCHAR(8) DEFAULT '' COMMENT '级别 1-最高级别 以此类推',
-                          department_note        VARCHAR(500) DEFAULT '' COMMENT '备注',
+                          remark                 VARCHAR(500) DEFAULT '' COMMENT '备注',
                           create_user_id         BIGINT COMMENT '创建者ID',
                           create_time            DATETIME DEFAULT NULL COMMENT '创建时间',
-                          PRIMARY KEY (id)
+                          PRIMARY KEY (dept_id)
 )ENGINE=MYISAM
 ;
 

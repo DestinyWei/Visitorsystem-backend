@@ -28,7 +28,7 @@ public class SecurityUtils {
         if (loginUser == null) {
             throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
-        return loginUser.getId();
+        return loginUser.getUserId();
     }
 
     /**

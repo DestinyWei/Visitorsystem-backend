@@ -67,7 +67,7 @@ public class SysUserController {
     @GetMapping("/current")
     public BaseResponse getCurrentUser(HttpServletRequest request) {
         SysUserEntity loginUser = SecurityUtils.getLoginUser(request);
-        long userId = loginUser.getId();
+        long userId = loginUser.getUserId();
         SysUserEntity user = sysUserService.getById(userId);
         SysUserEntity safetyUser = sysUserService.getSafetyUser(user);
         return ResultUtils.success(safetyUser);

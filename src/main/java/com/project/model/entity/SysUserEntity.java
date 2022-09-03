@@ -20,12 +20,12 @@ public class SysUserEntity implements Serializable {
      * 用户Id
      */
     @TableId(type = IdType.AUTO)
-    private Long id;
+    private Long userId;
 
     /**
      * 部门Id
      */
-    private Long departmentId;
+    private Long deptId;
 
     /**
      * 姓名
