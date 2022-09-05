@@ -20,8 +20,7 @@ import javax.annotation.Resource;
  * @date 2018-06-25
  */
 @Service
-public class SysNoticeServiceImpl implements SysNoticeService
-{
+public class SysNoticeServiceImpl implements SysNoticeService {
     @Resource
     private SysNoticeMapper noticeMapper;
 
@@ -32,8 +31,7 @@ public class SysNoticeServiceImpl implements SysNoticeService
      * @return 公告信息
      */
     @Override
-    public BaseResponse selectNoticeById(Long noticeId)
-    {
+    public BaseResponse selectNoticeById(Long noticeId) {
         SysNoticeEntity sysNoticeEntity = noticeMapper.selectNoticeById(noticeId);
         return ResultUtils.success(sysNoticeEntity, "查询公告信息成功");
     }
@@ -45,8 +43,7 @@ public class SysNoticeServiceImpl implements SysNoticeService
      * @return 公告集合
      */
     @Override
-    public BaseResponse selectNoticeList(SysNoticeDto sysNoticeDto)
-    {
+    public BaseResponse selectNoticeList(SysNoticeDto sysNoticeDto) {
         IPage<SysNoticeEntity> sysNoticeEntities = noticeMapper.selectNoticeList(sysNoticeDto);
         return ResultUtils.success(sysNoticeEntities, "查询公告列表成功");
     }
@@ -54,33 +51,34 @@ public class SysNoticeServiceImpl implements SysNoticeService
     /**
      * 新增公告
      * 
-     * @param notice 公告信息
+     * @param sysNoticeEntity 公告信息
      * @return 结果
      */
     @Override
-    public BaseResponse insertNotice(SysNoticeEntity notice)
-    {
-        int insert = noticeMapper.insertNotice(notice);
+    public BaseResponse insertNotice(SysNoticeEntity sysNoticeEntity) {
+        int insert = noticeMapper.insertNotice(sysNoticeEntity);
         if (insert == 0){
             return ResultUtils.error(ErrorCode.SAVE_ERROR, "新增失败");
         }
-        return ResultUtils.success(notice.getNoticeId(), "新增成功");
+        return ResultUtils.success(sysNoticeEntity.getNoticeId(), "新增成功");
     }
 
     /**
      * 修改公告
      * 
-     * @param notice 公告信息
+     * @param sysNoticeEntity 公告信息
      * @return 结果
      */
     @Override
-    public BaseResponse updateNotice(SysNoticeEntity notice)
-    {
-        int update = noticeMapper.updateNotice(notice);
+    public BaseResponse updateNotice(SysNoticeEntity sysNoticeEntity) {
+        if (sysNoticeEntity.getNoticeId() == null){
+            return ResultUtils.error(ErrorCode.NULL_ERROR,"Id为空");
+        }
+        int update = noticeMapper.updateNotice(sysNoticeEntity);
         if (update == 0){
             return ResultUtils.error(ErrorCode.UPDATE_ERROR, "修改失败");
         }
-        return ResultUtils.success(notice.getNoticeId(), "修改成功");
+        return ResultUtils.success(sysNoticeEntity.getNoticeId(), "修改成功");
     }
 
     /**
@@ -90,11 +88,10 @@ public class SysNoticeServiceImpl implements SysNoticeService
      * @return 结果
      */
     @Override
-    public BaseResponse deleteNoticeByIds(String ids)
-    {
+    public BaseResponse deleteNoticeByIds(String ids) {
         int delete = noticeMapper.deleteNoticeByIds(Convert.toStrArray(ids));
         if (delete == 0){
-            return ResultUtils.error(ErrorCode.DELETE_ERROR, "删除失败");
+            return ResultUtils.error(ErrorCode.DELETE_ERROR, "删除失败,已删除或没有该公告");
         }
         return ResultUtils.success("删除成功");
     }

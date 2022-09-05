@@ -21,4 +21,5 @@ public class SysNoticeDto extends Page<SysNoticeEntity> {
     private String noticeType;
     private String noticeContent;
     private String status;
+    private String createBy;
 }

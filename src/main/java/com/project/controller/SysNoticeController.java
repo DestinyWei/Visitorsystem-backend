@@ -9,21 +9,19 @@ import com.project.service.SysNoticeService;
 import com.project.util.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 /**
  * 公告 信息操作处理
  * 
  * @author ruoyi
  */
-@Controller
-@RequestMapping("/system/notice")
+@RestController
+@RequestMapping("/notice")
 public class SysNoticeController {
     @Resource
     private SysNoticeService sysNoticeService;
@@ -32,8 +30,7 @@ public class SysNoticeController {
      * 查询公告详情
      */
     @GetMapping("/detail")
-    public BaseResponse detail(Long noticeId)
-    {
+    public BaseResponse detail(Long noticeId) {
         return sysNoticeService.selectNoticeById(noticeId);
     }
 
@@ -41,8 +38,7 @@ public class SysNoticeController {
      * 查询公告列表
      */
     @PostMapping("/search")
-    @ResponseBody
-    public BaseResponse search(SysNoticeDto sysNoticeDto){
+    public BaseResponse search(@RequestBody SysNoticeDto sysNoticeDto){
         return sysNoticeService.selectNoticeList(sysNoticeDto);
     }
 
@@ -51,10 +47,10 @@ public class SysNoticeController {
      */
     @Log(title = "通知公告", businessType = BusinessType.INSERT)
     @PostMapping("/insert")
-    @ResponseBody
-    public BaseResponse insert(@Validated SysNoticeEntity sysNoticeEntity, HttpServletRequest request) {
+    public BaseResponse insert(@Validated @RequestBody SysNoticeEntity sysNoticeEntity, HttpServletRequest request) {
         String userName = SecurityUtils.getLoginUser(request).getUserName();
         sysNoticeEntity.setCreateBy(userName);
+        sysNoticeEntity.setCreateTime(new Date());
         return sysNoticeService.insertNotice(sysNoticeEntity);
     }
 
@@ -63,11 +59,10 @@ public class SysNoticeController {
      */
     @Log(title = "通知公告", businessType = BusinessType.UPDATE)
     @PostMapping("/update")
-    @ResponseBody
-    public BaseResponse update(@Validated SysNoticeEntity sysNoticeEntity, HttpServletRequest request)
-    {
+    public BaseResponse update(@Validated @RequestBody SysNoticeEntity sysNoticeEntity, HttpServletRequest request) {
         String userName = SecurityUtils.getLoginUser(request).getUserName();
-        sysNoticeEntity.setCreateBy(userName);
+        sysNoticeEntity.setUpdateBy(userName);
+        sysNoticeEntity.setUpdateTime(new Date());
         return sysNoticeService.updateNotice(sysNoticeEntity);
     }
 
@@ -76,9 +71,7 @@ public class SysNoticeController {
      */
     @Log(title = "通知公告", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
-    @ResponseBody
-    public BaseResponse remove(String ids)
-    {
+    public BaseResponse remove(String ids) {
         return sysNoticeService.deleteNoticeByIds(ids);
     }
 }
