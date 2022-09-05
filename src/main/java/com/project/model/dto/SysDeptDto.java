@@ -18,10 +18,10 @@ import java.util.Date;
 @Data
 public class SysDeptDto extends Page<SysDeptEntity> {
 
-    private String departmentName;
-    private String departmentCode;
-    private Long parentDepartmentId;
-    private String departmentType;
+    private String deptName;
+    private String deptCode;
+    private Long parentDeptId;
+    private String deptType;
     private String unit;
     private String level;
     private Long createUserId;

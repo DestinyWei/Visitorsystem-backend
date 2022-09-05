@@ -41,31 +41,31 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptEntity
         if (insert == 0){
             return ResultUtils.error(ErrorCode.SAVE_ERROR, "新增失败");
         }
-        return ResultUtils.success(sysDeptEntity.getId(), "新增成功");
+        return ResultUtils.success(sysDeptEntity.getDeptId(), "新增成功");
     }
 
     @Override
     public BaseResponse remove(SysDeptEntity sysDeptEntity) {
-        if (sysDeptEntity.getId() == null){
+        if (sysDeptEntity.getDeptId() == null){
             return ResultUtils.error(ErrorCode.NULL_ERROR, "Id为空");
         }
-        int delete = sysDeptMapper.deleteById(sysDeptEntity.getId());
+        int delete = sysDeptMapper.deleteById(sysDeptEntity.getDeptId());
         if (delete == 0){
             return ResultUtils.error(ErrorCode.DELETE_ERROR, "删除失败");
         }
-        return ResultUtils.success(sysDeptEntity.getId(), "删除成功");
+        return ResultUtils.success(sysDeptEntity.getDeptId(), "删除成功");
     }
 
     @Override
     public BaseResponse update(SysDeptEntity sysDeptEntity) {
-        if (sysDeptEntity.getId() == null){
+        if (sysDeptEntity.getDeptId() == null){
             return ResultUtils.error(ErrorCode.NULL_ERROR, "Id为空");
         }
         int update = sysDeptMapper.updateById(sysDeptEntity);
         if (update == 0){
             return ResultUtils.error(ErrorCode.UPDATE_ERROR, "修改失败");
         }
-        return ResultUtils.success(sysDeptEntity.getId(), "修改成功");
+        return ResultUtils.success(sysDeptEntity.getDeptId(), "修改成功");
     }
 
     @Override

@@ -96,7 +96,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
         if (!saveResult) {
             throw new BusinessException(ErrorCode.SAVE_ERROR, "未注册成功");
         }
-        return ResultUtils.success(user.getId(), "用户注册成功");
+        return ResultUtils.success(user.getUserId(), "用户注册成功");
     }
 
     @Override
@@ -149,7 +149,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
             return null;
         }
         SysUserEntity safetyUser = new SysUserEntity();
-        safetyUser.setId(originUser.getId());
+        safetyUser.setUserId(originUser.getUserId());
         safetyUser.setUserName(originUser.getUserName());
         safetyUser.setUserAccount(originUser.getUserAccount());
         safetyUser.setSex(originUser.getSex());
@@ -175,7 +175,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
 
     @Override
     public BaseResponse update(SysUserEntity sysUserEntity) {
-        if (sysUserEntity.getId() == null){
+        if (sysUserEntity.getUserId() == null){
             return ResultUtils.error(ErrorCode.NULL_ERROR, "Id为空");
         }
         int update = sysUserMapper.updateById(sysUserEntity);
@@ -197,7 +197,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
     public BaseResponse updatePwd(SysUserUpdatePwdRequest sysUserUpdatePwdRequest, HttpServletRequest request) {
         SysUserEntity loginUser = SecurityUtils.getLoginUser(request);
         String userRawPassword = loginUser.getUserPassword();
-        Long userId = loginUser.getId();
+        Long userId = loginUser.getUserId();
         if (!userRawPassword.equals(sysUserUpdatePwdRequest.getRawPassword())){
             return ResultUtils.error(ErrorCode.PARAMS_ERROR, "密码校验不正确");
         }

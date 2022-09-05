@@ -18,27 +18,27 @@ public class SysDeptEntity implements Serializable {
      * 部门信息ID
      */
     @TableId(type = IdType.AUTO)
-    private Long id;
+    private Long deptId;
 
     /**
      * 部门名称
      */
-    private String departmentName;
+    private String deptName;
 
     /**
      * 部门编码
      */
-    private String departmentCode;
+    private String deptCode;
 
     /**
      * 上级部门
      */
-    private Long parentDepartmentId;
+    private Long parentDeptId;
 
     /**
      * 部门类型
      */
-    private String departmentType;
+    private String deptType;
 
     /**
      * 所属单位
@@ -53,7 +53,7 @@ public class SysDeptEntity implements Serializable {
     /**
      * 备注
      */
-    private String departmentNote;
+    private String deptNote;
 
     /**
      * 创建者ID

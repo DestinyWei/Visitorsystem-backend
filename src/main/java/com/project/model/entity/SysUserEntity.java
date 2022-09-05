@@ -16,77 +16,49 @@ import lombok.Data;
 @Data
 public class SysUserEntity implements Serializable {
 
-    /**
-     * 用户Id
-     */
+    /** 用户Id */
     @TableId(type = IdType.AUTO)
     private Long userId;
 
-    /**
-     * 部门Id
-     */
+    /** 部门Id */
     private Long deptId;
 
-    /**
-     * 姓名
-     */
+    /** 姓名 */
     private String userName;
 
-    /**
-     * 性别 0-未知 1-男 2-女
-     */
+    /** 性别 0-未知 1-男 2-女 */
     private String sex;
 
-    /**
-     * 身份证号
-     */
+    /** 身份证号 */
     private String idNumber;
 
-    /**
-     * 电话
-     */
+    /** 电话 */
     private String phone;
 
-    /**
-     * 邮箱
-     */
+    /** 邮箱 */
     private String email;
 
-    /**
-     * 账户
-     */
+    /** 账户 */
     private String userAccount;
 
-    /**
-     * 密码
-     */
+    /** 密码 */
     private String userPassword;
 
-    /**
-     * 用户类型 0-默认 1-管理员 2-公司高管
-     */
+    /** 用户类型 0-默认 1-管理员 2-公司高管 */
     private String type;
 
-    /**
-     * 创建时间
-     */
+    /** 创建时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date createTime;
 
-    /**
-     * 更新时间
-     */
+    /** 更新时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date updateTime;
 
-    /**
-     * 状态 0-正常 1-停用
-     */
+    /** 状态 0-正常 1-停用 */
     private String userStatus;
 
-    /**
-     * 是否删除(逻辑删除) 0-否 1-是
-     */
+    /** 是否删除(逻辑删除) 0-否 1-是 */
     @TableLogic
     private Integer isDelete;
 
