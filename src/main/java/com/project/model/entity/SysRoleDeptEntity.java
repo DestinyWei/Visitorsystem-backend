@@ -1,34 +1,27 @@
 package com.project.model.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
 import lombok.Data;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
+ * 角色和部门关联 sys_role_dept
  * 
- * @TableName role_dept
+ * @author ruoyi
  */
-@TableName(value ="role_dept")
 @Data
-public class SysRoleDeptEntity implements Serializable {
-    /**
-     * ID
-     */
-    @TableId
-    private Long id;
-
-    /**
-     * 角色ID
-     */
+public class SysRoleDeptEntity {
+    /** 角色ID */
     private Long roleId;
+    
+    /** 部门ID */
+    private Long deptId;
 
-    /**
-     * 部门ID
-     */
-    private Long departmentId;
-
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+            .append("roleId", getRoleId())
+            .append("deptId", getDeptId())
+            .toString();
+    }
 }
