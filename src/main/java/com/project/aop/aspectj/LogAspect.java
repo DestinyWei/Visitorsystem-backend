@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -84,6 +85,9 @@ public class LogAspect {
             String ip = SecurityUtils.getIpAddress(request);
             operLog.setOperIp(ip);
             operLog.setOperUrl(ServletUtils.getRequest().getRequestURI());
+            // 创建时间/创建者
+            operLog.setCreateTime(new Date());
+            operLog.setCreateBy(currentUser.getUserName());
 
             if (e != null) {
                 operLog.setStatus(BusinessStatus.FAIL.ordinal());

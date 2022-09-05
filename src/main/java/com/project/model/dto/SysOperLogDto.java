@@ -1,6 +1,7 @@
 package com.project.model.dto;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.model.entity.SysOperLogEntity;
 import lombok.Data;
 
@@ -31,5 +32,10 @@ public class SysOperLogDto extends Page<SysOperLogEntity> {
     private String jsonResult;
     private Integer status;
     private String errorMsg;
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     private Date operTime;
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+    private Date beginTime;
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+    private Date endTime;
 }

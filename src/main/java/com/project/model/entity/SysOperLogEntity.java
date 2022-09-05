@@ -2,6 +2,7 @@ package com.project.model.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.model.entity.BaseEntity;
 import lombok.Data;
 
@@ -13,8 +14,7 @@ import java.util.Date;
  * @author ruoyi
  */
 @Data
-public class SysOperLogEntity extends BaseEntity
-{
+public class SysOperLogEntity extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /** 日志主键 */
@@ -67,5 +67,6 @@ public class SysOperLogEntity extends BaseEntity
     private String errorMsg;
 
     /** 操作时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date operTime;
 }

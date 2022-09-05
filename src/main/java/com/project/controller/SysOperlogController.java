@@ -16,7 +16,7 @@ import javax.annotation.Resource;
  * 
  * @author ruoyi
  */
-@Controller
+@RestController
 @RequestMapping("/operlog")
 public class SysOperlogController {
 
@@ -24,31 +24,24 @@ public class SysOperlogController {
     private SysOperLogService operLogService;
 
     @PostMapping("/search")
-    @ResponseBody
-    public BaseResponse search(SysOperLogDto sysOperLogDto)
-    {
+    public BaseResponse search(@RequestBody SysOperLogDto sysOperLogDto) {
         return operLogService.selectOperLogList(sysOperLogDto);
     }
 
     @Log(title = "操作日志", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
-    @ResponseBody
-    public BaseResponse remove(String ids)
-    {
+    public BaseResponse remove(String ids) {
         return operLogService.deleteOperLogByIds(ids);
     }
 
     @GetMapping("/detail/{operId}")
-    public BaseResponse detail(@PathVariable("operId") Long operId)
-    {
+    public BaseResponse detail(@PathVariable("operId") Long operId) {
         return operLogService.selectOperLogById(operId);
     }
     
     @Log(title = "操作日志", businessType = BusinessType.CLEAN)
     @PostMapping("/clean")
-    @ResponseBody
-    public BaseResponse clean()
-    {
+    public BaseResponse clean() {
         operLogService.cleanOperLog();
         return ResultUtils.success("清空成功");
     }

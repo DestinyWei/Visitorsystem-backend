@@ -28,8 +28,8 @@ public class SysRoleDto extends Page<SysRoleEntity> {
     private Long[] menuIds;
     private Long[] deptIds;
     private Set<String> permissions;
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     private Date beginTime;
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     private Date endTime;
 }
