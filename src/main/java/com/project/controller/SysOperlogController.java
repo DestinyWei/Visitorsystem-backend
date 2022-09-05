@@ -17,7 +17,7 @@ import javax.annotation.Resource;
  * @author ruoyi
  */
 @Controller
-@RequestMapping("/monitor/operlog")
+@RequestMapping("/operlog")
 public class SysOperlogController {
 
     @Resource
