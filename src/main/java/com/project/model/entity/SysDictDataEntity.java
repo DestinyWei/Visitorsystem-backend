@@ -17,7 +17,7 @@ import javax.validation.constraints.Size;
  */
 @TableName("sys_dict_data")
 @Data
-public class SysDictDataEntity extends BaseEntity {
+public class SysDictDataEntity extends BaseEntity{
     private static final long serialVersionUID = 1L;
 
     /** 字典编码 */
