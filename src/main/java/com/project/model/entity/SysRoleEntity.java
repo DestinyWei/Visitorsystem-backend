@@ -62,6 +62,14 @@ public class SysRoleEntity extends BaseEntity {
     @TableField(exist = false)
     private Set<String> permissions;
 
+    public boolean isAdmin() {
+        return isAdmin(this.roleId);
+    }
+
+    public static boolean isAdmin(Long roleId) {
+        return roleId != null && 1L == roleId;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)

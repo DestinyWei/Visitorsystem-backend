@@ -159,7 +159,9 @@ public class SysRoleServiceImpl implements SysRoleService {
     public BaseResponse deleteRoleByIds(String ids, HttpServletRequest request) {
         Long[] roleIds = Convert.toLongArray(ids);
         for (Long roleId : roleIds) {
-            checkRoleAllowed(new SysRoleEntity(roleId));
+            SysRoleEntity sysRoleEntity = new SysRoleEntity();
+            sysRoleEntity.setRoleId(roleId);
+            checkRoleAllowed(sysRoleEntity);
             SysRoleEntity role = roleMapper.selectRoleById(roleId);
             if (countUserRoleByRoleId(roleId) > 0) {
                 throw new ServiceException(String.format("%1$s已分配,不能删除", role.getRoleName()));
