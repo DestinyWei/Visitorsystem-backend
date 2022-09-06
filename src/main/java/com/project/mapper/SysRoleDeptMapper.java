@@ -1,6 +1,8 @@
 package com.project.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.project.model.entity.SysRoleDeptEntity;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
@@ -9,7 +11,8 @@ import java.util.List;
  * 
  * @author ruoyi
  */
-public interface SysRoleDeptMapper {
+@Mapper
+public interface SysRoleDeptMapper extends BaseMapper<SysRoleDeptEntity> {
     /**
      * 通过角色ID删除角色和部门关联
      * 

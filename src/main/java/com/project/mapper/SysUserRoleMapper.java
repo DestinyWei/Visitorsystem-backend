@@ -1,6 +1,8 @@
 package com.project.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.project.model.entity.SysUserRoleEntity;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -10,7 +12,8 @@ import java.util.List;
  * 
  * @author ruoyi
  */
-public interface SysUserRoleMapper {
+@Mapper
+public interface SysUserRoleMapper extends BaseMapper<SysUserRoleEntity> {
     /**
      * 通过用户ID查询用户和角色关联
      * 

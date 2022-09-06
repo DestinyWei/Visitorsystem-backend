@@ -2,6 +2,8 @@ package com.project.model.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -13,6 +15,8 @@ import javax.validation.constraints.Size;
  * 
  * @author ruoyi
  */
+@TableName("sys_notice")
+@Data
 public class SysNoticeEntity extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
@@ -21,6 +25,8 @@ public class SysNoticeEntity extends BaseEntity {
     private Long noticeId;
 
     /** 公告标题 */
+    @NotBlank(message = "公告标题不能为空")
+    @Size(min = 0, max = 50, message = "公告标题不能超过50个字符")
     private String noticeTitle;
 
     /** 公告类型（1通知 2公告） */
@@ -31,58 +37,6 @@ public class SysNoticeEntity extends BaseEntity {
 
     /** 公告状态（0正常 1关闭） */
     private String status;
-
-    public Long getNoticeId()
-    {
-        return noticeId;
-    }
-
-    public void setNoticeId(Long noticeId)
-    {
-        this.noticeId = noticeId;
-    }
-
-    public void setNoticeTitle(String noticeTitle)
-    {
-        this.noticeTitle = noticeTitle;
-    }
-
-    @NotBlank(message = "公告标题不能为空")
-    @Size(min = 0, max = 50, message = "公告标题不能超过50个字符")
-    public String getNoticeTitle()
-    {
-        return noticeTitle;
-    }
-
-    public void setNoticeType(String noticeType)
-    {
-        this.noticeType = noticeType;
-    }
-
-    public String getNoticeType()
-    {
-        return noticeType;
-    }
-
-    public void setNoticeContent(String noticeContent)
-    {
-        this.noticeContent = noticeContent;
-    }
-
-    public String getNoticeContent()
-    {
-        return noticeContent;
-    }
-
-    public void setStatus(String status)
-    {
-        this.status = status;
-    }
-
-    public String getStatus()
-    {
-        return status;
-    }
 
     @Override
     public String toString() {

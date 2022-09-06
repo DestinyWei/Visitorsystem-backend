@@ -1,5 +1,6 @@
 package com.project.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.project.model.dto.SysOperLogDto;
 import com.project.model.entity.SysOperLogEntity;
@@ -9,8 +10,7 @@ import com.project.model.entity.SysOperLogEntity;
  * 
  * @author ruoyi
  */
-public interface SysOperLogMapper
-{
+public interface SysOperLogMapper extends BaseMapper<SysOperLogEntity> {
     /**
      * 新增操作日志
      * 

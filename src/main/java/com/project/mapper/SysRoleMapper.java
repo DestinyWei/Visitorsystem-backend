@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.project.model.dto.SysRoleDto;
 import com.project.model.entity.SysRoleEntity;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  * 
  * @author ruoyi
  */
+@Mapper
 public interface SysRoleMapper extends BaseMapper<SysRoleEntity> {
     /**
      * 根据条件分页查询角色数据

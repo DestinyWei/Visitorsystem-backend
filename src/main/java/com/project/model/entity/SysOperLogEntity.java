@@ -2,6 +2,7 @@ package com.project.model.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.model.entity.BaseEntity;
 import lombok.Data;
@@ -13,6 +14,7 @@ import java.util.Date;
  * 
  * @author ruoyi
  */
+@TableName("sys_oper_log")
 @Data
 public class SysOperLogEntity extends BaseEntity {
     private static final long serialVersionUID = 1L;

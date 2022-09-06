@@ -1,5 +1,6 @@
 package com.project.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.project.model.dto.SysNoticeDto;
 import com.project.model.entity.SysNoticeEntity;
@@ -11,8 +12,7 @@ import java.util.List;
  * 
  * @author ruoyi
  */
-public interface SysNoticeMapper
-{
+public interface SysNoticeMapper extends BaseMapper<SysNoticeEntity> {
     /**
      * 查询公告信息
      * 
