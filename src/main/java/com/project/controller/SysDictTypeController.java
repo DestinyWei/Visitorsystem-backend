@@ -1,122 +1,121 @@
 package com.project.controller;
 
-
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.project.aop.annotation.Log;
 import com.project.common.BaseResponse;
-import com.project.constant.SysUserConstant;
+import com.project.constant.SysUserConstants;
+import com.project.model.dto.SysDictTypeDto;
 import com.project.model.entity.SysDictTypeEntity;
+import com.project.model.entity.Ztree;
 import com.project.model.enums.BusinessType;
 import com.project.service.SysDictTypeService;
-import com.project.util.QueryWrapperUtils;
 import com.project.util.ResultUtils;
 import com.project.util.SecurityUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 
 /**
  * 数据字典信息
- *
- * @author smalljop
+ * 
+ * @author ruoyi
  */
 @RestController
-@RequiredArgsConstructor
-@RequestMapping("/system/dict/type")
-@Api(tags = "数据字典信息")
-public class SysDictTypeController {
-    private final SysDictTypeService dictTypeService;
+@RequestMapping("/dict")
+public class SysDictTypeController{
 
-    @PreAuthorize("@ss.hasPermi('system:dict:list')")
-    @ApiOperation(value = "分页查询数据字典信息")
-    @GetMapping("/page")
-    public BaseResponse queryPage(Page page, SysDictTypeEntity dictType) {
-        return ResultUtils.success(dictTypeService.page(page, QueryWrapperUtils.toSimpleQuery(dictType)), "分页查询数据字典信息成功");
-    }
+    @Resource
+    private SysDictTypeService dictTypeService;
 
-    @ApiOperation(value = "查询所有数据字典信息")
-    @GetMapping("all")
-    public BaseResponse<List<SysDictTypeEntity>> allDict() {
-        return ResultUtils.success(dictTypeService.allDict(), "查询所有数据字典信息成功");
+    @PostMapping("/search")
+    public BaseResponse search(@RequestBody SysDictTypeDto sysDictTypeDto){
+        return dictTypeService.selectDictTypeList(sysDictTypeDto);
     }
 
     /**
-     * 查询字典类型详细
+     * 新增保存字典类型
      */
-    @ApiOperation(value = "查询字典类型详细")
-    @PreAuthorize("@ss.hasPermi('system:dict:query')")
-    @GetMapping(value = "/{dictId}")
-    public BaseResponse getInfo(@PathVariable Long dictId) {
-        return ResultUtils.success(dictTypeService.getById(dictId), "查询字典类型详细成功");
-    }
-
-    /**
-     * 新增字典类型
-     */
-    @ApiOperation(value = "新增字典类型")
-    @PreAuthorize("@ss.hasPermi('system:dict:add')")
     @Log(title = "字典类型", businessType = BusinessType.INSERT)
-    @PostMapping
-    public BaseResponse save(@Validated @RequestBody SysDictTypeEntity dict, HttpServletRequest request) {
-        if (SysUserConstant.NOT_UNIQUE.equals(dictTypeService.checkDictTypeUnique(dict))) {
-            return ResultUtils.error("新增字典'" + dict.getDictName() + "'失败，字典类型已存在");
+    @PostMapping("/insert")
+    public BaseResponse insert(@Validated @RequestBody SysDictTypeEntity sysDictTypeEntity, HttpServletRequest request) {
+        if (SysUserConstants.DICT_TYPE_NOT_UNIQUE.equals(dictTypeService.checkDictTypeUnique(sysDictTypeEntity))) {
+            return ResultUtils.error("新增字典'" + sysDictTypeEntity.getDictName() + "'失败，字典类型已存在");
         }
-        dict.setCreateBy(SecurityUtils.getUsername(request));
-        return ResultUtils.success(dictTypeService.saveDictType(dict), "新增字典类型成功");
+        String username = SecurityUtils.getUsername(request);
+        sysDictTypeEntity.setCreateBy(username);
+        sysDictTypeEntity.setCreateTime(new Date());
+        return dictTypeService.insertDictType(sysDictTypeEntity);
     }
 
     /**
-     * 修改字典类型
+     * 修改保存字典类型
      */
-    @ApiOperation(value = "修改字典类型")
-    @PreAuthorize("@ss.hasPermi('system:dict:edit')")
     @Log(title = "字典类型", businessType = BusinessType.UPDATE)
-    @PutMapping
-    public BaseResponse update(@Validated @RequestBody SysDictTypeEntity dict, HttpServletRequest request) {
-        if (SysUserConstant.NOT_UNIQUE.equals(dictTypeService.checkDictTypeUnique(dict))) {
-            return ResultUtils.error("修改字典'" + dict.getDictName() + "'失败，字典类型已存在");
+    @PostMapping("/update")
+    public BaseResponse update(@Validated @RequestBody SysDictTypeEntity sysDictTypeEntity, HttpServletRequest request) {
+        if (SysUserConstants.DICT_TYPE_NOT_UNIQUE.equals(dictTypeService.checkDictTypeUnique(sysDictTypeEntity))) {
+            return ResultUtils.error("修改字典'" + sysDictTypeEntity.getDictName() + "'失败，字典类型已存在");
         }
-        dict.setUpdateBy(SecurityUtils.getUsername(request));
-        return ResultUtils.success(dictTypeService.updateDictType(dict), "修改字典类型成功");
+        String username = SecurityUtils.getUsername(request);
+        sysDictTypeEntity.setUpdateBy(username);
+        sysDictTypeEntity.setUpdateTime(new Date());
+        return dictTypeService.updateDictType(sysDictTypeEntity);
     }
 
     /**
      * 删除字典类型
      */
-    @ApiOperation(value = "删除字典类型")
-    @PreAuthorize("@ss.hasPermi('system:dict:remove')")
     @Log(title = "字典类型", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{dictIds}")
-    public BaseResponse delete(@PathVariable List<Long> dictIds) {
-        dictTypeService.removeByIds(dictIds);
-        return ResultUtils.success("删除字典类型成功");
+    @PostMapping("/remove")
+    public BaseResponse remove(String ids) {
+        return dictTypeService.deleteDictTypeByIds(ids);
     }
 
     /**
      * 刷新字典缓存
      */
-    @ApiOperation(value = "刷新字典缓存")
-    @PreAuthorize("@ss.hasPermi('system:dict:remove')")
     @Log(title = "字典类型", businessType = BusinessType.CLEAN)
-    @DeleteMapping("/refreshCache")
+    @GetMapping("/refreshCache")
     public BaseResponse refreshCache() {
         dictTypeService.resetDictCache();
         return ResultUtils.success("刷新字典缓存成功");
     }
 
     /**
-     * 获取字典选择框列表
+     * 查询字典详细
      */
-    @ApiOperation(value = "获取字典选择框列表")
-    @GetMapping("/optionselect")
-    public BaseResponse optionselect() {
-        List<SysDictTypeEntity> dictTypes = dictTypeService.list();
-        return ResultUtils.success(dictTypes);
+    @GetMapping("/detail/{dictId}")
+    public BaseResponse detail(@PathVariable("dictId") Long dictId) {
+        return dictTypeService.selectDictTypeById(dictId);
+    }
+
+    /**
+     * 校验字典类型
+     */
+    @PostMapping("/checkDictTypeUnique")
+    public BaseResponse checkDictTypeUnique(@RequestBody SysDictTypeEntity sysDictTypeEntity) {
+        String typeUnique = dictTypeService.checkDictTypeUnique(sysDictTypeEntity);
+        return ResultUtils.success(typeUnique, "校验字典类型成功");
+    }
+
+    /**
+     * 选择字典树
+     */
+    @GetMapping("/selectDictTree/{dictType}")
+    public BaseResponse selectDeptTree(@PathVariable("dictType") String dictType) {
+        return dictTypeService.selectDictTypeByType(dictType);
+    }
+
+    /**
+     * 加载字典列表树
+     */
+    @GetMapping("/treeData")
+    public BaseResponse treeData() {
+        List<Ztree> ztrees = dictTypeService.selectDictTree(new SysDictTypeEntity());
+        return ResultUtils.success(ztrees, "加载字典列表树成功");
     }
 }

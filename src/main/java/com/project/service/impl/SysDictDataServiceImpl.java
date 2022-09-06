@@ -1,116 +1,116 @@
 package com.project.service.impl;
 
-import cn.hutool.core.util.ObjectUtil;
-import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.project.mapper.SysDictDataMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.project.common.BaseResponse;
+import com.project.common.ErrorCode;
+import com.project.model.dto.SysDictDataDto;
 import com.project.model.entity.SysDictDataEntity;
 import com.project.service.SysDictDataService;
+import com.project.text.Convert;
+import com.project.mapper.SysDictDataMapper;
 import com.project.util.DictUtils;
-import lombok.RequiredArgsConstructor;
+import com.project.util.ResultUtils;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
  * 字典 业务层处理
- *
- * @author smalljop
+ * 
+ * @author ruoyi
  */
 @Service
-@RequiredArgsConstructor
-public class SysDictDataServiceImpl extends ServiceImpl<SysDictDataMapper, SysDictDataEntity> implements SysDictDataService {
-    private final SysDictDataMapper dictDataMapper;
+public class SysDictDataServiceImpl implements SysDictDataService {
+    @Resource
+    private SysDictDataMapper dictDataMapper;
+
+    /**
+     * 根据条件分页查询字典数据
+     * 
+     * @param sysDictDataDto 字典数据信息
+     * @return 字典数据集合信息
+     */
+    @Override
+    public BaseResponse selectDictDataList(SysDictDataDto sysDictDataDto) {
+        IPage<SysDictDataEntity> page = dictDataMapper.selectDictDataPage(sysDictDataDto);
+        return ResultUtils.success(page, "查询成功");
+    }
 
     /**
      * 根据字典类型和字典键值查询字典数据信息
-     *
-     * @param dictType  字典类型
+     * 
+     * @param dictType 字典类型
      * @param dictValue 字典键值
      * @return 字典标签
      */
     @Override
-    public String getDictLabel(String dictType, String dictValue) {
-        SysDictDataEntity data = dictDataMapper.selectOne(Wrappers.<SysDictDataEntity>lambdaQuery()
-                .eq(SysDictDataEntity::getDictType, dictType).eq(SysDictDataEntity::getDictValue, dictValue).select(SysDictDataEntity::getDictLabel));
-        if (ObjectUtil.isNotNull(data)) {
-            return data.getDictLabel();
-        }
-        return StrUtil.EMPTY;
-    }
-
-
-    /**
-     * 根据字典类型获取
-     *
-     * @param dictType
-     */
-    @Override
-    public List<SysDictDataEntity> getDictDataList(String dictType) {
-        List<SysDictDataEntity> dictDatas = dictDataMapper.selectList(Wrappers.<SysDictDataEntity>lambdaQuery()
-                .eq(SysDictDataEntity::getDictType, dictType).eq(SysDictDataEntity::getStatus, "0").orderByAsc(SysDictDataEntity::getDictSort));
-        return dictDatas;
+    public BaseResponse selectDictLabel(String dictType, String dictValue) {
+        String dictLabel = dictDataMapper.selectDictLabel(dictType, dictValue);
+        return ResultUtils.success(dictLabel, "根据字典类型和字典键值查询字典数据信息成功");
     }
 
     /**
-     * 批量删除字典数据信息
-     *
-     * @param dictCodes 需要删除的字典数据ID
-     * @return 结果
+     * 根据字典数据ID查询信息
+     * 
+     * @param dictCode 字典数据ID
+     * @return 字典数据
      */
     @Override
-    public void deleteDictDataByIds(List<Long> dictCodes) {
+    public BaseResponse selectDictDataById(Long dictCode) {
+        SysDictDataEntity sysDictDataEntity = dictDataMapper.selectDictDataById(dictCode);
+        return ResultUtils.success(sysDictDataEntity, "根据字典数据ID查询信息成功");
+    }
+
+    /**
+     * 批量删除字典数据
+     * 
+     * @param ids 需要删除的数据
+     */
+    @Override
+    public BaseResponse deleteDictDataByIds(String ids) {
+        Long[] dictCodes = Convert.toLongArray(ids);
         for (Long dictCode : dictCodes) {
-            SysDictDataEntity data = getById(dictCode);
-            int row = dictDataMapper.deleteById(dictCode);
-            this.setDictCache(data, row);
+            SysDictDataEntity data = dictDataMapper.selectDictDataById(dictCode);
+            dictDataMapper.deleteDictDataById(dictCode);
+            List<SysDictDataEntity> dictDatas = dictDataMapper.selectDictDataByType(data.getDictType());
+            DictUtils.setDictCache(data.getDictType(), dictDatas);
         }
+        return ResultUtils.success(ids,"删除成功");
     }
 
     /**
      * 新增保存字典数据信息
-     *
-     * @param data 字典数据信息
+     * 
+     * @param sysDictDataEntity 字典数据信息
      * @return 结果
      */
     @Override
-    public int saveDictData(SysDictDataEntity data) {
-        int row = dictDataMapper.insert(data);
-        setDictCache(data, row);
-        return row;
+    public BaseResponse insertDictData(SysDictDataEntity sysDictDataEntity) {
+        int row = dictDataMapper.insert(sysDictDataEntity);
+        if (row > 0) {
+            List<SysDictDataEntity> dictDatas = dictDataMapper.selectDictDataByType(sysDictDataEntity.getDictType());
+            DictUtils.setDictCache(sysDictDataEntity.getDictType(), dictDatas);
+        }
+        return ResultUtils.success(sysDictDataEntity.getDictCode(), "新增成功");
     }
 
     /**
      * 修改保存字典数据信息
-     *
-     * @param data 字典数据信息
+     * 
+     * @param sysDictDataEntity 字典数据信息
      * @return 结果
      */
     @Override
-    public int updateDictData(SysDictDataEntity data) {
-        int row = dictDataMapper.updateById(data);
-        setDictCache(data, row);
-        return row;
-    }
-
-
-    /**
-     * 设置缓存
-     *
-     * @param data
-     * @param row
-     * @return
-     */
-    private void setDictCache(SysDictDataEntity data, int row) {
-        if (row > 0) {
-            List<SysDictDataEntity> dictDatas = dictDataMapper.selectList(Wrappers.<SysDictDataEntity>lambdaQuery()
-                    .eq(SysDictDataEntity::getDictType, data.getDictType()).eq(SysDictDataEntity::getStatus, 0).orderByAsc(SysDictDataEntity::getDictSort));
-            DictUtils.setDictCache(data.getDictType(), dictDatas);
+    public BaseResponse updateDictData(SysDictDataEntity sysDictDataEntity) {
+        if (sysDictDataEntity.getDictCode() == null){
+            return ResultUtils.error(ErrorCode.NULL_ERROR, "Id为空");
         }
-
+        int row = dictDataMapper.updateById(sysDictDataEntity);
+        if (row > 0) {
+            List<SysDictDataEntity> dictDatas = dictDataMapper.selectDictDataByType(sysDictDataEntity.getDictType());
+            DictUtils.setDictCache(sysDictDataEntity.getDictType(), dictDatas);
+        }
+        return ResultUtils.success(sysDictDataEntity.getDictCode(), "修改成功");
     }
 }
-
-
-
