@@ -8,10 +8,8 @@ import com.project.jackson.DictEnumDeSerializer;
 import java.io.Serializable;
 
 /**
- * @author : wangqing
  * @description : 字典枚举基础接口
  * 继承该接口会在jackson默认增强显示字段
- * @create :  2021/12/21 10:19
  **/
 @JsonDeserialize(using = DictEnumDeSerializer.class)
 public interface IDictEnum<T extends Serializable> extends IEnum<T> {

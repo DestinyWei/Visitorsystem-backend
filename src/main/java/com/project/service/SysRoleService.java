@@ -10,8 +10,6 @@ import java.util.List;
 
 /**
  * 角色业务层
- * 
- * @author ruoyi
  */
 public interface SysRoleService {
     /**

@@ -17,8 +17,6 @@ import java.util.Date;
 
 /**
  * 公告 信息操作处理
- * 
- * @author ruoyi
  */
 @RestController
 @RequestMapping("/notice")

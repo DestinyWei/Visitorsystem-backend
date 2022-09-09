@@ -5,8 +5,6 @@ import com.project.common.ErrorCode;
 
 /**
  * 返回工具类
- *
- * @author yupi
  */
 public class ResultUtils {
 

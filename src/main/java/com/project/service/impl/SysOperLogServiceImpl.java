@@ -7,7 +7,7 @@ import com.project.mapper.SysOperLogMapper;
 import com.project.model.dto.SysOperLogDto;
 import com.project.model.entity.SysOperLogEntity;
 import com.project.service.SysOperLogService;
-import com.project.text.Convert;
+import com.project.util.text.Convert;
 import com.project.util.ResultUtils;
 import org.springframework.stereotype.Service;
 

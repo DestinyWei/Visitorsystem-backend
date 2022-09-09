@@ -2,8 +2,6 @@ package com.project.model.enums;
 
 /**
  * 业务操作类型
- *
- * @author smalljop
  */
 public enum BusinessType {
     /**

@@ -7,7 +7,7 @@ import com.project.mapper.SysNoticeMapper;
 import com.project.model.dto.SysNoticeDto;
 import com.project.model.entity.SysNoticeEntity;
 import com.project.service.SysNoticeService;
-import com.project.text.Convert;
+import com.project.util.text.Convert;
 import com.project.util.ResultUtils;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +15,6 @@ import javax.annotation.Resource;
 
 /**
  * 公告 服务层实现
- * 
- * @author ruoyi
  * @date 2018-06-25
  */
 @Service

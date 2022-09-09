@@ -16,8 +16,6 @@ import java.util.Date;
 
 /**
  * 字典类型表 sys_dict_type
- * 
- * @author ruoyi
  */
 @TableName("sys_dict_type")
 @Data

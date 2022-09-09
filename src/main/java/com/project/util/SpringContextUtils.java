@@ -13,8 +13,6 @@ import org.springframework.context.ApplicationEvent;
 import org.springframework.stereotype.Component;
 
 /**
- * @author smalljop
- * @date 2018/6/27
  * Spring 工具类
  */
 @Slf4j

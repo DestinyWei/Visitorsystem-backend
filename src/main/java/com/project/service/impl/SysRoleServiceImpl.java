@@ -13,9 +13,8 @@ import com.project.mapper.SysUserRoleMapper;
 import com.project.model.dto.SysRoleDto;
 import com.project.model.entity.*;
 import com.project.service.SysRoleService;
-import com.project.text.Convert;
+import com.project.util.text.Convert;
 import com.project.util.ResultUtils;
-import com.project.util.SecurityUtils;
 import com.project.util.SpringUtils;
 import com.project.util.StringUtils;
 import org.springframework.stereotype.Service;
@@ -27,8 +26,6 @@ import java.util.*;
 
 /**
  * 角色 业务层处理
- * 
- * @author ruoyi
  */
 @Service
 public class SysRoleServiceImpl implements SysRoleService {

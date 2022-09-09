@@ -9,8 +9,6 @@ import java.util.List;
 
 /**
  * 用户与角色关联表 数据层
- * 
- * @author ruoyi
  */
 @Mapper
 public interface SysUserRoleMapper extends BaseMapper<SysUserRoleEntity> {

@@ -11,8 +11,6 @@ import java.util.List;
 
 /**
  * 字典表 数据层
- * 
- * @author ruoyi
  */
 @Mapper
 public interface SysDictDataMapper extends BaseMapper<SysDictDataEntity> {

@@ -1,15 +1,13 @@
 package com.project.util;
 
 import com.project.constant.Constants;
-import com.project.text.StrFormatter;
+import com.project.util.text.StrFormatter;
 import org.springframework.util.AntPathMatcher;
 
 import java.util.*;
 
 /**
  * 字符串工具类
- * 
- * @author ruoyi
  */
 public class StringUtils extends org.apache.commons.lang3.StringUtils
 {

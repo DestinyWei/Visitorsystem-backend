@@ -1,4 +1,4 @@
-package com.project.text;
+package com.project.util.text;
 
 import com.project.util.StringUtils;
 import org.apache.commons.lang3.ArrayUtils;
@@ -12,8 +12,6 @@ import java.util.Set;
 
 /**
  * 类型转换器
- * 
- * @author ruoyi
  */
 public class Convert
 {

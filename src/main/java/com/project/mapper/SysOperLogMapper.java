@@ -7,8 +7,6 @@ import com.project.model.entity.SysOperLogEntity;
 
 /**
  * 操作日志 数据层
- * 
- * @author ruoyi
  */
 public interface SysOperLogMapper extends BaseMapper<SysOperLogEntity> {
     /**

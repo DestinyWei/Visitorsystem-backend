@@ -6,7 +6,7 @@ import com.project.common.ErrorCode;
 import com.project.model.dto.SysDictDataDto;
 import com.project.model.entity.SysDictDataEntity;
 import com.project.service.SysDictDataService;
-import com.project.text.Convert;
+import com.project.util.text.Convert;
 import com.project.mapper.SysDictDataMapper;
 import com.project.util.DictUtils;
 import com.project.util.ResultUtils;
@@ -17,8 +17,6 @@ import java.util.List;
 
 /**
  * 字典 业务层处理
- * 
- * @author ruoyi
  */
 @Service
 public class SysDictDataServiceImpl implements SysDictDataService {

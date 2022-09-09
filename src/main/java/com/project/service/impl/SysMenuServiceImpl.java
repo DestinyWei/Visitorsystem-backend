@@ -24,8 +24,6 @@ import java.util.*;
 
 /**
  * 菜单 业务层处理
- * 
- * @author ruoyi
  */
 @Service
 public class SysMenuServiceImpl implements SysMenuService

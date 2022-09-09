@@ -1,7 +1,7 @@
 package com.project.util;
 
 import com.project.constant.Constants;
-import com.project.text.Convert;
+import com.project.util.text.Convert;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -16,8 +16,6 @@ import java.net.URLEncoder;
 
 /**
  * 客户端工具类
- * 
- * @author ruoyi
  */
 public class ServletUtils
 {

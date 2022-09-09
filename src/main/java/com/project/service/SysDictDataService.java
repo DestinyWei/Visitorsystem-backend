@@ -6,8 +6,6 @@ import com.project.model.entity.SysDictDataEntity;
 
 /**
  * 字典 业务层
- * 
- * @author ruoyi
  */
 public interface SysDictDataService
 {

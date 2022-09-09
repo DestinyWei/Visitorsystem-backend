@@ -9,8 +9,6 @@ import java.util.List;
 
 /**
  * 公告 数据层
- * 
- * @author ruoyi
  */
 public interface SysNoticeMapper extends BaseMapper<SysNoticeEntity> {
     /**

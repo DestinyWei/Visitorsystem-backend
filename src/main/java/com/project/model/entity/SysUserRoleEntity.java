@@ -8,8 +8,6 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * 用户和角色关联 sys_user_role
- * 
- * @author ruoyi
  */
 @TableName("sys_user_role")
 @Data

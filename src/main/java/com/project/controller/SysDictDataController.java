@@ -17,8 +17,6 @@ import java.util.Date;
 
 /**
  * 数据字典信息
- * 
- * @author ruoyi
  */
 @RestController
 @RequestMapping("/dict/data")

@@ -10,7 +10,7 @@ import com.project.model.dto.SysDictTypeDto;
 import com.project.model.entity.SysDictTypeEntity;
 import com.project.model.entity.Ztree;
 import com.project.service.SysDictTypeService;
-import com.project.text.Convert;
+import com.project.util.text.Convert;
 import com.project.model.entity.SysDictDataEntity;
 import com.project.mapper.SysDictDataMapper;
 import com.project.util.DictUtils;
@@ -29,8 +29,6 @@ import java.util.stream.Collectors;
 
 /**
  * 字典 业务层处理
- * 
- * @author ruoyi
  */
 @Service
 public class SysDictTypeServiceImpl implements SysDictTypeService {

@@ -1,4 +1,4 @@
-package com.project.text;
+package com.project.util.text;
 
 import com.project.util.StringUtils;
 
@@ -7,8 +7,6 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * 字符集工具类
- * 
- * @author ruoyi
  */
 public class CharsetKit
 {

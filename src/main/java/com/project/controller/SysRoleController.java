@@ -19,8 +19,6 @@ import java.util.Date;
 
 /**
  * 角色信息
- * 
- * @author ruoyi
  */
 @RestController
 @RequestMapping("/role")

@@ -1,12 +1,10 @@
-package com.project.text;
+package com.project.util.text;
 
 
 import com.project.util.StringUtils;
 
 /**
  * 字符串格式化
- * 
- * @author ruoyi
  */
 public class StrFormatter
 {

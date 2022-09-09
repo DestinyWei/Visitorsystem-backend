@@ -12,8 +12,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author smalljop
- * @date 23/09/2018
+ * Redis工具类
  */
 @Slf4j
 @Component

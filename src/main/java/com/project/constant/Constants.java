@@ -2,8 +2,6 @@ package com.project.constant;
 
 /**
  * 通用常量信息
- * 
- * @author ruoyi
  */
 public class Constants
 {
