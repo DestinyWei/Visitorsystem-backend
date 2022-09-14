@@ -8,7 +8,7 @@
             <id property="id" column="id" jdbcType="BIGINT"/>
             <result property="startTime" column="start_time" jdbcType="TIMESTAMP"/>
             <result property="endTime" column="end_time" jdbcType="TIMESTAMP"/>
-            <result property="departmentId" column="department_id" jdbcType="BIGINT"/>
+            <result property="deptId" column="dept_id" jdbcType="BIGINT"/>
             <result property="applyInfo" column="apply_info" jdbcType="VARCHAR"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
             <result property="applicantId" column="applicant_id" jdbcType="BIGINT"/>
@@ -18,30 +18,31 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,visit_time,department_id,
+        id,visit_time,dept_id,
         apply_info,create_time,applicant_id,
         principal_id,apply_status,company_id
     </sql>
 
     <select id="selectApplyInfo" resultType="com.project.model.entity.ApplyInfoEntity">
         SELECT
-            ap.visit_time, sd.department_name,
-            ap.apply_info, ap.create_time, su1.user_name AS applicantName,
-            su2.user_name AS principalName, ap.apply_status, ci.company_name AS companyName
+            ap.id, ap.start_time, ap.end_time, ap.create_time, ap.dept_id, ap.applicant_id, ap.principal_id,
+            ap.company_id, ap.apply_info, ap.create_time, su1.user_name AS applicantName,
+            su2.user_name AS principalName, ap.apply_status, ci.company_name AS companyName,
+            sd.dept_name AS deptName
         FROM
             apply_info ap
         LEFT JOIN
             sys_dept sd
         ON
-            ap.department_id = sd.id
+            ap.dept_id = sd.dept_id
         LEFT JOIN
             sys_user su1
         ON
-            ap.applicant_id = su1.id
+            ap.applicant_id = su1.user_id
         LEFT JOIN
             sys_user su2
         ON
-            ap.principal_id = su2.id
+            ap.principal_id = su2.user_id
         LEFT JOIN
             company_info ci
         ON
@@ -53,20 +54,11 @@
         <if test=" endTime != null ">
             AND ap.start_time &lt;= #{endTime}
         </if>
-        <if test="departmentId != null">
-            AND ap.department_id LIKE concat('%',#{departmentId},'%')
-        </if>
-        <if test="applicantId != null">
-            AND ap.applicant_id LIKE concat('%',#{applicantId},'%')
-        </if>
-        <if test="principalId != null">
-            AND ap.principal_id LIKE concat('%',#{principalId},'%')
+        <if test=" createTime != null ">
+            AND ap.create_time = #{createTime}
         </if>
         <if test="applyStatus != null and applyStatus != '' ">
-            AND ap.apply_status LIKE concat('%',#{applyStatus},'%')
-        </if>
-        <if test="companyId != null">
-            AND ap.company_id LIKE concat('%',#{companyId},'%')
+            AND ap.apply_status = #{applyStatus}
         </if>
         <if test="applicantName != null and applicantName != '' ">
             AND su1.user_name LIKE concat('%',#{applicantName},'%')
@@ -77,6 +69,37 @@
         <if test="companyName != null and companyName != '' ">
             AND ci.company_name LIKE concat('%',#{companyName},'%')
         </if>
+        <if test="deptName != null and deptName != '' ">
+            AND sd.dept_name LIKE concat('%',#{deptName},'%')
+        </if>
         ORDER BY ap.create_time DESC 
+    </select>
+
+    <select id="selectApplyInfoById" resultType="com.project.model.entity.ApplyInfoEntity">
+        SELECT
+        ap.id, ap.start_time, ap.end_time, ap.create_time, ap.dept_id, ap.applicant_id, ap.principal_id,
+        ap.company_id, ap.apply_info, ap.create_time, su1.user_name AS applicantName,
+        su2.user_name AS principalName, ap.apply_status, ci.company_name AS companyName,
+        sd.dept_name AS deptName
+        FROM
+        apply_info ap
+        LEFT JOIN
+        sys_dept sd
+        ON
+        ap.dept_id = sd.dept_id
+        LEFT JOIN
+        sys_user su1
+        ON
+        ap.applicant_id = su1.user_id
+        LEFT JOIN
+        sys_user su2
+        ON
+        ap.principal_id = su2.user_id
+        LEFT JOIN
+        company_info ci
+        ON
+        ap.company_id = ci.id
+        WHERE ap.id = #{id}
+        ORDER BY ap.create_time DESC
     </select>
 </mapper>

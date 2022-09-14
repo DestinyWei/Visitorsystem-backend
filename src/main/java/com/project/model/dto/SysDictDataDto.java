@@ -2,7 +2,11 @@ package com.project.model.dto;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.project.model.entity.SysDictDataEntity;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * @description:
@@ -10,16 +14,15 @@ import lombok.Data;
  * @create: 2022-09-01-11:07
  * @version:
  */
+@ApiModel(value = "字典数据请求类")
 @Data
-public class SysDictDataDto extends Page<SysDictDataEntity> {
+public class SysDictDataDto extends Page<SysDictDataEntity> implements Serializable {
 
-    private Long dictCode;
-    private Long dictSort;
+    private static final long serialVersionUID = -254828971791398390L;
+    @ApiModelProperty(value = "字典标签")
     private String dictLabel;
-    private String dictValue;
+    @ApiModelProperty(value = "字典类型")
     private String dictType;
-    private String cssClass;
-    private String listClass;
-    private String isDefault;
+    @ApiModelProperty(value = "状态（0正常 1停用）")
     private String status;
 }

@@ -1,14 +1,13 @@
 package com.project.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.project.common.BaseResponse;
 import com.project.common.ErrorCode;
+import com.project.mapper.SysResourceMapper;
 import com.project.model.dto.SysResourceDto;
 import com.project.model.entity.SysResourceEntity;
 import com.project.service.SysResourceService;
-import com.project.mapper.SysResourceMapper;
 import com.project.util.ResultUtils;
 import com.project.util.SecurityUtils;
 import org.springframework.stereotype.Service;
@@ -42,15 +41,15 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysRe
     }
 
     @Override
-    public BaseResponse remove(SysResourceEntity sysResourceEntity) {
-        if (sysResourceEntity.getId() == null){
+    public BaseResponse remove(Long resourceId) {
+        if (resourceId == null){
             return ResultUtils.error(ErrorCode.NULL_ERROR, "Id为空");
         }
-        int delete = sysResourceMapper.deleteById(sysResourceEntity.getId());
+        int delete = sysResourceMapper.deleteById(resourceId);
         if (delete == 0){
-            return ResultUtils.error(ErrorCode.DELETE_ERROR, "删除失败");
+            return ResultUtils.error(ErrorCode.DELETE_ERROR, "删除失败,该系统资源不存在或已被删除");
         }
-        return ResultUtils.success(sysResourceEntity.getId(), "删除成功");
+        return ResultUtils.success(resourceId, "删除成功");
     }
 
     @Override
@@ -60,7 +59,7 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysRe
         }
         int update = sysResourceMapper.updateById(sysResourceEntity);
         if (update == 0){
-            return ResultUtils.error(ErrorCode.UPDATE_ERROR, "修改失败");
+            return ResultUtils.error(ErrorCode.UPDATE_ERROR, "修改失败,该系统资源不存在或已被删除");
         }
         return ResultUtils.success(sysResourceEntity.getId(), "修改成功");
     }

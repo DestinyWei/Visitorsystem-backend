@@ -2,7 +2,11 @@ package com.project.model.dto;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.project.model.entity.SysMenuEntity;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * @description:
@@ -10,22 +14,15 @@ import lombok.Data;
  * @create: 2022-09-05-17:41
  * @version:
  */
+@ApiModel(value = "菜单权限请求类")
 @Data
-public class SysMenuDto extends Page<SysMenuEntity> {
+public class SysMenuDto extends Page<SysMenuEntity> implements Serializable {
 
-    private Long menuId;
+    private static final long serialVersionUID = -3199201293046951486L;
+    @ApiModelProperty(value = "菜单名称")
     private String menuName;
-    private String parentName;
-    private Long parentId;
-    private String orderNum;
-    private String url;
-    private String target;
-    private String menuType;
+    @ApiModelProperty(value = "菜单状态（0显示 1隐藏）")
     private String visible;
-    private String isRefresh;
-    private String perms;
-    private String icon;
-    private String remark;
-    private String createBy;
+    @ApiModelProperty(value = "当前登录用户Id")
     private Long currentUserId;
 }

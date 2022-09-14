@@ -1,14 +1,13 @@
 package com.project.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.project.common.BaseResponse;
 import com.project.common.ErrorCode;
+import com.project.mapper.SysDeptMapper;
 import com.project.model.dto.SysDeptDto;
 import com.project.model.entity.SysDeptEntity;
 import com.project.service.SysDeptService;
-import com.project.mapper.SysDeptMapper;
 import com.project.util.ResultUtils;
 import com.project.util.SecurityUtils;
 import org.springframework.stereotype.Service;
@@ -31,9 +30,6 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptEntity
 
     @Override
     public BaseResponse insert(SysDeptEntity sysDeptEntity, HttpServletRequest request) {
-        if (SecurityUtils.isAdmin(request)){
-            return ResultUtils.error(ErrorCode.NO_AUTH,"仅限管理员可操作");
-        }
         Long userId = SecurityUtils.getLoginUserId(request);
         sysDeptEntity.setCreateUserId(userId);
         sysDeptEntity.setCreateTime(new Date());
@@ -45,15 +41,15 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptEntity
     }
 
     @Override
-    public BaseResponse remove(SysDeptEntity sysDeptEntity) {
-        if (sysDeptEntity.getDeptId() == null){
+    public BaseResponse remove(Long deptId) {
+        if (deptId == null){
             return ResultUtils.error(ErrorCode.NULL_ERROR, "Id为空");
         }
-        int delete = sysDeptMapper.deleteById(sysDeptEntity.getDeptId());
+        int delete = sysDeptMapper.deleteById(deptId);
         if (delete == 0){
-            return ResultUtils.error(ErrorCode.DELETE_ERROR, "删除失败");
+            return ResultUtils.error(ErrorCode.DELETE_ERROR, "删除失败,该部门不存在或已被删除");
         }
-        return ResultUtils.success(sysDeptEntity.getDeptId(), "删除成功");
+        return ResultUtils.success(deptId, "删除成功");
     }
 
     @Override
@@ -63,7 +59,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptEntity
         }
         int update = sysDeptMapper.updateById(sysDeptEntity);
         if (update == 0){
-            return ResultUtils.error(ErrorCode.UPDATE_ERROR, "修改失败");
+            return ResultUtils.error(ErrorCode.UPDATE_ERROR, "修改失败,该部门不存在或已被删除");
         }
         return ResultUtils.success(sysDeptEntity.getDeptId(), "修改成功");
     }
@@ -72,6 +68,12 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptEntity
     public BaseResponse search(SysDeptDto sysDeptDto) {
         IPage<SysDeptEntity> page = sysDeptMapper.selectDept(sysDeptDto);
         return ResultUtils.success(page, "查询成功");
+    }
+
+    @Override
+    public BaseResponse detail(Long deptId) {
+        SysDeptEntity sysDeptEntity = sysDeptMapper.selectById(deptId);
+        return ResultUtils.success(sysDeptEntity, "查询部门详情成功");
     }
 }
 

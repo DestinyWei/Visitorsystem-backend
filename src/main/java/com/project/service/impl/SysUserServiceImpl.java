@@ -180,7 +180,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
         }
         int update = sysUserMapper.updateById(sysUserEntity);
         if (update == 0){
-            return ResultUtils.error(ErrorCode.UPDATE_ERROR, "修改失败");
+            return ResultUtils.error(ErrorCode.UPDATE_ERROR, "修改失败,该用户不存在或已被删除");
         }
         return null;
     }

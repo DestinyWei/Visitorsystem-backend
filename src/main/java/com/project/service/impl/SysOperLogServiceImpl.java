@@ -19,8 +19,7 @@ import javax.annotation.Resource;
  * @author ruoyi
  */
 @Service
-public class SysOperLogServiceImpl implements SysOperLogService
-{
+public class SysOperLogServiceImpl implements SysOperLogService {
     @Resource
     private SysOperLogMapper operLogMapper;
 
@@ -30,8 +29,7 @@ public class SysOperLogServiceImpl implements SysOperLogService
      * @param sysOperLogEntity 操作日志对象
      */
     @Override
-    public BaseResponse insertOperlog(SysOperLogEntity sysOperLogEntity)
-    {
+    public BaseResponse insertOperlog(SysOperLogEntity sysOperLogEntity) {
         operLogMapper.insertOperlog(sysOperLogEntity);
         return ResultUtils.success("新增操作日志成功");
     }
@@ -43,8 +41,7 @@ public class SysOperLogServiceImpl implements SysOperLogService
      * @return 操作日志集合
      */
     @Override
-    public BaseResponse selectOperLogList(SysOperLogDto sysOperLogDto)
-    {
+    public BaseResponse selectOperLogList(SysOperLogDto sysOperLogDto) {
         IPage<SysOperLogEntity> page = operLogMapper.selectOperLogList(sysOperLogDto);
         return ResultUtils.success(page, "查询成功");
     }
@@ -56,11 +53,10 @@ public class SysOperLogServiceImpl implements SysOperLogService
      * @return
      */
     @Override
-    public BaseResponse deleteOperLogByIds(String ids)
-    {
+    public BaseResponse deleteOperLogByIds(String ids) {
         int delete = operLogMapper.deleteOperLogByIds(Convert.toStrArray(ids));
         if (delete == 0){
-            return ResultUtils.error(ErrorCode.DELETE_ERROR, "删除失败");
+            return ResultUtils.error(ErrorCode.DELETE_ERROR, "删除失败,,该操作日志不存在或已被删除");
         }
         return ResultUtils.success(delete, "删除成功");
     }
@@ -72,8 +68,7 @@ public class SysOperLogServiceImpl implements SysOperLogService
      * @return 操作日志对象
      */
     @Override
-    public BaseResponse selectOperLogById(Long operId)
-    {
+    public BaseResponse selectOperLogById(Long operId) {
         SysOperLogEntity log = operLogMapper.selectOperLogById(operId);
         return ResultUtils.success(log, "查询成功");
     }
@@ -82,8 +77,7 @@ public class SysOperLogServiceImpl implements SysOperLogService
      * 清空操作日志
      */
     @Override
-    public BaseResponse cleanOperLog()
-    {
+    public BaseResponse cleanOperLog() {
         operLogMapper.cleanOperLog();
         return ResultUtils.success("清空操作日志成功");
     }

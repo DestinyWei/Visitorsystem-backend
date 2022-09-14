@@ -24,10 +24,10 @@ public interface ApplyInfoService extends IService<ApplyInfoEntity> {
 
     /**
      * 访问申请删除
-     * @param applyInfoEntity
+     * @param applyId
      * @return BaseResponse
      */
-    BaseResponse remove(ApplyInfoEntity applyInfoEntity);
+    BaseResponse remove(Long applyId);
 
     /**
      * 访问申请修改
@@ -43,4 +43,10 @@ public interface ApplyInfoService extends IService<ApplyInfoEntity> {
      */
     BaseResponse search(ApplyInfoDto applyInfoDto);
 
+    /**
+     * 访问申请详情
+     * @param applyId
+     * @return BaseResponse
+     */
+    BaseResponse detail(Long applyId);
 }

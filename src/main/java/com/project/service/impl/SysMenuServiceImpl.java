@@ -26,8 +26,7 @@ import java.util.*;
  * 菜单 业务层处理
  */
 @Service
-public class SysMenuServiceImpl implements SysMenuService
-{
+public class SysMenuServiceImpl implements SysMenuService {
     public static final String PREMISSION_STRING = "perms[\"{0}\"]";
 
     @Resource
@@ -81,16 +80,13 @@ public class SysMenuServiceImpl implements SysMenuService
      * @return 所有菜单信息
      */
     @Override
-    public List<SysMenuEntity> selectMenuAll(HttpServletRequest request)
-    {
+    public List<SysMenuEntity> selectMenuAll(HttpServletRequest request) {
         Long userId = SecurityUtils.getLoginUserId(request);
         List<SysMenuEntity> menuList = null;
-        if (SecurityUtils.isAdmin(request))
-        {
+        if (SecurityUtils.isAdmin(request)) {
             menuList = menuMapper.selectMenuAll();
         }
-        else
-        {
+        else {
             menuList = menuMapper.selectMenuAllByUserId(userId);
         }
         return menuList;
@@ -103,14 +99,11 @@ public class SysMenuServiceImpl implements SysMenuService
      * @return 权限列表
      */
     @Override
-    public BaseResponse selectPermsByUserId(Long userId)
-    {
+    public BaseResponse selectPermsByUserId(Long userId) {
         List<String> perms = menuMapper.selectPermsByUserId(userId);
         Set<String> permsSet = new HashSet<>();
-        for (String perm : perms)
-        {
-            if (StringUtils.isNotEmpty(perm))
-            {
+        for (String perm : perms) {
+            if (StringUtils.isNotEmpty(perm)) {
                 permsSet.addAll(Arrays.asList(perm.trim().split(",")));
             }
         }
@@ -124,14 +117,11 @@ public class SysMenuServiceImpl implements SysMenuService
      * @return 权限列表
      */
     @Override
-    public BaseResponse selectPermsByRoleId(Long roleId)
-    {
+    public BaseResponse selectPermsByRoleId(Long roleId) {
         List<String> perms = menuMapper.selectPermsByRoleId(roleId);
         Set<String> permsSet = new HashSet<>();
-        for (String perm : perms)
-        {
-            if (StringUtils.isNotEmpty(perm))
-            {
+        for (String perm : perms) {
+            if (StringUtils.isNotEmpty(perm)) {
                 permsSet.addAll(Arrays.asList(perm.trim().split(",")));
             }
         }
@@ -165,8 +155,7 @@ public class SysMenuServiceImpl implements SysMenuService
      * @return 菜单列表
      */
     @Override
-    public BaseResponse menuTreeData(HttpServletRequest request)
-    {
+    public BaseResponse menuTreeData(HttpServletRequest request) {
         List<SysMenuEntity> menuList = selectMenuAll(request);
         List<Ztree> ztrees = initZtree(menuList);
         return ResultUtils.success(ztrees, "查询所有菜单成功");
@@ -178,8 +167,7 @@ public class SysMenuServiceImpl implements SysMenuService
      * @return 权限列表
      */
     @Override
-    public BaseResponse selectPermsAll(HttpServletRequest request)
-    {
+    public BaseResponse selectPermsAll(HttpServletRequest request) {
         LinkedHashMap<String, String> section = new LinkedHashMap<>();
         List<SysMenuEntity> permissions = selectMenuAll(request);
         if (StringUtils.isNotEmpty(permissions))
@@ -198,8 +186,7 @@ public class SysMenuServiceImpl implements SysMenuService
      * @param menuList 菜单列表
      * @return 树结构列表
      */
-    public List<Ztree> initZtree(List<SysMenuEntity> menuList)
-    {
+    public List<Ztree> initZtree(List<SysMenuEntity> menuList) {
         return initZtree(menuList, null, false);
     }
 
@@ -211,19 +198,16 @@ public class SysMenuServiceImpl implements SysMenuService
      * @param permsFlag 是否需要显示权限标识
      * @return 树结构列表
      */
-    public List<Ztree> initZtree(List<SysMenuEntity> menuList, List<String> roleMenuList, boolean permsFlag)
-    {
+    public List<Ztree> initZtree(List<SysMenuEntity> menuList, List<String> roleMenuList, boolean permsFlag) {
         List<Ztree> ztrees = new ArrayList<Ztree>();
         boolean isCheck = StringUtils.isNotNull(roleMenuList);
-        for (SysMenuEntity menu : menuList)
-        {
+        for (SysMenuEntity menu : menuList) {
             Ztree ztree = new Ztree();
             ztree.setId(menu.getMenuId());
             ztree.setpId(menu.getParentId());
             ztree.setName(transMenuName(menu, permsFlag));
             ztree.setTitle(menu.getMenuName());
-            if (isCheck)
-            {
+            if (isCheck) {
                 ztree.setChecked(roleMenuList.contains(menu.getMenuId() + menu.getPerms()));
             }
             ztrees.add(ztree);
@@ -231,12 +215,10 @@ public class SysMenuServiceImpl implements SysMenuService
         return ztrees;
     }
 
-    public String transMenuName(SysMenuEntity menu, boolean permsFlag)
-    {
+    public String transMenuName(SysMenuEntity menu, boolean permsFlag) {
         StringBuffer sb = new StringBuffer();
         sb.append(menu.getMenuName());
-        if (permsFlag)
-        {
+        if (permsFlag) {
             sb.append("<font color=\"#888\">&nbsp;&nbsp;&nbsp;" + menu.getPerms() + "</font>");
         }
         return sb.toString();
@@ -249,8 +231,7 @@ public class SysMenuServiceImpl implements SysMenuService
      * @return 结果
      */
     @Override
-    public BaseResponse deleteMenuById(Long menuId)
-    {
+    public BaseResponse deleteMenuById(Long menuId) {
         int delete = menuMapper.deleteMenuById(menuId);
         if (delete == 0){
             return ResultUtils.error(ErrorCode.DELETE_ERROR, "该菜单不存在");
@@ -265,8 +246,7 @@ public class SysMenuServiceImpl implements SysMenuService
      * @return 菜单信息
      */
     @Override
-    public BaseResponse selectMenuById(Long menuId)
-    {
+    public BaseResponse selectMenuById(Long menuId) {
         SysMenuEntity sysMenuEntity = menuMapper.selectMenuById(menuId);
         return ResultUtils.success(sysMenuEntity, "查询菜单详情成功");
     }
@@ -278,8 +258,7 @@ public class SysMenuServiceImpl implements SysMenuService
      * @return 结果
      */
     @Override
-    public int selectCountMenuByParentId(Long parentId)
-    {
+    public int selectCountMenuByParentId(Long parentId) {
         return menuMapper.selectCountMenuByParentId(parentId);
     }
 
@@ -322,7 +301,7 @@ public class SysMenuServiceImpl implements SysMenuService
         }
         int update = menuMapper.updateById(sysMenuEntity);
         if (update == 0){
-            return ResultUtils.error(ErrorCode.UPDATE_ERROR, "修改失败");
+            return ResultUtils.error(ErrorCode.UPDATE_ERROR, "修改失败,该菜单不存在或已被删除");
         }
         return ResultUtils.success(sysMenuEntity.getMenuId(), "修改成功");
     }
@@ -334,12 +313,10 @@ public class SysMenuServiceImpl implements SysMenuService
      * @return 结果
      */
     @Override
-    public String checkMenuNameUnique(SysMenuEntity menu)
-    {
+    public String checkMenuNameUnique(SysMenuEntity menu) {
         Long menuId = StringUtils.isNull(menu.getMenuId()) ? -1L : menu.getMenuId();
         SysMenuEntity info = menuMapper.checkMenuNameUnique(menu.getMenuName(), menu.getParentId());
-        if (StringUtils.isNotNull(info) && info.getMenuId().longValue() != menuId.longValue())
-        {
+        if (StringUtils.isNotNull(info) && info.getMenuId().longValue() != menuId.longValue()) {
             return SysUserConstants.MENU_NAME_NOT_UNIQUE;
         }
         return SysUserConstants.MENU_NAME_UNIQUE;
@@ -352,15 +329,12 @@ public class SysMenuServiceImpl implements SysMenuService
      * @param parentId 传入的父节点ID
      * @return String
      */
-    public List<SysMenuEntity> getChildPerms(List<SysMenuEntity> list, int parentId)
-    {
+    public List<SysMenuEntity> getChildPerms(List<SysMenuEntity> list, int parentId) {
         List<SysMenuEntity> returnList = new ArrayList<SysMenuEntity>();
-        for (Iterator<SysMenuEntity> iterator = list.iterator(); iterator.hasNext();)
-        {
+        for (Iterator<SysMenuEntity> iterator = list.iterator(); iterator.hasNext();) {
             SysMenuEntity t = (SysMenuEntity) iterator.next();
             // 一、根据传入的某个父节点ID,遍历该父节点的所有子节点
-            if (t.getParentId() == parentId)
-            {
+            if (t.getParentId() == parentId) {
                 recursionFn(list, t);
                 returnList.add(t);
             }
@@ -374,15 +348,12 @@ public class SysMenuServiceImpl implements SysMenuService
      * @param list
      * @param t
      */
-    private void recursionFn(List<SysMenuEntity> list, SysMenuEntity t)
-    {
+    private void recursionFn(List<SysMenuEntity> list, SysMenuEntity t) {
         // 得到子节点列表
         List<SysMenuEntity> childList = getChildList(list, t);
         t.setChildren(childList);
-        for (SysMenuEntity tChild : childList)
-        {
-            if (hasChild(list, tChild))
-            {
+        for (SysMenuEntity tChild : childList) {
+            if (hasChild(list, tChild)) {
                 recursionFn(list, tChild);
             }
         }
@@ -391,15 +362,12 @@ public class SysMenuServiceImpl implements SysMenuService
     /**
      * 得到子节点列表
      */
-    private List<SysMenuEntity> getChildList(List<SysMenuEntity> list, SysMenuEntity t)
-    {
+    private List<SysMenuEntity> getChildList(List<SysMenuEntity> list, SysMenuEntity t) {
         List<SysMenuEntity> tlist = new ArrayList<SysMenuEntity>();
         Iterator<SysMenuEntity> it = list.iterator();
-        while (it.hasNext())
-        {
+        while (it.hasNext()) {
             SysMenuEntity n = (SysMenuEntity) it.next();
-            if (n.getParentId().longValue() == t.getMenuId().longValue())
-            {
+            if (n.getParentId().longValue() == t.getMenuId().longValue()) {
                 tlist.add(n);
             }
         }
@@ -409,8 +377,7 @@ public class SysMenuServiceImpl implements SysMenuService
     /**
      * 判断是否有子节点
      */
-    private boolean hasChild(List<SysMenuEntity> list, SysMenuEntity t)
-    {
+    private boolean hasChild(List<SysMenuEntity> list, SysMenuEntity t) {
         return getChildList(list, t).size() > 0;
     }
 }

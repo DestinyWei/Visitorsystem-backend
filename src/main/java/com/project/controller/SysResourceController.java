@@ -1,15 +1,18 @@
 package com.project.controller;
 
+import com.project.aop.annotation.Log;
 import com.project.common.BaseResponse;
 import com.project.model.dto.SysResourceDto;
 import com.project.model.entity.SysResourceEntity;
+import com.project.model.enums.BusinessType;
 import com.project.service.SysResourceService;
 import com.project.util.ResultUtils;
 import com.project.util.SecurityUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +25,7 @@ import static com.project.common.ErrorCode.NO_AUTH;
  * @create: 2022-08-25-17:54
  * @version:
  */
+@Api(tags = "系统资源接口")
 @RestController
 @RequestMapping("/resource")
 public class SysResourceController {
@@ -29,8 +33,10 @@ public class SysResourceController {
     @Resource
     private SysResourceService sysResourceService;
 
+    @ApiOperation(value = "资源新增")
+    @Log(title = "资源管理", businessType = BusinessType.INSERT)
     @PostMapping("/insert")
-    public BaseResponse insert(@RequestBody SysResourceEntity sysResourceEntity, HttpServletRequest request){
+    public BaseResponse insert(@Validated @RequestBody SysResourceEntity sysResourceEntity, HttpServletRequest request){
         boolean admin = SecurityUtils.isAdmin(request);
         if (!admin){
             return ResultUtils.error(NO_AUTH, "无权限");
@@ -38,17 +44,21 @@ public class SysResourceController {
         return sysResourceService.insert(sysResourceEntity, request);
     }
 
-    @PostMapping("/remove")
-    public BaseResponse remove(@RequestBody SysResourceEntity sysResourceEntity, HttpServletRequest request){
+    @ApiOperation(value = "资源删除")
+    @Log(title = "资源管理", businessType = BusinessType.DELETE)
+    @GetMapping("/remove")
+    public BaseResponse remove(@ApiParam(value = "系统资源Id") Long resourceId, HttpServletRequest request){
         boolean admin = SecurityUtils.isAdmin(request);
         if (!admin){
             return ResultUtils.error(NO_AUTH, "无权限");
         }
-        return sysResourceService.remove(sysResourceEntity);
+        return sysResourceService.remove(resourceId);
     }
 
+    @ApiOperation(value = "资源修改")
+    @Log(title = "资源管理", businessType = BusinessType.UPDATE)
     @PostMapping("/update")
-    public BaseResponse update(@RequestBody SysResourceEntity sysResourceEntity, HttpServletRequest request){
+    public BaseResponse update(@Validated @RequestBody SysResourceEntity sysResourceEntity, HttpServletRequest request){
         boolean admin = SecurityUtils.isAdmin(request);
         if (!admin){
             return ResultUtils.error(NO_AUTH, "无权限");
@@ -56,6 +66,7 @@ public class SysResourceController {
         return sysResourceService.update(sysResourceEntity);
     }
 
+    @ApiOperation(value = "资源查询")
     @PostMapping("/search")
     public BaseResponse search(@RequestBody SysResourceDto sysResourceDto){
         return sysResourceService.search(sysResourceDto);

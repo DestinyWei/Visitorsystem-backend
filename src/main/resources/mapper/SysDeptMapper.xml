@@ -5,51 +5,45 @@
 <mapper namespace="com.project.mapper.SysDeptMapper">
 
     <resultMap id="BaseResultMap" type="com.project.model.entity.SysDeptEntity">
-            <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="departmentName" column="department_name" jdbcType="VARCHAR"/>
-            <result property="departmentCode" column="department_code" jdbcType="VARCHAR"/>
-            <result property="parentDepartmentId" column="parent_department" jdbcType="VARCHAR"/>
-            <result property="departmentType" column="department_type" jdbcType="VARCHAR"/>
+            <id property="deptId" column="id" jdbcType="BIGINT"/>
+            <result property="deptName" column="dept_name" jdbcType="VARCHAR"/>
+            <result property="deptCode" column="dept_code" jdbcType="VARCHAR"/>
+            <result property="parentDeptId" column="parent_dept_id" jdbcType="VARCHAR"/>
+            <result property="status" column="status" jdbcType="VARCHAR"/>
             <result property="unit" column="unit" jdbcType="VARCHAR"/>
             <result property="level" column="level" jdbcType="VARCHAR"/>
-            <result property="departmentNote" column="department_note" jdbcType="VARCHAR"/>
+            <result property="remark" column="remark" jdbcType="VARCHAR"/>
             <result property="createUserId" column="create_user_id" jdbcType="BIGINT"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,department_name,department_code,
-        parent_department_id,department_type,unit,
-        `level`,department_note,create_user_id,
+        id,dept_name,dept_code,
+        parent_dept_id,status,unit,
+        `level`,remark,create_user_id,
         create_time
     </sql>
 
     <select id="selectDept" resultType="com.project.model.entity.SysDeptEntity">
         SELECT
-            sd1.department_name, sd1.department_code, sd2.department_name AS parentDept, sd1.department_type,
-            sd1.unit, sd1.`level`, sd1.department_note, su.user_name AS createUserName, sd1.create_time
+            sd1.dept_id, sd1.dept_name, sd1.dept_code, sd1.parent_dept_id, sd2.dept_name AS parentDept, sd1.status,
+            sd1.unit, sd1.`level`, sd1.remark, su.user_name AS createUserName, sd1.create_time
         FROM
             sys_dept sd1
         LEFT JOIN
             sys_dept sd2
         ON
-            sd1.parent_department_id = sd2.id
+            sd1.parent_dept_id = sd2.dept_id
         LEFT JOIN
             sys_user su
         ON
-            sd1.create_user_id = su.id
+            sd1.create_user_id = su.user_id
         WHERE 1 = 1
-        <if test="departmentName != null and departmentName != '' ">
-            AND sd1.department_name LIKE concat('%',#{departmentName},'%')
+        <if test="deptName != null and deptName != '' ">
+            AND sd1.dept_name LIKE concat('%',#{deptName},'%')
         </if>
-        <if test="departmentCode != null and departmentCode != '' ">
-            AND sd1.department_code LIKE concat('%',#{departmentCode},'%')
-        </if>
-        <if test="parentDepartmentId != null ">
-            AND sd1.parent_department_id = #{departmentName}
-        </if>
-        <if test="departmentType != null and departmentType != '' ">
-            AND sd1.department_type LIKE concat('%',#{departmentType},'%')
+        <if test="parentDeptId != null ">
+            AND sd1.parent_dept_id = #{parentDeptId}
         </if>
         <if test="unit != null and unit != '' ">
             AND sd1.unit LIKE concat('%',#{unit},'%')
@@ -57,12 +51,19 @@
         <if test="level != null and level != '' ">
             AND sd1.level LIKE concat('%',#{level},'%')
         </if>
-        <if test="createUserId != null ">
-            and sd1.create_user_id LIKE concat('%',#{createUserId},'%')
-        </if>
         <if test="createUserName != null and createUserName != '' ">
             AND su.user_name LIKE concat('%',#{createUserName},'%')
         </if>
+        <choose>
+            <when test="currentUserId != 1L">
+                AND sd1.status = 0
+            </when>
+            <otherwise>
+                <if test="status != null and status != '' ">
+                    AND sd1.status = #{status}
+                </if>
+            </otherwise>
+        </choose>
         ORDER BY sd1.`level` ASC , sd1.create_time DESC
     </select>
 </mapper>

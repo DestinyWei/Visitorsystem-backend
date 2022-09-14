@@ -1,9 +1,9 @@
 package com.project.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.project.common.BaseResponse;
 import com.project.model.dto.SysDeptDto;
 import com.project.model.entity.SysDeptEntity;
-import com.baomidou.mybatisplus.extension.service.IService;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,10 +23,10 @@ public interface SysDeptService extends IService<SysDeptEntity> {
 
     /**
      * 部门删除
-     * @param sysDeptEntity
+     * @param deptId
      * @return BaseResponse
      */
-    BaseResponse remove(SysDeptEntity sysDeptEntity);
+    BaseResponse remove(Long deptId);
 
     /**
      * 部门修改
@@ -41,4 +41,11 @@ public interface SysDeptService extends IService<SysDeptEntity> {
      * @return BaseResponse
      */
     BaseResponse search(SysDeptDto sysDeptDto);
+
+    /**
+     * 部门详情
+     * @param deptId
+     * @return BaseResponse
+     */
+    BaseResponse detail(Long deptId);
 }

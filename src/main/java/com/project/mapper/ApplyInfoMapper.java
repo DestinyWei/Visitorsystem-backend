@@ -14,6 +14,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 public interface ApplyInfoMapper extends BaseMapper<ApplyInfoEntity> {
 
     IPage<ApplyInfoEntity> selectApplyInfo(ApplyInfoDto applyInfoDto);
+
+    ApplyInfoEntity selectApplyInfoById(Long applyId);
 }
 
 

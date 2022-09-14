@@ -5,7 +5,7 @@
 <mapper namespace="com.project.mapper.SysUserMapper">
 
     <resultMap id="BaseResultMap" type="com.project.model.entity.SysUserEntity">
-        <id property="id" column="id" jdbcType="BIGINT"/>
+        <id property="userId" column="user_id" jdbcType="BIGINT"/>
         <result property="userName" column="user_name" jdbcType="VARCHAR"/>
         <result property="sex" column="sex" jdbcType="VARCHAR"/>
         <result property="idNumber" column="id_number" jdbcType="VARCHAR"/>
@@ -20,7 +20,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        su.id, su.user_name, su.sex, su.id_number, su.phone, su.email,
+        su.user_id, su.user_name, su.sex, su.id_number, su.phone, su.email,
         su.user_account, su.user_password,su.`type`,
         su.create_time, su.update_time, su.user_status, su.is_delete
     </sql>
@@ -28,17 +28,17 @@
     <select id="searchUser" resultType="com.project.model.entity.SysUserEntity">
         SELECT
             su.user_name, su.sex, su.id_number, su.phone, su.email, su.user_account, su.`type`,
-            su.user_status, su.is_delete, sr.role_type AS  roleType
+            su.user_status, su.is_delete, sr.role_name AS  roleName
         FROM
             sys_user su
         LEFT JOIN
-            user_role ur
+            sys_user_role ur
         ON
-            su.id = ur.user_id
+            su.user_id = ur.user_id
         LEFT JOIN
             sys_role sr
         ON
-            ur.role_id = sr.id
+            ur.role_id = sr.role_id
         WHERE 1 = 1
         <if test=" userName != null and userName != '' ">
             AND su.user_name LIKE concat('%',#{userName},'%')

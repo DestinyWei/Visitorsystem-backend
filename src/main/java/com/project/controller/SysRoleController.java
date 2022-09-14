@@ -10,6 +10,9 @@ import com.project.model.enums.BusinessType;
 import com.project.service.SysRoleService;
 import com.project.util.ResultUtils;
 import com.project.util.SecurityUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,11 +25,13 @@ import java.util.Date;
  */
 @RestController
 @RequestMapping("/role")
+@Api(tags = "系统角色接口")
 public class SysRoleController{
 
     @Resource
     private SysRoleService sysRoleService;
 
+    @ApiOperation(value = "角色查询")
     @PostMapping("/search")
     public BaseResponse search(@RequestBody SysRoleDto sysRoleDto) {
         return sysRoleService.selectRoleList(sysRoleDto);
@@ -36,6 +41,7 @@ public class SysRoleController{
      * 新增保存角色
      */
     @Log(title = "角色管理", businessType = BusinessType.INSERT)
+    @ApiOperation(value = "角色新增")
     @PostMapping("/insert")
     public BaseResponse insert(@Validated @RequestBody SysRoleEntity sysRoleEntity, HttpServletRequest request) {
         if (!SecurityUtils.isAdmin(request)){
@@ -58,6 +64,7 @@ public class SysRoleController{
      * 修改保存角色
      */
     @Log(title = "角色管理", businessType = BusinessType.UPDATE)
+    @ApiOperation(value = "角色修改")
     @PostMapping("/update")
     public BaseResponse update(@Validated @RequestBody SysRoleEntity sysRoleEntity, HttpServletRequest request) {
         if (!SecurityUtils.isAdmin(request)){
@@ -81,6 +88,7 @@ public class SysRoleController{
      * 保存角色部门信息
      */
     @Log(title = "角色管理", businessType = BusinessType.UPDATE)
+    @ApiOperation(value = "角色部门信息修改")
     @PostMapping("/updateRoleDept")
     public BaseResponse updateRoleDept(@RequestBody SysRoleEntity sysRoleEntity, HttpServletRequest request) {
         if (!SecurityUtils.isAdmin(request)){
@@ -97,9 +105,10 @@ public class SysRoleController{
      * 删除角色
      */
     @Log(title = "角色管理", businessType = BusinessType.DELETE)
+    @ApiOperation(value = "角色删除")
     @PostMapping("/remove")
     @ResponseBody
-    public BaseResponse remove(String ids, HttpServletRequest request) {
+    public BaseResponse remove(@ApiParam(value = "角色Id组") String ids, HttpServletRequest request) {
         if (!SecurityUtils.isAdmin(request)){
             return ResultUtils.error(ErrorCode.NO_AUTH);
         }
@@ -109,6 +118,7 @@ public class SysRoleController{
     /**
      * 校验角色名称
      */
+    @ApiOperation(value = "校验角色名称")
     @PostMapping("/checkRoleNameUnique")
     public BaseResponse checkRoleNameUnique(@RequestBody SysRoleEntity sysRoleEntity) {
         String roleNameUnique = sysRoleService.checkRoleNameUnique(sysRoleEntity);
@@ -118,6 +128,7 @@ public class SysRoleController{
     /**
      * 校验角色权限
      */
+    @ApiOperation(value = "校验角色权限")
     @PostMapping("/checkRoleKeyUnique")
     public BaseResponse checkRoleKeyUnique(@RequestBody SysRoleEntity sysRoleEntity) {
         String checkRoleKeyUnique = sysRoleService.checkRoleKeyUnique(sysRoleEntity);
@@ -127,6 +138,7 @@ public class SysRoleController{
     /**
      * 角色状态修改
      */
+    @ApiOperation(value = "角色状态修改")
     @Log(title = "角色管理", businessType = BusinessType.UPDATE)
     @PostMapping("/changeStatus")
     public BaseResponse changeStatus(@RequestBody SysRoleEntity sysRoleEntity, HttpServletRequest request) {

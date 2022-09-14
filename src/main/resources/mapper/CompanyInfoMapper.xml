@@ -22,14 +22,14 @@
 
     <select id="selectCompany" resultType="com.project.model.entity.CompanyInfoEntity">
         SELECT
-            company_name,company_region,company_address,
+            id, company_name,company_region,company_address,
             company_phone,company_info,company_introduction,
             create_time
         FROM
             company_info
         WHERE 1 = 1
         <if test="companyName != null and companyName != '' ">
-            AND company_name LIKE concat('%',#{companyPhone},'%')
+            AND company_name LIKE concat('%',#{companyName},'%')
         </if>
         <if test="companyRegion != null and companyRegion != '' ">
             AND company_region = #{companyRegion}

@@ -21,10 +21,10 @@ public interface CompanyInfoService extends IService<CompanyInfoEntity> {
 
     /**
      * 公司信息删除
-     * @param companyInfoEntity
+     * @param companyId
      * @return BaseResponse
      */
-    BaseResponse remove(CompanyInfoEntity companyInfoEntity);
+    BaseResponse remove(Long companyId);
 
     /**
      * 公司信息修改
@@ -39,4 +39,11 @@ public interface CompanyInfoService extends IService<CompanyInfoEntity> {
      * @return BaseResponse
      */
     BaseResponse search(CompanyInfoDto companyInfoDto);
+
+    /**
+     * 公司信息详情
+     * @param companyId
+     * @return BaseResponse
+     */
+    BaseResponse detail(Long companyId);
 }

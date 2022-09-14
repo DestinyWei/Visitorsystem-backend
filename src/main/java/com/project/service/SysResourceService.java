@@ -23,10 +23,10 @@ public interface SysResourceService extends IService<SysResourceEntity> {
 
     /**
      * 系统资源修改
-     * @param sysResourceEntity
+     * @param resourceId
      * @return BaseResponse
      */
-    BaseResponse remove(SysResourceEntity sysResourceEntity);
+    BaseResponse remove(Long resourceId);
 
     /**
      * 系统资源修改

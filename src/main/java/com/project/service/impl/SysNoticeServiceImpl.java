@@ -74,7 +74,7 @@ public class SysNoticeServiceImpl implements SysNoticeService {
         }
         int update = noticeMapper.updateNotice(sysNoticeEntity);
         if (update == 0){
-            return ResultUtils.error(ErrorCode.UPDATE_ERROR, "修改失败");
+            return ResultUtils.error(ErrorCode.UPDATE_ERROR, "修改失败,该公告不存在或已被删除");
         }
         return ResultUtils.success(sysNoticeEntity.getNoticeId(), "修改成功");
     }
@@ -89,7 +89,7 @@ public class SysNoticeServiceImpl implements SysNoticeService {
     public BaseResponse deleteNoticeByIds(String ids) {
         int delete = noticeMapper.deleteNoticeByIds(Convert.toStrArray(ids));
         if (delete == 0){
-            return ResultUtils.error(ErrorCode.DELETE_ERROR, "删除失败,已删除或没有该公告");
+            return ResultUtils.error(ErrorCode.DELETE_ERROR, "删除失败,,该公告不存在或已被删除");
         }
         return ResultUtils.success("删除成功");
     }

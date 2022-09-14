@@ -10,18 +10,20 @@ import com.project.model.enums.BusinessType;
 import com.project.service.SysMenuService;
 import com.project.util.ResultUtils;
 import com.project.util.SecurityUtils;
-import org.springframework.stereotype.Controller;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
-import java.util.List;
 
 /**
  * 菜单信息
  */
+@Api(tags = "菜单信息接口")
 @RestController
 @RequestMapping("/menu")
 public class SysMenuController {
@@ -29,6 +31,7 @@ public class SysMenuController {
     @Resource
     private SysMenuService sysMenuService;
 
+    @ApiOperation(value = "菜单查询")
     @PostMapping("/search")
     public BaseResponse search(@RequestBody SysMenuDto sysMenuDto, HttpServletRequest request) {
         return sysMenuService.selectMenuList(sysMenuDto, request);
@@ -37,9 +40,10 @@ public class SysMenuController {
     /**
      * 删除菜单
      */
+    @ApiOperation(value = "菜单删除")
     @Log(title = "菜单管理", businessType = BusinessType.DELETE)
     @GetMapping("/remove/{menuId}")
-    public BaseResponse remove(@PathVariable("menuId") Long menuId) {
+    public BaseResponse remove(@PathVariable("menuId") @ApiParam(value = "菜单Id") Long menuId) {
         if (sysMenuService.selectCountMenuByParentId(menuId) > 0) {
             return ResultUtils.error("存在子菜单,不允许删除");
         }
@@ -52,6 +56,7 @@ public class SysMenuController {
     /**
      * 新增保存菜单
      */
+    @ApiOperation(value = "菜单新增")
     @Log(title = "菜单管理", businessType = BusinessType.INSERT)
     @PostMapping("/insert")
     public BaseResponse insert(@Validated @RequestBody SysMenuEntity sysMenuEntity, HttpServletRequest request) {
@@ -67,14 +72,16 @@ public class SysMenuController {
     /**
      * 菜单详情
      */
+    @ApiOperation(value = "菜单详情")
     @GetMapping("/detail/{menuId}")
-    public BaseResponse detail(@PathVariable("menuId") Long menuId) {
+    public BaseResponse detail(@PathVariable("menuId") @ApiParam(value = "菜单Id") Long menuId) {
         return sysMenuService.selectMenuById(menuId);
     }
 
     /**
      * 修改保存菜单
      */
+    @ApiOperation(value = "菜单修改")
     @Log(title = "菜单管理", businessType = BusinessType.UPDATE)
     @PostMapping("/update")
     public BaseResponse update(@Validated @RequestBody SysMenuEntity sysMenuEntity, HttpServletRequest request) {
@@ -90,6 +97,7 @@ public class SysMenuController {
     /**
      * 校验菜单名称
      */
+    @ApiOperation(value = "校验菜单名称")
     @PostMapping("/checkMenuNameUnique")
     public String checkMenuNameUnique(@RequestBody SysMenuEntity sysMenuEntity) {
         return sysMenuService.checkMenuNameUnique(sysMenuEntity);
@@ -98,6 +106,7 @@ public class SysMenuController {
     /**
      * 加载角色菜单列表树
      */
+    @ApiOperation(value = "加载角色菜单列表树")
     @PostMapping("/roleMenuTreeData")
     public BaseResponse roleMenuTreeData(@RequestBody SysRoleEntity sysRoleEntity, HttpServletRequest request) {
         // TODO 权限
@@ -107,6 +116,7 @@ public class SysMenuController {
     /**
      * 加载所有菜单列表树
      */
+    @ApiOperation(value = "加载所有菜单列表树")
     @GetMapping("/menuTreeData")
     public BaseResponse menuTreeData(HttpServletRequest request) {
         return sysMenuService.menuTreeData(request);
@@ -115,8 +125,9 @@ public class SysMenuController {
     /**
      * 选择菜单树
      */
+    @ApiOperation(value = "选择菜单树")
     @GetMapping("/selectMenuTree/{menuId}")
-    public BaseResponse selectMenuTree(@PathVariable("menuId") Long menuId) {
+    public BaseResponse selectMenuTree(@PathVariable("menuId") @ApiParam(value = "菜单Id") Long menuId) {
         return sysMenuService.selectMenuById(menuId);
     }
 }

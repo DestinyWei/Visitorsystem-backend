@@ -93,8 +93,8 @@ CREATE TABLE sys_resource(
                              resource_url            VARCHAR(1000) DEFAULT '' COMMENT '资源URL',
                              photo_url               VARCHAR(500) DEFAULT '' COMMENT '图片URL',
                              resource_code           VARCHAR(64) DEFAULT '' COMMENT '资源编码',
-                             authorization_status    INT DEFAULT NULL COMMENT '授权状态 0-未授权 1-已授权',
-                             `status`                INT DEFAULT NULL COMMENT '状态 0-正常 1-停用',
+                             authorization_status    VARCHAR(8) DEFAULT '' COMMENT '授权状态 0-未授权 1-已授权',
+                             `status`                VARCHAR(8) DEFAULT '' COMMENT '状态 0-正常 1-停用',
                              create_user_id          BIGINT COMMENT '创建者ID',
                              create_time             DATETIME DEFAULT NULL COMMENT '创建时间',
                              PRIMARY KEY (id)
