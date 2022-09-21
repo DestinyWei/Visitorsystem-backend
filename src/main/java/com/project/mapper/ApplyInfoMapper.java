@@ -1,9 +1,11 @@
 package com.project.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.project.model.dto.ApplyInfoDto;
 import com.project.model.entity.ApplyInfoEntity;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+import java.util.List;
 
 /**
 * @author Destiny
@@ -16,6 +18,8 @@ public interface ApplyInfoMapper extends BaseMapper<ApplyInfoEntity> {
     IPage<ApplyInfoEntity> selectApplyInfo(ApplyInfoDto applyInfoDto);
 
     ApplyInfoEntity selectApplyInfoById(Long applyId);
+
+    List<ApplyInfoEntity> selectApplyInfoList(ApplyInfoDto applyInfoDto);
 }
 
 

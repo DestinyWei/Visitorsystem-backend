@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.project.common.BaseResponse;
 import com.project.common.ErrorCode;
+import com.project.exception.BusinessException;
 import com.project.mapper.ApplyInfoMapper;
 import com.project.mapper.CompanyInfoMapper;
 import com.project.mapper.SysDeptMapper;
@@ -20,7 +21,10 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
 * @author Destiny
@@ -46,25 +50,10 @@ public class ApplyInfoServiceImpl extends ServiceImpl<ApplyInfoMapper, ApplyInfo
     @Override
     public BaseResponse insert(ApplyInfoEntity applyInfoEntity, HttpServletRequest request) {
         SysUserEntity loginUser = SecurityUtils.getLoginUser(request);
-        SysDeptEntity dept = sysDeptMapper.selectById(applyInfoEntity.getDeptId());
-        if (dept == null){
-            return ResultUtils.error(ErrorCode.PARAMS_ERROR, "部门不存在");
-        }
-        CompanyInfoEntity companyInfo = companyInfoMapper.selectById(applyInfoEntity.getCompanyId());
-        if (companyInfo == null){
-            return ResultUtils.error(ErrorCode.PARAMS_ERROR, "公司不存在");
-        }
-        SysUserEntity user = sysUserMapper.selectById(applyInfoEntity.getPrincipalId());
-        if (user == null){
-            return ResultUtils.error(ErrorCode.PARAMS_ERROR, "用户不存在");
-        }
         applyInfoEntity.setCreateTime(new Date());
         applyInfoEntity.setApplicantId(loginUser.getUserId());
-        applyInfoEntity.setApplicantName(loginUser.getUserName());
         applyInfoEntity.setApplyStatus("0");
-        applyInfoEntity.setDeptName(dept.getDeptName());
-        applyInfoEntity.setCompanyName(companyInfo.getCompanyName());
-        applyInfoEntity.setPrincipalName(user.getUserName());
+        this.insertInfo(applyInfoEntity);
         int insert = applyInfoMapper.insert(applyInfoEntity);
         if (insert == 0){
             return ResultUtils.error(ErrorCode.SAVE_ERROR, "新增失败");
@@ -121,6 +110,48 @@ public class ApplyInfoServiceImpl extends ServiceImpl<ApplyInfoMapper, ApplyInfo
     public BaseResponse detail(Long applyId) {
         ApplyInfoEntity applyInfoEntity = applyInfoMapper.selectApplyInfoById(applyId);
         return ResultUtils.success(applyInfoEntity, "查询详情成功");
+    }
+
+    @Override
+    public BaseResponse collect(ApplyInfoDto applyInfoDto) {
+        // 获得分组情况
+        List<ApplyInfoEntity> applyInfoEntities = applyInfoMapper.selectApplyInfoList(applyInfoDto);
+        for (ApplyInfoEntity applyInfoEntity : applyInfoEntities) {
+            // 获取相同分组下的所有访问申请信息
+            String ids = applyInfoEntity.getIds();
+            List<String> id = Arrays.stream(ids.split(",")).collect(Collectors.toList());
+            List<ApplyInfoEntity> applyInfoList = applyInfoMapper.selectBatchIds(id);
+            for (ApplyInfoEntity infoEntity : applyInfoList) {
+                // 添加具体字段信息
+                this.insertInfo(infoEntity);
+            }
+            applyInfoEntity.setList(applyInfoList);
+        }
+        return ResultUtils.success(applyInfoEntities, "分组查询成功");
+    }
+
+    private ApplyInfoEntity insertInfo(ApplyInfoEntity applyInfoEntity){
+        SysDeptEntity dept = sysDeptMapper.selectById(applyInfoEntity.getDeptId());
+        if (dept == null){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "部门不存在");
+        }
+        CompanyInfoEntity companyInfo = companyInfoMapper.selectById(applyInfoEntity.getCompanyId());
+        if (companyInfo == null){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "公司不存在");
+        }
+        SysUserEntity principal = sysUserMapper.selectById(applyInfoEntity.getPrincipalId());
+        if (principal == null){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "用户不存在");
+        }
+        SysUserEntity applicant = sysUserMapper.selectById(applyInfoEntity.getApplicantId());
+        if (applicant == null){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "用户不存在");
+        }
+        applyInfoEntity.setApplicantName(applicant.getUserName());
+        applyInfoEntity.setPrincipalName(principal.getUserName());
+        applyInfoEntity.setDeptName(dept.getDeptName());
+        applyInfoEntity.setCompanyName(companyInfo.getCompanyName());
+        return applyInfoEntity;
     }
 }
 

@@ -49,4 +49,11 @@ public interface ApplyInfoService extends IService<ApplyInfoEntity> {
      * @return BaseResponse
      */
     BaseResponse detail(Long applyId);
+
+    /**
+     * 访问申请信息收集
+     * @param applyInfoDto
+     * @return BaseResponse
+     */
+    BaseResponse collect(ApplyInfoDto applyInfoDto);
 }

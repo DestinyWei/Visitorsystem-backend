@@ -43,7 +43,6 @@ public class ApplyInfoController {
         return applyInfoService.remove(applyId);
     }
 
-    // TODO 校验名称是否唯一
     @ApiOperation(value = "访问申请修改")
     @PostMapping("/update")
     public BaseResponse update(@Validated @RequestBody ApplyInfoEntity applyInfoEntity){
@@ -61,5 +60,11 @@ public class ApplyInfoController {
     @ResponseBody
     public BaseResponse detail(@PathVariable("applyId") @ApiParam(value = "访问申请Id") Long applyId){
         return applyInfoService.detail(applyId);
+    }
+
+    @ApiOperation(value = "访问申请分组查询")
+    @PostMapping("/collect")
+    public BaseResponse collect(@RequestBody ApplyInfoDto applyInfoDto){
+        return applyInfoService.collect(applyInfoDto);
     }
 }

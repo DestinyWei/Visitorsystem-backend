@@ -12,6 +12,7 @@ import lombok.Data;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 
@@ -66,7 +67,6 @@ public class ApplyInfoEntity implements Serializable {
      * 申请人ID
      */
     @ApiModelProperty(value = "申请人Id")
-    @NotNull(message = "申请人Id不能为空")
     private Long applicantId;
 
     /**
@@ -116,6 +116,20 @@ public class ApplyInfoEntity implements Serializable {
     @ApiModelProperty(value = "部门名称")
     @TableField(exist = false)
     private String deptName;
+
+    /**
+     * 分组查询Id结果列表
+     */
+    @ApiModelProperty(value = "分组查询Id结果列表")
+    @TableField(exist = false)
+    private String ids;
+
+    /**
+     * 访问申请分类
+     */
+    @ApiModelProperty(value = "分组查询结果")
+    @TableField(exist = false)
+    private List<ApplyInfoEntity> list;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

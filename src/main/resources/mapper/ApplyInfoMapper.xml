@@ -102,4 +102,32 @@
         WHERE ap.id = #{id}
         ORDER BY ap.create_time DESC
     </select>
+
+    <select id="selectApplyInfoList" resultType="com.project.model.entity.ApplyInfoEntity">
+        SELECT
+            ap.start_time, ap.end_time, sd.dept_name,
+            ci.company_name AS companyName, su2.user_name AS principalName,
+            cast(group_concat(ap.id) as char) AS ids
+        FROM
+            apply_info ap
+        LEFT JOIN
+            sys_dept sd
+        ON
+            ap.dept_id = sd.dept_id
+        LEFT JOIN
+            sys_user su1
+        ON
+            ap.applicant_id = su1.user_id
+        LEFT JOIN
+            sys_user su2
+        ON
+            ap.principal_id = su2.user_id
+        LEFT JOIN
+            company_info ci
+        ON
+            ap.company_id = ci.id
+        GROUP BY
+            ap.start_time, ap.end_time, sd.dept_name, ci.company_name, su2.user_name
+        ORDER BY ap.create_time DESC
+    </select>
 </mapper>
