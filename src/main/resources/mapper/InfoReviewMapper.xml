@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.mapper.InfoReviewMapper">
+
+    <resultMap id="InfoReviewResult" type="com.project.model.entity.InfoReviewEntity">
+        <id property="id"         column="id"/>
+        <id property="reviewerId" column="reviewer_id"/>
+        <id property="visitId"    column="visit_id"/>
+        <id property="status"     column="status"/>
+        <id property="remark"     column="remark"/>
+        <id property="createTime" column="create_time"/>
+    </resultMap>
+    <sql id="selectInfoReviewList">
+        select r.id, r.reviewer_id, r.visit_id, r.status, r.remark ,r.create_time
+        from info_review r
+    </sql>
+
+    <select id="selectInfoReview" parameterType="com.project.model.entity.InfoReviewEntity" resultType="com.project.model.entity.InfoReviewEntity">
+        <include refid="selectInfoReviewList"/>
+        where 1=1
+        <if test="reviewerId != null and reviewerId != 0">
+            AND r.reviewer_id = #{reviewerId}
+        </if>
+        <if test="status != null and status != ''">
+            AND r.status = #{status}
+        </if>
+        <if test="createTime != null and createTime != ''"><!-- 审核时间 -->
+            AND r.create_time = #{createTime}
+        </if>
+    </select>
+
+    <select id="selectInfoReviewById" parameterType="Long" resultType="com.project.model.entity.InfoReviewEntity">
+        select * from info_review
+        where id = #{id}
+    </select>
+
+    <select id="selectInfoReviewByVisitId" parameterType="Long" resultType="com.project.model.entity.InfoReviewEntity">
+        select * from info_review
+        where visit_id = #{visitId}
+    </select>
+
+    <insert id="insertInfoReview" parameterType="com.project.model.entity.InfoReviewEntity">
+        insert into info_review(
+            <if test="reviewerId != null and reviewerId !=0">reviewer_id,</if>
+            <if test="visitId != null and visitId != 0">visit_id,</if>
+            <if test="status != null and status != ''">status,</if>
+            <if test="remark != null and remark != ''">remark,</if>
+            create_time
+        )values (
+            <if test="reviewerId != null and reviewerId !=0">#{reviewerId},</if>
+            <if test="visitId != null and visitId != 0">#{visitId},</if>
+            <if test="status != null and status != ''">#{status},</if>
+            <if test="remark != null and remark != ''">#{remark},</if>
+            sysdate()
+        )
+    </insert>
+
+    <delete id="deleteInfoReviewById" parameterType="Long">
+        delete from info_review where id = #{id}
+    </delete>
+
+    <delete id="deleteInfoReviewByVisitIds" parameterType="Long">
+        delete from info_review where visit_id in
+        <foreach collection="array" item="infoReviewId" open="(" separator="," close=")">
+            #{infoReviewId}
+        </foreach>
+    </delete>
+
+    <update id="updateInfoReview" parameterType="com.project.model.entity.InfoReviewEntity">
+        update info_review
+        <set>
+            <if test="reviewerId != null and reviewerId != 0">reviewer_id = #{reviewerId},</if>
+            <if test="visitId != null and visitId != 0">visit_id = #{visitId},</if>
+            <if test="status != null and status != ''">status = #{status},</if>
+            <if test="remark != null and remark != ''">remark = #{remark},</if>
+            create_time = sysdate()
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

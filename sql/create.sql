@@ -148,17 +148,6 @@ CREATE TABLE apply_info(
 )ENGINE=MYISAM
 ;
 
-# 信息收集表
-CREATE TABLE info_collect(
-                             id     		  BIGINT NOT NULL AUTO_INCREMENT COMMENT '信息采集ID',
-                             visit_id         BIGINT COMMENT '访问申请ID',
-                             user_id          BIGINT COMMENT '用户ID',
-                             department_id    BIGINT COMMENT '部门ID',
-                             create_time      DATETIME DEFAULT NULL COMMENT '创建时间',
-                             PRIMARY KEY (id)
-)ENGINE=MYISAM
-;
-
 # 人员信息审核表
 CREATE TABLE info_review(
                           id			  BIGINT NOT NULL AUTO_INCREMENT COMMENT '审核ID',
@@ -166,33 +155,21 @@ CREATE TABLE info_review(
                           visit_id        BIGINT COMMENT '访问申请ID',
                           status          VARCHAR(8) DEFAULT '' COMMENT '状态 1-进行中 2-已完成 3-驳回',
                           remark          VARCHAR(255) DEFAULT '' COMMENT '备注',
-                          create_time     DATETIME DEFAULT NULL COMMENT '创建时间',
+                          create_time     DATETIME DEFAULT NULL COMMENT '审核时间',
                           PRIMARY KEY (id)
-)ENGINE=MYISAM
-;
-
-# 信息处理表
-CREATE TABLE info_process(
-                            id					BIGINT NOT NULL AUTO_INCREMENT COMMENT '处理ID',
-                            collect_id          BIGINT COMMENT '信息采集ID',
-                            reviewer_id         BIGINT COMMENT '审核ID',
-                            score_id            BIGINT COMMENT '评分ID',
-                            notice_id           BIGINT COMMENT '通知公告ID',
-                            create_time         DATETIME DEFAULT NULL COMMENT '编辑时间',
-                            PRIMARY KEY (id)
 )ENGINE=MYISAM
 ;
 
 # 信息评分表
 CREATE TABLE info_score(
                           id			  BIGINT NOT NULL AUTO_INCREMENT COMMENT '评分ID',
-                          score_rule      VARCHAR(255) DEFAULT  '' COMMENT '评分细则',
-                          is_use          VARCHAR(8) DEFAULT '' COMMENT '是否采用',
+                          applicant_id    BIGINT COMMENT '访问人ID',
+                          visit_id        BIGINT COMMENT '访问申请信息ID',
                           score           INT COMMENT '分数',
+                          suggest         VARCHAR(255) DEFAULT  '' COMMENT '用户建议',
+                          is_use          VARCHAR(8) DEFAULT '' COMMENT '是否采用',
                           remark          VARCHAR(500) DEFAULT  '' COMMENT '备注',
-                          collect_id      BIGINT COMMENT '采集ID',
-                          create_user_id  BIGINT COMMENT '创建者ID',
-                          create_time     DATETIME DEFAULT NULL COMMENT '创建时间',
+                          create_time     DATETIME DEFAULT NULL COMMENT '评分时间',
                           PRIMARY KEY (id)
 )ENGINE=MYISAM
 ;
