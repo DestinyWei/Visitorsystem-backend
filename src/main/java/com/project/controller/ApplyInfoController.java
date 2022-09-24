@@ -43,6 +43,14 @@ public class ApplyInfoController {
         return applyInfoService.remove(applyId);
     }
 
+    @ApiOperation(value = "访问申请批量删除")
+    @Log(title = "访问申请管理", businessType = BusinessType.DELETE)
+    @PostMapping("/removes")
+    @ResponseBody
+    public BaseResponse removes(@ApiParam(value = "访问申请Ids") Long[] applyIds){
+        return applyInfoService.removes(applyIds);
+    }
+
     @ApiOperation(value = "访问申请修改")
     @PostMapping("/update")
     public BaseResponse update(@Validated @RequestBody ApplyInfoEntity applyInfoEntity){

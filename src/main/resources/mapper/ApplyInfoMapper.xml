@@ -130,4 +130,11 @@
             ap.start_time, ap.end_time, sd.dept_name, ci.company_name, su2.user_name
         ORDER BY ap.create_time DESC
     </select>
+
+    <delete id="deleteApplyInfoByIds" parameterType="Long">
+        delete from apply_info where id in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </delete>
 </mapper>

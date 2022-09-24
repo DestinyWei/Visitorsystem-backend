@@ -30,6 +30,13 @@ public interface ApplyInfoService extends IService<ApplyInfoEntity> {
     BaseResponse remove(Long applyId);
 
     /**
+     * 访问申请批量删除
+     * @param applyIds
+     * @return BaseResponse
+     */
+    BaseResponse removes(Long[] applyIds);
+
+    /**
      * 访问申请修改
      * @param applyInfoEntity
      * @return BaseResponse

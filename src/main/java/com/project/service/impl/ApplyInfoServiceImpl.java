@@ -74,6 +74,15 @@ public class ApplyInfoServiceImpl extends ServiceImpl<ApplyInfoMapper, ApplyInfo
     }
 
     @Override
+    public BaseResponse removes(Long[] applyIds) {
+        int deletes = applyInfoMapper.deleteBatchIds(Arrays.stream(applyIds).collect(Collectors.toList()));
+        if (deletes == 0){
+            return ResultUtils.error(ErrorCode.DELETE_ERROR, "删除失败,该访问申请不存在或已被删除");
+        }
+        return ResultUtils.success(deletes, "批量删除成功");
+    }
+
+    @Override
     public BaseResponse update(ApplyInfoEntity applyInfoEntity) {
         if (applyInfoEntity.getId() == null){
             return ResultUtils.error(ErrorCode.NULL_ERROR, "Id为空");

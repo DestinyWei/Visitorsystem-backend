@@ -15,11 +15,33 @@ import java.util.List;
 */
 public interface ApplyInfoMapper extends BaseMapper<ApplyInfoEntity> {
 
+    /**
+     * 分页查询访问申请
+     * @param applyInfoDto
+     * @return IPage<ApplyInfoEntity>
+     */
     IPage<ApplyInfoEntity> selectApplyInfo(ApplyInfoDto applyInfoDto);
 
+    /**
+     * 根据Id查询访问申请
+     * @param applyId
+     * @return ApplyInfoEntity
+     */
     ApplyInfoEntity selectApplyInfoById(Long applyId);
 
+    /**
+     * 分组查询
+     * @param applyInfoDto
+     * @return List<ApplyInfoEntity>
+     */
     List<ApplyInfoEntity> selectApplyInfoList(ApplyInfoDto applyInfoDto);
+
+    /**
+     * 批量删除访问申请
+     * @param ids
+     * @return int
+     */
+    int deleteApplyInfoByIds(Long[] ids);
 }
 
 
