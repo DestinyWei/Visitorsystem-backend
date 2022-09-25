@@ -20,6 +20,7 @@ import java.util.Date;
 @Data
 public class InfoScoreDto extends Page<InfoScoreEntity> implements Serializable {
 
+    private static final long serialVersionUID = 7253493733691529301L;
     @ApiModelProperty(value = "访问人ID")
     private Long applicantId;
     @ApiModelProperty(value = "是否采用")

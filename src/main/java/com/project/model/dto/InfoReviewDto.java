@@ -20,6 +20,7 @@ import java.util.Date;
 @Data
 public class InfoReviewDto extends Page<InfoReviewEntity> implements Serializable {
 
+    private static final long serialVersionUID = 7963814922713760301L;
     @ApiModelProperty(value = "审核人ID")
     private Long reviewerId;
     @ApiModelProperty(value = "状态 1-进行中 2-已完成 3-驳回")

@@ -37,7 +37,7 @@ public class InfoScoreServiceImpl extends ServiceImpl<InfoScoreMapper, InfoScore
     public BaseResponse insert(InfoScoreEntity infoScoreEntity, HttpServletRequest request) {
         infoScoreEntity.setCreateTime(new Date());
         this.insertInfo(infoScoreEntity);
-        int insert = infoScoreMapper.insertInfoScore(infoScoreEntity);
+        int insert = infoScoreMapper.insert(infoScoreEntity);
         if (insert == 0){
             return ResultUtils.error(ErrorCode.SAVE_ERROR, "新增失败");
         }
@@ -49,7 +49,7 @@ public class InfoScoreServiceImpl extends ServiceImpl<InfoScoreMapper, InfoScore
         if (id == null){
             return ResultUtils.error(ErrorCode.NULL_ERROR, "Id为空");
         }
-        int delete = infoScoreMapper.deleteInfoScoreById(id);
+        int delete = infoScoreMapper.deleteById(id);
         if (delete == 0){
             return ResultUtils.error(ErrorCode.DELETE_ERROR, "删除失败,该评分表不存在或已被删除");
         }
@@ -74,7 +74,7 @@ public class InfoScoreServiceImpl extends ServiceImpl<InfoScoreMapper, InfoScore
         if (applyInfo == null){
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "访问申请表不存在");
         }
-        int update = infoScoreMapper.updateInfoScore(infoScoreEntity);
+        int update = infoScoreMapper.updateById(infoScoreEntity);
         if (update == 0){
             return ResultUtils.error(ErrorCode.UPDATE_ERROR, "修改失败,该评分表不存在或已被删除");
         }
@@ -83,7 +83,7 @@ public class InfoScoreServiceImpl extends ServiceImpl<InfoScoreMapper, InfoScore
 
     @Override
     public BaseResponse selectById(Long id) {
-        InfoScoreEntity infoScoreEntity = infoScoreMapper.selectInfoScoreById(id);
+        InfoScoreEntity infoScoreEntity = infoScoreMapper.selectById(id);
         return ResultUtils.success(infoScoreEntity, "查询详情成功");
     }
 
