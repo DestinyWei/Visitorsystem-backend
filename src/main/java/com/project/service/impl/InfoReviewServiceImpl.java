@@ -19,6 +19,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -42,7 +43,7 @@ public class InfoReviewServiceImpl extends ServiceImpl<InfoReviewMapper, InfoRev
         infoReviewEntity.setReviewerId(LoginUserId);
         infoReviewEntity.setCreateTime(new Date());
         this.insertInfo(infoReviewEntity);
-        int insert = infoReviewMapper.insertInfoReview(infoReviewEntity);
+        int insert = infoReviewMapper.insert(infoReviewEntity);
 
         //修改关联的访问申请表中的状态
         ApplyInfoEntity applyInfoEntity = applyInfoMapper.selectApplyInfoById(infoReviewEntity.getVisitId());
@@ -74,9 +75,10 @@ public class InfoReviewServiceImpl extends ServiceImpl<InfoReviewMapper, InfoRev
 
     @Override
     public BaseResponse removes(Long[] visitIds) {
+        List<Long> ids = Arrays.stream(visitIds).collect(Collectors.toList());
         //删除关联的访问申请表
-        applyInfoMapper.deleteBatchIds(Arrays.stream(visitIds).collect(Collectors.toList()));
-        int deletes = infoReviewMapper.deleteInfoReviewByVisitIds(visitIds);
+        applyInfoMapper.deleteBatchIds(ids);
+        int deletes = infoReviewMapper.deleteBatchIds(ids);
         if (deletes == 0){
             return ResultUtils.error(ErrorCode.DELETE_ERROR, "删除失败,该审核表不存在或已被删除");
         }
@@ -89,7 +91,6 @@ public class InfoReviewServiceImpl extends ServiceImpl<InfoReviewMapper, InfoRev
             return ResultUtils.error(ErrorCode.NULL_ERROR, "Id为空");
         }
         ApplyInfoEntity applyInfo = applyInfoMapper.selectById(infoReviewEntity.getVisitId());
-        log.error(infoReviewEntity.getVisitId().toString());
         if (applyInfo == null){
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "访问申请表不存在");
         }
@@ -99,7 +100,7 @@ public class InfoReviewServiceImpl extends ServiceImpl<InfoReviewMapper, InfoRev
         applyInfoEntity.setApplyStatus(infoReviewEntity.getStatus());
         applyInfoMapper.updateById(applyInfoEntity);
 
-        int update = infoReviewMapper.updateInfoReview(infoReviewEntity);
+        int update = infoReviewMapper.updateById(infoReviewEntity);
         if (update == 0){
             return ResultUtils.error(ErrorCode.UPDATE_ERROR, "修改失败,该审核表不存在或已被删除");
         }

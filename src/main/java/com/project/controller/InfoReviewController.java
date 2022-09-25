@@ -53,6 +53,7 @@ public class InfoReviewController {
 
 
     @ApiOperation(value = "信息审核修改")
+    @Log(title = "信息审核管理", businessType = BusinessType.UPDATE)
     @PostMapping("/update")
     @ResponseBody
     public BaseResponse update(@Validated @RequestBody InfoReviewEntity infoReviewEntity){
@@ -73,7 +74,7 @@ public class InfoReviewController {
         return infoReviewService.selectByVisitId(visitId);
     }
 
-    @ApiOperation(value = "信息审核模糊查询")
+    @ApiOperation(value = "信息审核查询")
     @PostMapping("/search")
     @ResponseBody
     public BaseResponse search(@RequestBody InfoReviewDto infoReviewDto){
