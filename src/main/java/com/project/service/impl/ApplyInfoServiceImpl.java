@@ -5,10 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.project.common.BaseResponse;
 import com.project.common.ErrorCode;
 import com.project.exception.BusinessException;
-import com.project.mapper.ApplyInfoMapper;
-import com.project.mapper.CompanyInfoMapper;
-import com.project.mapper.SysDeptMapper;
-import com.project.mapper.SysUserMapper;
+import com.project.mapper.*;
 import com.project.model.dto.ApplyInfoDto;
 import com.project.model.entity.ApplyInfoEntity;
 import com.project.model.entity.CompanyInfoEntity;
@@ -47,6 +44,9 @@ public class ApplyInfoServiceImpl extends ServiceImpl<ApplyInfoMapper, ApplyInfo
     @Resource
     private SysUserMapper sysUserMapper;
 
+    @Resource
+    private InfoScoreMapper infoScoreMapper;
+
     @Override
     public BaseResponse insert(ApplyInfoEntity applyInfoEntity, HttpServletRequest request) {
         SysUserEntity loginUser = SecurityUtils.getLoginUser(request);
@@ -75,6 +75,10 @@ public class ApplyInfoServiceImpl extends ServiceImpl<ApplyInfoMapper, ApplyInfo
 
     @Override
     public BaseResponse removes(Long[] applyIds) {
+
+        //删除关联的信息评分表
+        infoScoreMapper.deleteInfoScoreByVisitIds(applyIds);
+
         int deletes = applyInfoMapper.deleteBatchIds(Arrays.stream(applyIds).collect(Collectors.toList()));
         if (deletes == 0){
             return ResultUtils.error(ErrorCode.DELETE_ERROR, "删除失败,该访问申请不存在或已被删除");
