@@ -7,9 +7,10 @@ import com.project.mapper.SysOperLogMapper;
 import com.project.model.dto.SysOperLogDto;
 import com.project.model.entity.SysOperLogEntity;
 import com.project.service.SysOperLogService;
-import com.project.util.text.Convert;
 import com.project.util.ResultUtils;
+import com.project.util.text.Convert;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
@@ -29,6 +30,7 @@ public class SysOperLogServiceImpl implements SysOperLogService {
      * @param sysOperLogEntity 操作日志对象
      */
     @Override
+    @Transactional
     public BaseResponse insertOperlog(SysOperLogEntity sysOperLogEntity) {
         operLogMapper.insertOperlog(sysOperLogEntity);
         return ResultUtils.success("新增操作日志成功");
@@ -53,6 +55,7 @@ public class SysOperLogServiceImpl implements SysOperLogService {
      * @return
      */
     @Override
+    @Transactional
     public BaseResponse deleteOperLogByIds(String ids) {
         int delete = operLogMapper.deleteOperLogByIds(Convert.toStrArray(ids));
         if (delete == 0){

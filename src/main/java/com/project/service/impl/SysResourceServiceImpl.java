@@ -11,6 +11,7 @@ import com.project.service.SysResourceService;
 import com.project.util.ResultUtils;
 import com.project.util.SecurityUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +30,7 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysRe
     private SysResourceMapper sysResourceMapper;
 
     @Override
+    @Transactional
     public BaseResponse insert(SysResourceEntity sysResourceEntity, HttpServletRequest request) {
         Long userId = SecurityUtils.getLoginUserId(request);
         sysResourceEntity.setCreateUserId(userId);
@@ -41,6 +43,7 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysRe
     }
 
     @Override
+    @Transactional
     public BaseResponse remove(Long resourceId) {
         if (resourceId == null){
             return ResultUtils.error(ErrorCode.NULL_ERROR, "Id为空");
@@ -53,6 +56,7 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysRe
     }
 
     @Override
+    @Transactional
     public BaseResponse update(SysResourceEntity sysResourceEntity) {
         if (sysResourceEntity.getId() == null){
             return ResultUtils.error(ErrorCode.NULL_ERROR, "Id为空");

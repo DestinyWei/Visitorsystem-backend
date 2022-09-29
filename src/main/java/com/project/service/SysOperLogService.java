@@ -7,8 +7,7 @@ import com.project.model.entity.SysOperLogEntity;
 /**
  * 操作日志 服务层
  */
-public interface SysOperLogService
-{
+public interface SysOperLogService {
     /**
      * 新增操作日志
      * 

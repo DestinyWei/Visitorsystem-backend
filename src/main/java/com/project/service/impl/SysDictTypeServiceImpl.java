@@ -119,6 +119,7 @@ public class SysDictTypeServiceImpl implements SysDictTypeService {
      * @param ids 需要删除的数据
      */
     @Override
+    @Transactional
     public BaseResponse deleteDictTypeByIds(String ids) {
         Long[] dictIds = Convert.toLongArray(ids);
         for (Long dictId : dictIds) {
@@ -169,6 +170,7 @@ public class SysDictTypeServiceImpl implements SysDictTypeService {
      * @return 结果
      */
     @Override
+    @Transactional
     public BaseResponse insertDictType(SysDictTypeEntity sysDictTypeEntity) {
         int row = dictTypeMapper.insertDictType(sysDictTypeEntity);
         if (row > 0) {

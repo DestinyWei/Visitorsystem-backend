@@ -15,6 +15,7 @@ import com.project.service.ApplyInfoService;
 import com.project.util.ResultUtils;
 import com.project.util.SecurityUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -48,6 +49,7 @@ public class ApplyInfoServiceImpl extends ServiceImpl<ApplyInfoMapper, ApplyInfo
     private InfoScoreMapper infoScoreMapper;
 
     @Override
+   @Transactional
     public BaseResponse insert(ApplyInfoEntity applyInfoEntity, HttpServletRequest request) {
         SysUserEntity loginUser = SecurityUtils.getLoginUser(request);
         applyInfoEntity.setCreateTime(new Date());
@@ -62,6 +64,7 @@ public class ApplyInfoServiceImpl extends ServiceImpl<ApplyInfoMapper, ApplyInfo
     }
 
     @Override
+    @Transactional
     public BaseResponse remove(Long applyId) {
         if (applyId == null){
             return ResultUtils.error(ErrorCode.NULL_ERROR, "Id为空");
@@ -74,6 +77,7 @@ public class ApplyInfoServiceImpl extends ServiceImpl<ApplyInfoMapper, ApplyInfo
     }
 
     @Override
+    @Transactional
     public BaseResponse removes(Long[] applyIds) {
 
         //删除关联的信息评分表
@@ -87,6 +91,7 @@ public class ApplyInfoServiceImpl extends ServiceImpl<ApplyInfoMapper, ApplyInfo
     }
 
     @Override
+    @Transactional
     public BaseResponse update(ApplyInfoEntity applyInfoEntity) {
         if (applyInfoEntity.getId() == null){
             return ResultUtils.error(ErrorCode.NULL_ERROR, "Id为空");

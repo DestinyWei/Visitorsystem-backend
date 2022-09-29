@@ -18,6 +18,7 @@ import com.project.util.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
@@ -174,6 +175,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
     }
 
     @Override
+    @Transactional
     public BaseResponse update(SysUserEntity sysUserEntity) {
         if (sysUserEntity.getUserId() == null){
             return ResultUtils.error(ErrorCode.NULL_ERROR, "Id为空");
@@ -194,6 +196,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
     }
 
     @Override
+    @Transactional
     public BaseResponse updatePwd(SysUserUpdatePwdRequest sysUserUpdatePwdRequest, HttpServletRequest request) {
         SysUserEntity loginUser = SecurityUtils.getLoginUser(request);
         String userRawPassword = loginUser.getUserPassword();

@@ -16,6 +16,7 @@ import com.project.util.ResultUtils;
 import com.project.util.SecurityUtils;
 import com.project.util.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -231,6 +232,7 @@ public class SysMenuServiceImpl implements SysMenuService {
      * @return 结果
      */
     @Override
+    @Transactional
     public BaseResponse deleteMenuById(Long menuId) {
         int delete = menuMapper.deleteMenuById(menuId);
         if (delete == 0){
@@ -280,6 +282,7 @@ public class SysMenuServiceImpl implements SysMenuService {
      * @return 结果
      */
     @Override
+    @Transactional
     public BaseResponse insertMenu(SysMenuEntity sysMenuEntity) {
         int insert = menuMapper.insert(sysMenuEntity);
         if (insert == 0){
@@ -295,6 +298,7 @@ public class SysMenuServiceImpl implements SysMenuService {
      * @return 结果
      */
     @Override
+    @Transactional
     public BaseResponse updateMenu(SysMenuEntity sysMenuEntity) {
         if (sysMenuEntity.getMenuId() == null){
             return ResultUtils.error(ErrorCode.NULL_ERROR, "Id为空");

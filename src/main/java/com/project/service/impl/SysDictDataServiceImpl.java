@@ -3,14 +3,15 @@ package com.project.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.project.common.BaseResponse;
 import com.project.common.ErrorCode;
+import com.project.mapper.SysDictDataMapper;
 import com.project.model.dto.SysDictDataDto;
 import com.project.model.entity.SysDictDataEntity;
 import com.project.service.SysDictDataService;
-import com.project.util.text.Convert;
-import com.project.mapper.SysDictDataMapper;
 import com.project.util.DictUtils;
 import com.project.util.ResultUtils;
+import com.project.util.text.Convert;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -66,6 +67,7 @@ public class SysDictDataServiceImpl implements SysDictDataService {
      * @param ids 需要删除的数据
      */
     @Override
+    @Transactional
     public BaseResponse deleteDictDataByIds(String ids) {
         Long[] dictCodes = Convert.toLongArray(ids);
         for (Long dictCode : dictCodes) {
@@ -84,6 +86,7 @@ public class SysDictDataServiceImpl implements SysDictDataService {
      * @return 结果
      */
     @Override
+    @Transactional
     public BaseResponse insertDictData(SysDictDataEntity sysDictDataEntity) {
         int row = dictDataMapper.insert(sysDictDataEntity);
         if (row > 0) {
@@ -100,6 +103,7 @@ public class SysDictDataServiceImpl implements SysDictDataService {
      * @return 结果
      */
     @Override
+    @Transactional
     public BaseResponse updateDictData(SysDictDataEntity sysDictDataEntity) {
         if (sysDictDataEntity.getDictCode() == null){
             return ResultUtils.error(ErrorCode.NULL_ERROR, "Id为空");

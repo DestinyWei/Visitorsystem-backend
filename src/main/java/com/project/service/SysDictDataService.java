@@ -7,8 +7,7 @@ import com.project.model.entity.SysDictDataEntity;
 /**
  * 字典 业务层
  */
-public interface SysDictDataService
-{
+public interface SysDictDataService {
     /**
      * 根据条件分页查询字典数据
      * 

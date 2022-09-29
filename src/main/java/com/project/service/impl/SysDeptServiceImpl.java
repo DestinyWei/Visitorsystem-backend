@@ -29,6 +29,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptEntity
     private SysDeptMapper sysDeptMapper;
 
     @Override
+   @Transactional
     public BaseResponse insert(SysDeptEntity sysDeptEntity, HttpServletRequest request) {
         Long userId = SecurityUtils.getLoginUserId(request);
         sysDeptEntity.setCreateUserId(userId);
@@ -41,6 +42,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptEntity
     }
 
     @Override
+    @Transactional
     public BaseResponse remove(Long deptId) {
         if (deptId == null){
             return ResultUtils.error(ErrorCode.NULL_ERROR, "Id为空");
@@ -53,6 +55,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptEntity
     }
 
     @Override
+    @Transactional
     public BaseResponse update(SysDeptEntity sysDeptEntity) {
         if (sysDeptEntity.getDeptId() == null){
             return ResultUtils.error(ErrorCode.NULL_ERROR, "Id为空");

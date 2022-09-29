@@ -34,6 +34,7 @@ public class InfoScoreServiceImpl extends ServiceImpl<InfoScoreMapper, InfoScore
     private ApplyInfoMapper applyInfoMapper;
 
     @Override
+   @Transactional
     public BaseResponse insert(InfoScoreEntity infoScoreEntity, HttpServletRequest request) {
         infoScoreEntity.setCreateTime(new Date());
         this.insertInfo(infoScoreEntity);
@@ -45,6 +46,7 @@ public class InfoScoreServiceImpl extends ServiceImpl<InfoScoreMapper, InfoScore
     }
 
     @Override
+    @Transactional
     public BaseResponse remove(Long id) {
         if (id == null){
             return ResultUtils.error(ErrorCode.NULL_ERROR, "Id为空");
@@ -57,6 +59,7 @@ public class InfoScoreServiceImpl extends ServiceImpl<InfoScoreMapper, InfoScore
     }
 
     @Override
+    @Transactional
     public BaseResponse removes(Long[] visitIds) {
         int deletes = infoScoreMapper.deleteInfoScoreByVisitIds(visitIds);
         if (deletes == 0){
@@ -66,6 +69,7 @@ public class InfoScoreServiceImpl extends ServiceImpl<InfoScoreMapper, InfoScore
     }
 
     @Override
+    @Transactional
     public BaseResponse update(InfoScoreEntity infoScoreEntity) {
         if (infoScoreEntity.getId() == null){
             return ResultUtils.error(ErrorCode.NULL_ERROR, "Id为空");

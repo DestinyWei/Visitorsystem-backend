@@ -7,8 +7,7 @@ import com.project.model.entity.SysNoticeEntity;
 /**
  * 公告 服务层
  */
-public interface SysNoticeService
-{
+public interface SysNoticeService {
     /**
      * 查询公告信息
      * 

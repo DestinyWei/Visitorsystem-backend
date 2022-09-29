@@ -7,9 +7,10 @@ import com.project.mapper.SysNoticeMapper;
 import com.project.model.dto.SysNoticeDto;
 import com.project.model.entity.SysNoticeEntity;
 import com.project.service.SysNoticeService;
-import com.project.util.text.Convert;
 import com.project.util.ResultUtils;
+import com.project.util.text.Convert;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
@@ -53,6 +54,7 @@ public class SysNoticeServiceImpl implements SysNoticeService {
      * @return 结果
      */
     @Override
+    @Transactional
     public BaseResponse insertNotice(SysNoticeEntity sysNoticeEntity) {
         int insert = noticeMapper.insertNotice(sysNoticeEntity);
         if (insert == 0){
@@ -68,6 +70,7 @@ public class SysNoticeServiceImpl implements SysNoticeService {
      * @return 结果
      */
     @Override
+    @Transactional
     public BaseResponse updateNotice(SysNoticeEntity sysNoticeEntity) {
         if (sysNoticeEntity.getNoticeId() == null){
             return ResultUtils.error(ErrorCode.NULL_ERROR,"Id为空");
@@ -86,6 +89,7 @@ public class SysNoticeServiceImpl implements SysNoticeService {
      * @return 结果
      */
     @Override
+    @Transactional
     public BaseResponse deleteNoticeByIds(String ids) {
         int delete = noticeMapper.deleteNoticeByIds(Convert.toStrArray(ids));
         if (delete == 0){

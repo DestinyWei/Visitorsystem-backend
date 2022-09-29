@@ -27,6 +27,7 @@ public class CompanyInfoServiceImpl extends ServiceImpl<CompanyInfoMapper, Compa
     private CompanyInfoMapper companyInfoMapper;
 
     @Override
+   @Transactional
     public BaseResponse insert(CompanyInfoEntity companyInfoEntity) {
         companyInfoEntity.setCreateTime(new Date());
         int insert = companyInfoMapper.insert(companyInfoEntity);
@@ -37,6 +38,7 @@ public class CompanyInfoServiceImpl extends ServiceImpl<CompanyInfoMapper, Compa
     }
 
     @Override
+    @Transactional
     public BaseResponse remove(Long companyId) {
         if (companyId == null){
             return ResultUtils.error(ErrorCode.NULL_ERROR, "Id为空");
@@ -49,6 +51,7 @@ public class CompanyInfoServiceImpl extends ServiceImpl<CompanyInfoMapper, Compa
     }
 
     @Override
+    @Transactional
     public BaseResponse update(CompanyInfoEntity companyInfoEntity) {
         if (companyInfoEntity.getId() == null){
             return ResultUtils.error(ErrorCode.NULL_ERROR, "Id为空");

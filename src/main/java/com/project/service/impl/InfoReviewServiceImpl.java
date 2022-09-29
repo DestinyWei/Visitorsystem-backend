@@ -14,6 +14,7 @@ import com.project.service.InfoReviewService;
 import com.project.util.ResultUtils;
 import com.project.util.SecurityUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -38,6 +39,7 @@ public class InfoReviewServiceImpl extends ServiceImpl<InfoReviewMapper, InfoRev
     private ApplyInfoMapper applyInfoMapper;
 
     @Override
+    @Transactional
     public BaseResponse insert(InfoReviewEntity infoReviewEntity, HttpServletRequest request) {
         Long LoginUserId = SecurityUtils.getLoginUserId(request);
         infoReviewEntity.setReviewerId(LoginUserId);
@@ -57,6 +59,7 @@ public class InfoReviewServiceImpl extends ServiceImpl<InfoReviewMapper, InfoRev
     }
 
     @Override
+    @Transactional
     public BaseResponse remove(Long id) {
         if (id == null){
             return ResultUtils.error(ErrorCode.NULL_ERROR, "Id为空");
@@ -74,6 +77,7 @@ public class InfoReviewServiceImpl extends ServiceImpl<InfoReviewMapper, InfoRev
     }
 
     @Override
+    @Transactional
     public BaseResponse removes(Long[] visitIds) {
         List<Long> ids = Arrays.stream(visitIds).collect(Collectors.toList());
         //删除关联的访问申请表
@@ -86,6 +90,7 @@ public class InfoReviewServiceImpl extends ServiceImpl<InfoReviewMapper, InfoRev
     }
 
     @Override
+    @Transactional
     public BaseResponse update(InfoReviewEntity infoReviewEntity) {
         if (infoReviewEntity.getId() == null){
             return ResultUtils.error(ErrorCode.NULL_ERROR, "Id为空");

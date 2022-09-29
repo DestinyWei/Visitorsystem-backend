@@ -232,6 +232,7 @@ public class SysRoleServiceImpl implements SysRoleService {
      * 
      * @param role 角色对象
      */
+    @Transactional
     public BaseResponse insertRoleMenu(SysRoleEntity role) {
         int rows = 1;
         // 新增用户与角色管理
