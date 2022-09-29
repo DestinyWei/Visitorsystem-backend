@@ -339,4 +339,10 @@ public class SysRoleServiceImpl implements SysRoleService {
         }
         return ResultUtils.success(sysRoleEntity.getRoleId(), "修改成功");
     }
+
+    @Override
+    public BaseResponse detail(Long id) {
+        SysRoleEntity sysRoleEntity = roleMapper.selectById(id);
+        return ResultUtils.success(sysRoleEntity, "查询详情成功");
+    }
 }

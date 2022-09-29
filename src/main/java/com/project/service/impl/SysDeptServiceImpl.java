@@ -11,6 +11,7 @@ import com.project.service.SysDeptService;
 import com.project.util.ResultUtils;
 import com.project.util.SecurityUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +30,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptEntity
     private SysDeptMapper sysDeptMapper;
 
     @Override
-   @Transactional
+    @Transactional
     public BaseResponse insert(SysDeptEntity sysDeptEntity, HttpServletRequest request) {
         Long userId = SecurityUtils.getLoginUserId(request);
         sysDeptEntity.setCreateUserId(userId);

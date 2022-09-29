@@ -14,6 +14,7 @@ import com.project.model.entity.InfoScoreEntity;
 import com.project.service.InfoScoreService;
 import com.project.util.ResultUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +35,7 @@ public class InfoScoreServiceImpl extends ServiceImpl<InfoScoreMapper, InfoScore
     private ApplyInfoMapper applyInfoMapper;
 
     @Override
-   @Transactional
+    @Transactional
     public BaseResponse insert(InfoScoreEntity infoScoreEntity, HttpServletRequest request) {
         infoScoreEntity.setCreateTime(new Date());
         this.insertInfo(infoScoreEntity);

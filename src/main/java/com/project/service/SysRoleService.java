@@ -3,7 +3,6 @@ package com.project.service;
 import com.project.common.BaseResponse;
 import com.project.model.dto.SysRoleDto;
 import com.project.model.entity.SysRoleEntity;
-import com.project.model.entity.SysUserRoleEntity;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -131,4 +130,10 @@ public interface SysRoleService {
      */
     BaseResponse changeStatus(SysRoleEntity sysRoleEntity);
 
+    /**
+     * 角色详情查询
+     * @param id
+     * @return BaseResponse
+     */
+    BaseResponse detail(Long id);
 }

@@ -10,6 +10,7 @@ import com.project.model.entity.CompanyInfoEntity;
 import com.project.service.CompanyInfoService;
 import com.project.util.ResultUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -27,7 +28,7 @@ public class CompanyInfoServiceImpl extends ServiceImpl<CompanyInfoMapper, Compa
     private CompanyInfoMapper companyInfoMapper;
 
     @Override
-   @Transactional
+    @Transactional
     public BaseResponse insert(CompanyInfoEntity companyInfoEntity) {
         companyInfoEntity.setCreateTime(new Date());
         int insert = companyInfoMapper.insert(companyInfoEntity);
