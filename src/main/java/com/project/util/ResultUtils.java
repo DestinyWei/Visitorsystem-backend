@@ -67,6 +67,17 @@ public class ResultUtils {
     /**
      * 失败
      *
+     * @param code
+     * @param message
+     * @return
+     */
+    public static BaseResponse error(Integer code, String message) {
+        return new BaseResponse(code, null, message);
+    }
+
+    /**
+     * 失败
+     *
      * @param errorCode
      * @return
      */

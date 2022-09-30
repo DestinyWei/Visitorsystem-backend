@@ -1,5 +1,6 @@
 package com.project.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -13,6 +14,7 @@ import com.project.model.request.SysUserLoginRequest;
 import com.project.model.request.SysUserRegisterRequest;
 import com.project.model.request.SysUserUpdatePwdRequest;
 import com.project.service.SysUserService;
+import com.project.util.JwtUtils;
 import com.project.util.ResultUtils;
 import com.project.util.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -106,13 +108,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
         String userPassword = sysUserLoginRequestRequest.getUserPassword();
         // 1. 校验
         if (StringUtils.isAnyBlank(userAccount, userPassword)) {
-            return ResultUtils.error("账户/密码为空");
+            throw new BusinessException(ErrorCode.NULL_ERROR, "账户/密码为空");
         }
         if (userAccount.length() < 4) {
-            return ResultUtils.error("账户长度小于4");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "账户长度小于4");
         }
         if (userPassword.length() < 6) {
-            return ResultUtils.error("密码长度小于6");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "密码长度小于6");
         }
         // 账户不能包含特殊字符
         String validPattern = "[`~!@#$%^&*()+=|{}':;',\\\\[\\\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
@@ -130,12 +132,18 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
         // 用户不存在
         if (user == null) {
             log.info("user login failed, userAccount cannot match userPassword");
-            return ResultUtils.error("用户不存在,请检查账号密码是否正确");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "用户不存在,请检查账号密码是否正确");
         }
         // 3. 用户脱敏
         SysUserEntity safetyUser = getSafetyUser(user);
         // 4. 记录用户的登录态
         request.getSession().setAttribute(USER_LOGIN_STATE, safetyUser);
+        JSONObject json = new JSONObject();
+        String token = JwtUtils.createToken(safetyUser.getUserId().toString());
+        if (!StringUtils.isEmpty(token)) {
+            json.put("token",token) ;
+        }
+        log.error(token);
         return ResultUtils.success(safetyUser, "用户登录成功");
     }
 
