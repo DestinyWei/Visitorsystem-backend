@@ -85,7 +85,9 @@ public class SysUserController {
 
     @ApiOperation(value = "用户查询")
     @PostMapping("/search")
-    public BaseResponse searchUser(@Validated @RequestBody SysUserDto sysUserDto){
+    public BaseResponse searchUser(@Validated @RequestBody SysUserDto sysUserDto, HttpServletRequest request){
+        Long userId = SecurityUtils.getLoginUserId(request);
+        sysUserDto.setCurrentUserId(userId);
         return sysUserService.search(sysUserDto);
     }
 
@@ -106,5 +108,11 @@ public class SysUserController {
     @PostMapping("/updatePwd")
     public BaseResponse updatePwd(@Validated @RequestBody SysUserUpdatePwdRequest sysUserUpdatePwdRequest, HttpServletRequest request){
         return sysUserService.updatePwd(sysUserUpdatePwdRequest, request);
+    }
+
+    @ApiOperation(value = "用户详情")
+    @GetMapping("/detail/{userId}")
+    public BaseResponse detail(@PathVariable("userId") @ApiParam(value = "用户Id") Long userId){
+        return sysUserService.detail(userId);
     }
 }

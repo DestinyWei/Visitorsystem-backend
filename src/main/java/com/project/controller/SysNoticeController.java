@@ -31,8 +31,9 @@ public class SysNoticeController {
      * 查询公告详情
      */
     @ApiOperation(value = "公告详情")
-    @GetMapping("/detail")
-    public BaseResponse detail(@ApiParam(value = "公告Id") Long noticeId) {
+    @GetMapping("/detail/{noticeId}")
+    @ResponseBody
+    public BaseResponse detail(@PathVariable("noticeId") @ApiParam(value = "公告Id") Long noticeId) {
         return sysNoticeService.selectNoticeById(noticeId);
     }
 

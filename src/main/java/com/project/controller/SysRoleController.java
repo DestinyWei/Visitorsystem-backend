@@ -38,10 +38,10 @@ public class SysRoleController{
     }
 
     @ApiOperation(value = "角色详情")
-    @GetMapping("/detail")
+    @GetMapping("/detail/{roleId}")
     @ResponseBody
-    public BaseResponse detail(@ApiParam(value = "角色Id") Long id){
-        return sysRoleService.detail(id);
+    public BaseResponse detail(@PathVariable("roleId") @ApiParam(value = "角色Id") Long roleId){
+        return sysRoleService.detail(roleId);
     }
 
     /**

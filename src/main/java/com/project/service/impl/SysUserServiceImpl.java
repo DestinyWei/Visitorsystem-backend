@@ -8,8 +8,10 @@ import com.project.common.BaseResponse;
 import com.project.common.ErrorCode;
 import com.project.exception.BusinessException;
 import com.project.mapper.SysUserMapper;
+import com.project.mapper.SysUserRoleMapper;
 import com.project.model.dto.SysUserDto;
 import com.project.model.entity.SysUserEntity;
+import com.project.model.entity.SysUserRoleEntity;
 import com.project.model.request.SysUserLoginRequest;
 import com.project.model.request.SysUserRegisterRequest;
 import com.project.model.request.SysUserUpdatePwdRequest;
@@ -41,6 +43,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
 
     @Resource
     private SysUserMapper sysUserMapper;
+
+    @Resource
+    private SysUserRoleMapper sysUserRoleMapper;
 
     /**
      * 盐值，混淆密码
@@ -99,6 +104,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
         if (!saveResult) {
             throw new BusinessException(ErrorCode.SAVE_ERROR, "未注册成功");
         }
+        // 添加普通用户角色
+        SysUserRoleEntity sysUserRoleEntity = new SysUserRoleEntity();
+        sysUserRoleEntity.setUserId(user.getUserId());
+        sysUserRoleEntity.setRoleId(2L);
+        sysUserRoleMapper.insert(sysUserRoleEntity);
         return ResultUtils.success(user.getUserId(), "用户注册成功");
     }
 
@@ -198,7 +208,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
 
     @Override
     public BaseResponse search(SysUserDto sysUserDto) {
-        // TODO 权限鉴别
+        QueryWrapper<SysUserRoleEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id", sysUserDto.getCurrentUserId()).orderBy(true, true, "role_id");
+        Long roleId = sysUserRoleMapper.selectOne(queryWrapper).getRoleId();
+        sysUserDto.setRoleType(roleId.toString());
         IPage<SysUserEntity> page = sysUserMapper.searchUser(sysUserDto);
         return ResultUtils.success(page, "查询成功");
     }
@@ -224,5 +237,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
         }
         return ResultUtils.success("修改密码成功");
     }
+
+    @Override
+    public BaseResponse detail(Long userId) {
+        SysUserEntity sysUserEntity = sysUserMapper.selectById(userId);
+        return ResultUtils.success(sysUserEntity, "查询用户详情成功");
+    }
+
 
 }

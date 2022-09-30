@@ -61,7 +61,7 @@
         <if test=" userStatus != null and userStatus != '' ">
             AND su.user_status = #{userStatus}
         </if>
-        <if test="roleType != 0">
+        <if test=" roleType != 1">
             AND su.is_delete = 0
         </if>
         ORDER BY

@@ -95,11 +95,6 @@ public class SysUserEntity implements Serializable {
     @TableLogic
     private Integer isDelete;
 
-    /** 角色类型 */
-    @ApiModelProperty(value = "角色类型")
-    @TableField(exist = false)
-    private String roleType;
-
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

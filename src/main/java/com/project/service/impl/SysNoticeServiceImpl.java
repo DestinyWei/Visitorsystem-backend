@@ -31,7 +31,7 @@ public class SysNoticeServiceImpl implements SysNoticeService {
      */
     @Override
     public BaseResponse selectNoticeById(Long noticeId) {
-        SysNoticeEntity sysNoticeEntity = noticeMapper.selectNoticeById(noticeId);
+        SysNoticeEntity sysNoticeEntity = noticeMapper.selectById(noticeId);
         return ResultUtils.success(sysNoticeEntity, "查询公告信息成功");
     }
 

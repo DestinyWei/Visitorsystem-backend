@@ -9,7 +9,6 @@ import com.project.model.request.SysUserRegisterRequest;
 import com.project.model.request.SysUserUpdatePwdRequest;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * 用户服务
@@ -67,4 +66,11 @@ public interface SysUserService extends IService<SysUserEntity> {
      * @return BaseResponse
      */
     BaseResponse updatePwd(SysUserUpdatePwdRequest sysUserUpdatePwdRequest, HttpServletRequest request);
+
+    /**
+     * 用户详情
+     * @param userId
+     * @return BaseResponse
+     */
+    BaseResponse detail(Long userId);
 }

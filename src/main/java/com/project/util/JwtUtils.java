@@ -40,7 +40,7 @@ public class JwtUtils {
         Date nowDate = new Date();
         Date expireDate = new Date(nowDate.getTime() + expireTime);//过期时间
 
-        return tokenPrefix + Jwts.builder()
+        return Jwts.builder()
                 .setHeaderParam("typ", "JWT")
                 .setSubject(subject)
                 .setIssuedAt(nowDate)
