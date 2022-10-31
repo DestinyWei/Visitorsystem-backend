@@ -42,8 +42,8 @@ public class SysMenuController {
      */
     @ApiOperation(value = "菜单删除")
     @Log(title = "菜单管理", businessType = BusinessType.DELETE)
-    @GetMapping("/remove/{menuId}")
-    public BaseResponse remove(@PathVariable("menuId") @ApiParam(value = "菜单Id") Long menuId) {
+    @PostMapping("/remove")
+    public BaseResponse remove(@ApiParam(value = "菜单Id") Long menuId) {
         if (sysMenuService.selectCountMenuByParentId(menuId) > 0) {
             return ResultUtils.error("存在子菜单,不允许删除");
         }
