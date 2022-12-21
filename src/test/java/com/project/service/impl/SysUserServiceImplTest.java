@@ -4,13 +4,11 @@ import com.project.model.dto.SysUserDto;
 import com.project.model.entity.SysUserEntity;
 import com.project.model.request.SysUserLoginRequest;
 import com.project.model.request.SysUserRegisterRequest;
-import com.project.model.request.SysUserUpdatePwdRequest;
 import com.project.service.SysUserService;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -30,8 +28,6 @@ class SysUserServiceImplTest {
     HttpServletRequest request;
 
     private static final SysUserEntity user = new SysUserEntity();
-
-    private static final String SALT = "weihaoming";
 
     @BeforeAll
     public static void setParams() {
