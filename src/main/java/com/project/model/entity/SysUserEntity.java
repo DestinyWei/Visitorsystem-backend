@@ -95,6 +95,10 @@ public class SysUserEntity implements Serializable {
     @TableLogic
     private Integer isDelete;
 
+    @ApiModelProperty(value = "token")
+    @TableField(exist = false)
+    private String token;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

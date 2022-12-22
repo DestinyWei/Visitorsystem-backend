@@ -3,7 +3,7 @@ server:
     context-path: /api
 spring:
   application:
-    name: tduck-api
+    name: visitor-system
   profiles:
     active: prod
   jackson:

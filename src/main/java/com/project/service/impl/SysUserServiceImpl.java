@@ -150,6 +150,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
         request.getSession().setAttribute(USER_LOGIN_STATE, safetyUser);
         JSONObject json = new JSONObject();
         String token = JwtUtils.createToken(safetyUser.getUserId().toString());
+        safetyUser.setToken(token);
         if (!StringUtils.isEmpty(token)) {
             json.put("token",token) ;
         }
