@@ -7,9 +7,9 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import java.io.IOException;
 
 /**
- * @author : wangqing
- * @description : Long转string 避免返回前端丢失精度
- * @create :  2022/03/10 15:07
+ * @author: weihaoming
+ * @description: Long转string 避免返回前端丢失精度
+ * @create: 2022-08-29 10:43:45
  **/
 
 public class LongToStringSerializer extends JsonSerializer<Long> {

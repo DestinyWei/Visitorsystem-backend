@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import javax.servlet.http.HttpServletRequest;
 
 /**
-* @author Destiny
+* @author weihaoming
 * @description 针对表【sys_resource】的数据库操作Service
 * @createDate 2022-08-26 16:35:53
 */

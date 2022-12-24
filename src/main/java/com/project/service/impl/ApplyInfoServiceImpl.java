@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
-* @author Destiny
+* @author weihaoming
 * @description 针对表【apply_info】的数据库操作Service实现
 * @createDate 2022-08-29 12:43:45
 */

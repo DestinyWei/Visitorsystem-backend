@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 /**
-* @author Destiny
+* @author weihaoming
 * @description 针对表【sys_dept】的数据库操作Service实现
 * @createDate 2022-08-26 15:55:39
 */

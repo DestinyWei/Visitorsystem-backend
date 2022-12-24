@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
-* @author Destiny
+* @author weihaoming
 * @description 针对表【sys_role_resource】的数据库操作Mapper
 * @createDate 2022-08-29 10:57:23
 * @Entity generator.domain.SysRoleResource

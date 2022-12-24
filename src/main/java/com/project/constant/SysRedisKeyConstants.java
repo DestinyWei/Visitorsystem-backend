@@ -1,9 +1,9 @@
 package com.project.constant;
 
 /**
- * @author : wangqing
- * @description :
- * @create :  2021/07/06 16:01
+ * @author: weihaoming
+ * @description:
+ * @create: 2022-09-30-10:41
  **/
 public interface SysRedisKeyConstants {
     /**

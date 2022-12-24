@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
-* @author Destiny
+* @author weihaoming
 * @description 针对表【sys_dept】的数据库操作Mapper
 * @createDate 2022-08-26 15:55:39
 * @Entity generator.domain.SysDept

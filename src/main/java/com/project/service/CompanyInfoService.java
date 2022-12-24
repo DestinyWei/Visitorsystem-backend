@@ -6,7 +6,7 @@ import com.project.model.entity.CompanyInfoEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
-* @author Destiny
+* @author weihaoming
 * @description 针对表【company_info】的数据库操作Service
 * @createDate 2022-08-29 12:00:19
 */

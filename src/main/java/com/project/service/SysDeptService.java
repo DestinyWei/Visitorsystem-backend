@@ -8,7 +8,7 @@ import com.project.model.entity.SysDeptEntity;
 import javax.servlet.http.HttpServletRequest;
 
 /**
-* @author Destiny
+* @author weihaoming
 * @description 针对表【sys_dept】的数据库操作Service
 * @createDate 2022-08-26 15:55:39
 */

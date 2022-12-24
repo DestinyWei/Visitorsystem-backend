@@ -8,7 +8,7 @@ import com.project.model.entity.ApplyInfoEntity;
 import java.util.List;
 
 /**
-* @author Destiny
+* @author weihaoming
 * @description 针对表【apply_info】的数据库操作Mapper
 * @createDate 2022-08-29 12:43:45
 * @Entity generator.domain.ApplyInfo

@@ -10,7 +10,6 @@ import java.io.IOException;
 
 /**
  * 字典枚举序列化定义
- * @author tduck
  */
 public class DictEnumSerializer extends JsonSerializer<IDictEnum> {
 
