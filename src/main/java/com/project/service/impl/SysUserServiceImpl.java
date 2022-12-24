@@ -154,7 +154,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
         if (!StringUtils.isEmpty(token)) {
             json.put("token",token) ;
         }
-        log.error(token);
+        log.error("Bearer " + token);
         return ResultUtils.success(safetyUser, "用户登录成功");
     }
 

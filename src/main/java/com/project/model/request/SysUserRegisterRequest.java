@@ -44,7 +44,7 @@ public class SysUserRegisterRequest implements Serializable {
 
     @ApiModelProperty(value = "身份证号", required = true)
     @NotBlank(message = "身份证号不能为空")
-    @Pattern(regexp = "(^[1-9]\\\\d{5}(18|19|20)\\\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\\\d{3}[0-9Xx]$)|(^[1-9]\\\\d{5}\\\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\\\d{3}$)",
+    @Pattern(regexp = "^(\\d{18,18}|\\d{15,15}|(\\d{17,17}[x|X]))$",
             message = "身份证号输入有误")
     private String idNumber;
 
