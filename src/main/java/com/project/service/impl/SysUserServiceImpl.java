@@ -152,9 +152,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
         String token = JwtUtils.createToken(safetyUser.getUserId().toString());
         safetyUser.setToken(token);
         if (!StringUtils.isEmpty(token)) {
-            json.put("token",token) ;
+            json.put("token", "Bearer " + token) ;
         }
-        log.error("Bearer " + token);
+        log.info("Token为:Bearer " + token);
         return ResultUtils.success(safetyUser, "用户登录成功");
     }
 

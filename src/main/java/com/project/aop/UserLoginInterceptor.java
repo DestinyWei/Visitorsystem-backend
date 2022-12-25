@@ -29,6 +29,11 @@ public class UserLoginInterceptor implements HandlerInterceptor {
         if (uri.contains("/user/login") || uri.contains("/user/register")){
             return true ;
         }
+        //添加这行代码，让OPTIONS请求通过
+        if (request.getMethod().equals("OPTIONS")) {
+            response.setStatus(HttpServletResponse.SC_OK);
+            return true;
+        }
         /** Token 验证 */
         String token = request.getHeader(jwtUtils.getHeader());
         if(StringUtils.isEmpty(token)){
