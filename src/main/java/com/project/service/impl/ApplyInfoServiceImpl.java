@@ -11,6 +11,7 @@ import com.project.model.entity.ApplyInfoEntity;
 import com.project.model.entity.CompanyInfoEntity;
 import com.project.model.entity.SysDeptEntity;
 import com.project.model.entity.SysUserEntity;
+import com.project.model.request.DeleteRequest;
 import com.project.service.ApplyInfoService;
 import com.project.util.ResultUtils;
 import com.project.util.SecurityUtils;
@@ -49,12 +50,13 @@ public class ApplyInfoServiceImpl extends ServiceImpl<ApplyInfoMapper, ApplyInfo
     private InfoScoreMapper infoScoreMapper;
 
     @Override
-   @Transactional
+    @Transactional
     public BaseResponse insert(ApplyInfoEntity applyInfoEntity, HttpServletRequest request) {
         SysUserEntity loginUser = SecurityUtils.getLoginUser(request);
         applyInfoEntity.setCreateTime(new Date());
         applyInfoEntity.setApplicantId(loginUser.getUserId());
-        applyInfoEntity.setApplyStatus("0");
+//        applyInfoEntity.setApplyStatus("0"); // 申请之后需要审核
+        applyInfoEntity.setApplyStatus("2"); // 申请之后直接通过
         this.insertInfo(applyInfoEntity);
         int insert = applyInfoMapper.insert(applyInfoEntity);
         if (insert == 0){
@@ -65,7 +67,8 @@ public class ApplyInfoServiceImpl extends ServiceImpl<ApplyInfoMapper, ApplyInfo
 
     @Override
     @Transactional
-    public BaseResponse remove(Long applyId) {
+    public BaseResponse remove(DeleteRequest deleteRequest) {
+        Long applyId = deleteRequest.getId();
         if (applyId == null){
             return ResultUtils.error(ErrorCode.NULL_ERROR, "Id为空");
         }
@@ -78,8 +81,8 @@ public class ApplyInfoServiceImpl extends ServiceImpl<ApplyInfoMapper, ApplyInfo
 
     @Override
     @Transactional
-    public BaseResponse removes(Long[] applyIds) {
-
+    public BaseResponse removes(DeleteRequest deleteRequest) {
+        Long[] applyIds = deleteRequest.getIds();
         //删除关联的信息评分表
         infoScoreMapper.deleteInfoScoreByVisitIds(applyIds);
 
@@ -159,11 +162,16 @@ public class ApplyInfoServiceImpl extends ServiceImpl<ApplyInfoMapper, ApplyInfo
         }
         SysUserEntity principal = sysUserMapper.selectById(applyInfoEntity.getPrincipalId());
         if (principal == null){
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "用户不存在");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "负责人不存在");
         }
         SysUserEntity applicant = sysUserMapper.selectById(applyInfoEntity.getApplicantId());
         if (applicant == null){
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "用户不存在");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "申请人不存在");
+        }
+        Date startTime = applyInfoEntity.getStartTime();
+        Date endTime = applyInfoEntity.getEndTime();
+        if (startTime.compareTo(endTime) > 0){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "开始时间在结束时间之后");
         }
         applyInfoEntity.setApplicantName(applicant.getUserName());
         applyInfoEntity.setPrincipalName(principal.getUserName());

@@ -5,6 +5,7 @@ import com.project.common.BaseResponse;
 import com.project.model.dto.ApplyInfoDto;
 import com.project.model.entity.ApplyInfoEntity;
 import com.project.model.enums.BusinessType;
+import com.project.model.request.DeleteRequest;
 import com.project.service.ApplyInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -38,17 +39,17 @@ public class ApplyInfoController {
     @ApiOperation(value = "访问申请删除")
     @Log(title = "访问申请管理", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
-    @ResponseBody
-    public BaseResponse remove(@ApiParam(value = "访问申请Id") Long applyId){
-        return applyInfoService.remove(applyId);
+    // @ResponseBody
+    public BaseResponse remove(@RequestBody @ApiParam(value = "访问申请Id") DeleteRequest deleteRequest){
+        return applyInfoService.remove(deleteRequest);
     }
 
     @ApiOperation(value = "访问申请批量删除")
     @Log(title = "访问申请管理", businessType = BusinessType.DELETE)
     @PostMapping("/removes")
-    @ResponseBody
-    public BaseResponse removes(@ApiParam(value = "访问申请Ids") Long[] applyIds){
-        return applyInfoService.removes(applyIds);
+    // @ResponseBody
+    public BaseResponse removes(@RequestBody @ApiParam(value = "访问申请Ids") DeleteRequest deleteRequest){
+        return applyInfoService.removes(deleteRequest);
     }
 
     @ApiOperation(value = "访问申请修改")

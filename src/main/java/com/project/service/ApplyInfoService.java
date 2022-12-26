@@ -4,6 +4,7 @@ import com.project.common.BaseResponse;
 import com.project.model.dto.ApplyInfoDto;
 import com.project.model.entity.ApplyInfoEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.project.model.request.DeleteRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,17 +25,17 @@ public interface ApplyInfoService extends IService<ApplyInfoEntity> {
 
     /**
      * 访问申请删除
-     * @param applyId
+     * @param deleteRequest
      * @return BaseResponse
      */
-    BaseResponse remove(Long applyId);
+    BaseResponse remove(DeleteRequest deleteRequest);
 
     /**
      * 访问申请批量删除
-     * @param applyIds
+     * @param deleteRequest
      * @return BaseResponse
      */
-    BaseResponse removes(Long[] applyIds);
+    BaseResponse removes(DeleteRequest deleteRequest);
 
     /**
      * 访问申请修改
