@@ -1,4 +1,6 @@
-# 系统用户表
+-- ----------------------------
+-- 1、系统用户表
+-- ----------------------------
 CREATE TABLE sys_user(
                         user_id               		BIGINT NOT NULL AUTO_INCREMENT COMMENT '用户ID',
                         dept_id                     BIGINT COMMENT '部门ID',
@@ -20,7 +22,7 @@ CREATE TABLE sys_user(
 
 
 -- ----------------------------
--- 4、角色信息表
+-- 2、角色信息表
 -- ----------------------------
 drop table if exists sys_role;
 create table sys_role (
@@ -47,7 +49,7 @@ insert into sys_role values('2', '普通角色',   'common', 2, 2, '0', '0', 'ad
 
 
 -- ----------------------------
--- 6、用户和角色关联表  用户N-1角色
+-- 3、用户和角色关联表  用户N-1角色
 -- ----------------------------
 drop table if exists sys_user_role;
 create table sys_user_role (
@@ -63,7 +65,7 @@ insert into sys_user_role values ('1', '1');
 insert into sys_user_role values ('2', '2');
 
 -- ----------------------------
--- 8、角色和部门关联表  角色1-N部门
+-- 4、角色和部门关联表  角色1-N部门
 -- ----------------------------
 drop table if exists sys_role_dept;
 create table sys_role_dept (
@@ -72,7 +74,9 @@ create table sys_role_dept (
                                primary key(role_id, dept_id)
 ) engine=innodb comment = '角色和部门关联表';
 
-# 角色资源表
+-- ----------------------------
+-- 5、角色资源表
+-- ----------------------------
 CREATE TABLE sys_role_resource(
                               id				 BIGINT NOT NULL AUTO_INCREMENT COMMENT 'ID',
                               resource_id        BIGINT COMMENT '资源ID',
@@ -82,7 +86,9 @@ CREATE TABLE sys_role_resource(
 )ENGINE=MYISAM
 ;
 
-# 系统资源表
+-- ----------------------------
+-- 6、系统资源表
+-- ----------------------------
 CREATE TABLE sys_resource(
                              id             		 BIGINT NOT NULL AUTO_INCREMENT COMMENT '资源ID',
                              data_type               VARCHAR(8) DEFAULT '' COMMENT '数据类型',
@@ -101,7 +107,9 @@ CREATE TABLE sys_resource(
 )ENGINE=MYISAM
 ;
 
-# 部门信息表
+-- ----------------------------
+-- 7、部门信息表
+-- ----------------------------
 CREATE TABLE sys_dept(
                           dept_id     		     BIGINT NOT NULL AUTO_INCREMENT COMMENT '部门信息ID',
                           dept_name              VARCHAR(64) DEFAULT '' COMMENT '部门名称',
@@ -118,7 +126,9 @@ CREATE TABLE sys_dept(
 ;
 
 
-# 公司信息表
+-- ----------------------------
+-- 8、公司信息表
+-- ----------------------------
 CREATE TABLE company_info(
                              id              		 BIGINT NOT NULL AUTO_INCREMENT COMMENT '公司信息ID',
                              company_name            VARCHAR(16) DEFAULT '' COMMENT '公司名称',
@@ -132,7 +142,9 @@ CREATE TABLE company_info(
 )ENGINE=MYISAM
 ;
 
-# 访问申请信息表
+-- ----------------------------
+-- 9、访问申请信息表
+-- ----------------------------
 CREATE TABLE apply_info(
                                  id                		   BIGINT NOT NULL AUTO_INCREMENT COMMENT '访问申请ID',
                                  start_time                DATETIME DEFAULT NULL COMMENT '访问申请开始时间',
@@ -148,7 +160,9 @@ CREATE TABLE apply_info(
 )ENGINE=MYISAM
 ;
 
-# 人员信息审核表
+-- ----------------------------
+-- 10、人员信息审核表
+-- ----------------------------
 CREATE TABLE info_review(
                           id			  BIGINT NOT NULL AUTO_INCREMENT COMMENT '审核ID',
                           reviewer_id     BIGINT COMMENT '审核人ID',
@@ -160,7 +174,9 @@ CREATE TABLE info_review(
 )ENGINE=MYISAM
 ;
 
-# 信息评分表
+-- ----------------------------
+-- 11、信息评分表
+-- ----------------------------
 CREATE TABLE info_score(
                           id			  BIGINT NOT NULL AUTO_INCREMENT COMMENT '评分ID',
                           applicant_id    BIGINT COMMENT '访问人ID',
@@ -175,7 +191,7 @@ CREATE TABLE info_score(
 ;
 
 -- ----------------------------
--- 18、通知公告表
+-- 12、通知公告表
 -- ----------------------------
 drop table if exists sys_notice;
 create table sys_notice (
@@ -200,7 +216,7 @@ insert into sys_notice values('2', '维护通知：2022-12-20 企业访客管理
 
 
 -- ----------------------------
--- 11、字典类型表
+-- 13、字典类型表
 -- ----------------------------
 drop table if exists sys_dict_type;
 create table sys_dict_type
@@ -231,7 +247,7 @@ insert into sys_dict_type values(10, '系统状态', 'sys_common_status',   '0',
 
 
 -- ----------------------------
--- 12、字典数据表
+-- 14、字典数据表
 -- ----------------------------
 drop table if exists sys_dict_data;
 create table sys_dict_data
@@ -284,7 +300,7 @@ insert into sys_dict_data values(28, 1,  '成功',     '0',       'sys_common_st
 insert into sys_dict_data values(29, 2,  '失败',     '1',       'sys_common_status',   '',   'danger',  'N', '0', 'admin', sysdate(), '', null, '停用状态');
 
 -- ----------------------------
--- 10、操作日志记录
+-- 15、操作日志记录
 -- ----------------------------
 drop table if exists sys_oper_log;
 create table sys_oper_log (
@@ -308,7 +324,7 @@ create table sys_oper_log (
 ) engine=innodb auto_increment=100 comment = '操作日志记录';
 
 -- ----------------------------
--- 5、菜单权限表
+-- 16、菜单权限表
 -- ----------------------------
 drop table if exists sys_menu;
 create table sys_menu (
@@ -438,7 +454,7 @@ insert into sys_menu values('1061', '生成代码', '115', '5',  '#', '',  'F', 
 
 
 -- ----------------------------
--- 7、角色和菜单关联表  角色1-N菜单
+-- 17、角色和菜单关联表  角色1-N菜单
 -- ----------------------------
 drop table if exists sys_role_menu;
 create table sys_role_menu (
