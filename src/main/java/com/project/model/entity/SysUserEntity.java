@@ -6,6 +6,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -95,9 +97,19 @@ public class SysUserEntity implements Serializable {
     @TableLogic
     private Integer isDelete;
 
+    /**
+     * token令牌
+     */
     @ApiModelProperty(value = "token")
     @TableField(exist = false)
     private String token;
+
+    /**
+     * cookie
+     */
+    @ApiModelProperty(value = "cookie")
+    @TableField(exist = false)
+    private Cookie cookie;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

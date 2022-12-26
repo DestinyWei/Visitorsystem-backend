@@ -26,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.regex.Matcher;
@@ -149,12 +150,15 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
         // 4. 记录用户的登录态
         request.getSession().setAttribute(USER_LOGIN_STATE, safetyUser);
         JSONObject json = new JSONObject();
+        // String token = JwtUtils.tokenPrefix + JwtUtils.createToken(safetyUser.getUserId().toString()); // 规范格式
         String token = JwtUtils.createToken(safetyUser.getUserId().toString());
         safetyUser.setToken(token);
         if (!StringUtils.isEmpty(token)) {
-            json.put("token", "Bearer " + token) ;
+            json.put("token", token) ;
         }
-        log.info("Token为:Bearer " + token);
+        log.info("Token为:" + token);
+        Cookie cookie = new Cookie(safetyUser.getUserId().toString(), request.getSession().toString());
+        safetyUser.setCookie(cookie);
         return ResultUtils.success(safetyUser, "用户登录成功");
     }
 
