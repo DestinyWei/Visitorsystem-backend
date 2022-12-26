@@ -37,7 +37,7 @@ class SysUserServiceImplTest {
         user.setUserStatus("0");
         user.setPhone("11111111111");
         user.setType("0");
-        user.setSex("男");
+        user.setSex("1");
         user.setUserPassword("123456");
         user.setUserAccount("Pymjl");
         user.setIsDelete(0);
